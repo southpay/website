@@ -1,0 +1,614 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<link rel="icon" type="image/svg+xml" href="/favicon.svg">
+<title>About - SouthPay</title>
+<meta name="description" content="SouthPay is a global crypto payment solution built for commerce. We're building the bridge between crypto buyers and the stores that want to sell to them.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:ital,wght@0,400;0,500;0,600;0,700;1,500;1,600;1,700&family=Geist:wght@400;500;600;700&family=Geist+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="/southpay.css">
+<style>
+/* ===== About hero ===== */
+.about-hero {
+  padding: 100px 0 80px;
+  position: relative;
+}
+.about-hero .eyebrow { margin-bottom: 24px; }
+.about-hero h1 {
+  font-family: var(--display);
+  font-size: clamp(48px, 7vw, 88px);
+  font-weight: 600;
+  letter-spacing: -0.045em;
+  line-height: 1.02;
+  margin-bottom: 28px;
+}
+.about-hero h1 em { font-style: italic; color: var(--brand); font-weight: 600; }
+.about-hero .lede {
+  font-size: 20px; line-height: 1.5;
+  color: var(--ink-soft);
+  max-width: 640px;
+}
+
+/* ===== Mission ===== */
+.mission-section { padding: 80px 0 60px; }
+.mission-grid {
+  display: grid;
+  grid-template-columns: 1fr 1.2fr;
+  gap: 80px;
+  align-items: start;
+}
+.mission-grid h2 {
+  font-family: var(--display);
+  font-size: 44px; font-weight: 600;
+  letter-spacing: -0.035em; line-height: 1.08;
+}
+.mission-grid h2 em { font-style: italic; color: var(--brand); font-weight: 600; }
+.mission-copy p {
+  font-size: 17px; line-height: 1.65;
+  color: var(--ink-soft);
+  margin-bottom: 18px;
+}
+.mission-copy p strong { color: var(--ink); font-weight: 600; }
+@media (max-width: 900px) {
+  .mission-grid { grid-template-columns: 1fr; gap: 36px; }
+  .mission-grid h2 { font-size: 36px; }
+}
+
+/* ===== Values ===== */
+.values-section { padding: 60px 0 80px; }
+.values-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 18px;
+  margin-top: 40px;
+}
+.value-card {
+  background: var(--surface);
+  border: 1px solid var(--line);
+  border-radius: var(--r-xl);
+  padding: 30px;
+}
+.value-icon {
+  width: 38px; height: 38px;
+  border-radius: 10px;
+  background: var(--bg-lavender);
+  color: var(--brand);
+  display: inline-flex; align-items: center; justify-content: center;
+  font-weight: 700; font-family: var(--mono);
+  margin-bottom: 18px;
+  font-size: 16px;
+}
+.value-card h4 {
+  font-family: var(--display);
+  font-size: 19px; font-weight: 600;
+  letter-spacing: -0.02em;
+  margin-bottom: 10px;
+}
+.value-card p {
+  color: var(--ink-soft);
+  font-size: 14.5px;
+  line-height: 1.55;
+}
+@media (max-width: 880px) {
+  .values-grid { grid-template-columns: 1fr; }
+}
+
+/* ===== Team ===== */
+.team-section {
+  padding: 80px 0;
+  background: var(--bg-lavender);
+  position: relative;
+  border-top: 1px solid var(--line-soft);
+  border-bottom: 1px solid var(--line-soft);
+}
+.team-section::before {
+  content: '';
+  position: absolute; inset: 0;
+  background: radial-gradient(ellipse at top, rgba(255,255,255,0.6), transparent 60%);
+  pointer-events: none;
+}
+.team-section .container { position: relative; z-index: 1; }
+.team-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 22px;
+  margin-top: 50px;
+}
+.founder-card {
+  background: var(--surface);
+  border: 1px solid var(--line);
+  border-radius: var(--r-xl);
+  padding: 32px;
+  transition: transform .25s, box-shadow .25s;
+}
+.founder-card:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 24px 60px -28px rgba(55, 75, 236, 0.22);
+}
+.founder-avatar {
+  width: 72px; height: 72px;
+  border-radius: 50%;
+  overflow: hidden;
+  background: var(--bg-lavender);
+  margin-bottom: 20px;
+  position: relative;
+}
+.founder-avatar img {
+  width: 100%; height: 100%;
+  object-fit: cover;
+  display: block;
+}
+.founder-name {
+  font-family: var(--display);
+  font-size: 22px; font-weight: 600;
+  letter-spacing: -0.025em;
+  margin-bottom: 4px;
+}
+.founder-role {
+  color: var(--brand);
+  font-size: 13px; font-weight: 500;
+  font-family: var(--mono);
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  margin-bottom: 16px;
+}
+.founder-bio {
+  color: var(--ink-soft);
+  font-size: 14.5px;
+  line-height: 1.6;
+}
+@media (max-width: 880px) {
+  .team-grid { grid-template-columns: 1fr; }
+}
+
+/* ===== By the numbers ===== */
+.stats-section { padding: 80px 0 40px; }
+.stats-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 20px;
+  margin-top: 40px;
+}
+.stat-card {
+  background: var(--surface);
+  border: 1px solid var(--line);
+  border-radius: var(--r-xl);
+  padding: 30px 28px;
+}
+.stat-num {
+  font-family: var(--display);
+  font-weight: 700;
+  font-size: 44px;
+  letter-spacing: -0.04em;
+  color: var(--brand);
+  line-height: 1;
+}
+.stat-num .unit { font-size: 26px; color: var(--ink-mute); font-weight: 600; margin-left: 4px; }
+.stat-label {
+  margin-top: 10px;
+  font-size: 13px;
+  color: var(--ink-soft);
+  font-family: var(--mono);
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+}
+@media (max-width: 980px) {
+  .stats-grid { grid-template-columns: repeat(2, 1fr); }
+}
+</style>
+<!-- GA_BEGIN -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-G1YWDRHW8T"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+  gtag('config', 'G-G1YWDRHW8T');
+</script>
+<!-- GA_END -->
+<!-- AMPLITUDE_BEGIN -->
+<script src="https://cdn.eu.amplitude.com/script/30b70e5e6ec2360a6c262a482628baf0.js"></script>
+<script>
+  window.amplitude.init('30b70e5e6ec2360a6c262a482628baf0', {
+    serverZone: 'EU',
+    serverUrl: 'https://api.eu.amplitude.com/2/httpapi',
+    fetchRemoteConfig: true,
+    autocapture: {
+      attribution: true,
+      fileDownloads: true,
+      formInteractions: true,
+      pageViews: true,
+      sessions: true,
+      elementInteractions: true,
+      networkTracking: true,
+      webVitals: true,
+      frustrationInteractions: true
+    }
+  });
+</script>
+<!-- AMPLITUDE_END -->
+<!-- OG_BEGIN -->
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="SouthPay">
+<meta property="og:title" content="About - SouthPay">
+<meta property="og:description" content="SouthPay is a global crypto payment solution built for commerce. We">
+<meta property="og:url" content="https://southpay.io/about">
+<meta property="og:image" content="https://southpay.io/assets/img/og-image.png">
+<meta property="og:image:secure_url" content="https://southpay.io/assets/img/og-image.png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:image:alt" content="SouthPay - crypto payments for stores, ledgers, and invoices">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="About - SouthPay">
+<meta name="twitter:description" content="SouthPay is a global crypto payment solution built for commerce. We">
+<meta name="twitter:image" content="https://southpay.io/assets/img/og-image.png">
+<meta name="twitter:image:alt" content="SouthPay - crypto payments for stores, ledgers, and invoices">
+<!-- OG_END -->
+
+</head>
+<body>
+
+<div class="hex-bg" id="hexBg">
+  <svg id="hexSvg" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="xMidYMid slice"></svg>
+</div>
+
+<nav class="site-nav">
+  <div class="container">
+    <div class="nav-inner">
+      <a href="/" class="logo">
+        <img src="/assets/img/southpay-logo.avif" alt="SouthPay" class="logo-img">
+      </a>
+      <div class="nav-links">
+        <div class="nav-products">
+          <span class="nav-products-trigger">Products <svg viewBox="0 0 10 10" fill="none" stroke="currentColor" stroke-width="2"><path d="M2 4l3 3 3-3"/></svg></span>
+          <div class="nav-products-menu">
+            <a href="/commerce" class="nav-product-item">
+              <div class="motif motif-ecom"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 7h18l-2 12H5L3 7z"/><path d="M8 7V5a4 4 0 018 0v2"/></svg></div>
+              <div class="nav-product-info">
+                <div class="nav-product-name">Commerce</div>
+                <div class="nav-product-desc">Crypto checkout for your store. 1.99% flat.</div>
+              </div>
+            </a>
+            <a href="/ledger" class="nav-product-item">
+              <div class="motif motif-ledger"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 12h8M4 7h12M4 17h6"/><circle cx="18" cy="17" r="2"/></svg></div>
+              <div class="nav-product-info">
+                <div class="nav-product-name">Ledger</div>
+                <div class="nav-product-desc">Double-entry API for fintechs. From $97/mo.</div>
+              </div>
+            </a>
+            <a href="/invoice" class="nav-product-item">
+              <div class="motif motif-invoice"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="5" y="3" width="14" height="18" rx="1"/><path d="M8 8h8M8 12h8M8 16h5"/></svg></div>
+              <div class="nav-product-info">
+                <div class="nav-product-name">Invoice</div>
+                <div class="nav-product-desc">Get paid in crypto, settle in cash.</div>
+              </div>
+            </a>
+          </div>
+        </div>
+        <div class="nav-industries">
+          <span class="nav-industries-trigger">Industries <svg viewBox="0 0 10 10" fill="none" stroke="currentColor" stroke-width="2"><path d="M2 4l3 3 3-3"/></svg></span>
+          <div class="nav-industries-menu">
+            <a href="/industries/ecommerce-stores" class="nav-industry-item">
+              <div class="nav-industry-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 7h18l-2 12H5L3 7z"/><path d="M8 7V5a4 4 0 018 0v2"/></svg></div>
+              <div>
+                <div class="nav-industry-name">Ecommerce stores</div>
+                <div class="nav-industry-desc">Crypto checkout for global retailers</div>
+              </div>
+            </a>
+            <a href="/industries/gaming" class="nav-industry-item">
+              <div class="nav-industry-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="8" width="18" height="10" rx="3"/><path d="M8 13h4M10 11v4"/><circle cx="16" cy="12.5" r="0.8" fill="currentColor"/><circle cx="17.5" cy="14.5" r="0.8" fill="currentColor"/></svg></div>
+              <div>
+                <div class="nav-industry-name">Gaming</div>
+                <div class="nav-industry-desc">Top-ups and creator payouts</div>
+              </div>
+            </a>
+            <a href="/industries/trading-investments" class="nav-industry-item">
+              <div class="nav-industry-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 17l6-6 4 4 8-8"/><path d="M14 7h7v7"/></svg></div>
+              <div>
+                <div class="nav-industry-name">Trading & investments</div>
+                <div class="nav-industry-desc">Deposits, withdrawals, on-ramp</div>
+              </div>
+            </a>
+            <a href="/industries/stablecoin-top-ups" class="nav-industry-item">
+              <div class="nav-industry-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="6" width="18" height="13" rx="2"/><path d="M15 12h-2a2 2 0 100 4h2"/><path d="M3 10h18"/></svg></div>
+              <div>
+                <div class="nav-industry-name">Stablecoin top-ups</div>
+                <div class="nav-industry-desc">Wallet and fintech top-up flows</div>
+              </div>
+            </a>
+            <a href="/industries/it-solutions" class="nav-industry-item">
+              <div class="nav-industry-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="7" rx="2"/><rect x="3" y="13" width="18" height="7" rx="2"/><path d="M7 7.5h.01M7 16.5h.01"/></svg></div>
+              <div>
+                <div class="nav-industry-name">IT & SaaS</div>
+                <div class="nav-industry-desc">Cloud, hosting, software</div>
+              </div>
+            </a>
+            <a href="/industries/web3" class="nav-industry-item">
+              <div class="nav-industry-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3l8 4.5v9L12 21l-8-4.5v-9z"/><path d="M12 12L4 7.5M12 12l8-4.5M12 12v9"/></svg></div>
+              <div>
+                <div class="nav-industry-name">Web3</div>
+                <div class="nav-industry-desc">Crypto-native rails for protocols</div>
+              </div>
+            </a>
+            <a href="/industries/cross-border-trade" class="nav-industry-item">
+              <div class="nav-industry-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="M3 12h18"/><path d="M12 3c2.5 3 2.5 15 0 18M12 3c-2.5 3-2.5 15 0 18"/></svg></div>
+              <div>
+                <div class="nav-industry-name">Cross-border trade</div>
+                <div class="nav-industry-desc">Import, export, supplier payouts</div>
+              </div>
+            </a>
+            <a href="/industries/digital-goods" class="nav-industry-item">
+              <div class="nav-industry-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3v12"/><path d="M7 10l5 5 5-5"/><rect x="3" y="17" width="18" height="4" rx="1"/></svg></div>
+              <div>
+                <div class="nav-industry-name">Digital goods</div>
+                <div class="nav-industry-desc">Software, games, content, downloads</div>
+              </div>
+            </a>
+            <a href="/industries/payment-service-providers" class="nav-industry-item">
+              <div class="nav-industry-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="7" width="20" height="11" rx="2"/><path d="M2 11h20"/><path d="M6 15h3"/></svg></div>
+              <div>
+                <div class="nav-industry-name">Payment service providers</div>
+                <div class="nav-industry-desc">Crypto as a feature for your stack</div>
+              </div>
+            </a>
+            <a href="/industries/creator-economy" class="nav-industry-item">
+              <div class="nav-industry-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="9" y="3" width="6" height="11" rx="3"/><path d="M7 11a5 5 0 0010 0"/><path d="M12 16v4M9 20h6"/></svg></div>
+              <div>
+                <div class="nav-industry-name">Creator economy</div>
+                <div class="nav-industry-desc">Payouts and tipping for creators</div>
+              </div>
+            </a>
+            <a href="/industries/professional-services" class="nav-industry-item">
+              <div class="nav-industry-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="8" width="18" height="12" rx="2"/><path d="M9 8V5a2 2 0 012-2h2a2 2 0 012 2v3"/><path d="M3 13h18"/></svg></div>
+              <div>
+                <div class="nav-industry-name">Professional services</div>
+                <div class="nav-industry-desc">Agencies, consultancies, freelancers</div>
+              </div>
+            </a>
+            <a href="/industries/travel-hospitality" class="nav-industry-item">
+              <div class="nav-industry-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 12l18-6-5 17-3-9-10-2z"/></svg></div>
+              <div>
+                <div class="nav-industry-name">Travel & hospitality</div>
+                <div class="nav-industry-desc">Hotels, OTAs, tours, experiences</div>
+              </div>
+            </a>
+            <a href="/industries/luxury-rentals" class="nav-industry-item">
+              <div class="nav-industry-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 17l3-10 4 4 2-8 2 8 4-4 3 10z"/><circle cx="12" cy="20" r="1" fill="currentColor"/></svg></div>
+              <div>
+                <div class="nav-industry-name">Luxury rentals</div>
+                <div class="nav-industry-desc">Aviation, yachts, supercars, experiences</div>
+              </div>
+            </a>
+            <a href="/industries" class="nav-industries-cta">All industries <span class="arrow">→</span></a>
+          </div>
+        </div>
+        <a href="/about">About</a>
+        <a href="https://docs.southpay.io/" target="_blank" rel="noopener">Docs</a>
+        <a href="https://app.southpay.io/" class="nav-cta" target="_blank" rel="noopener">Get started →</a><!-- LANG_BEGIN --><!-- LANG_END --></div>
+    </div>
+  </div>
+</nav>
+
+<section class="about-hero">
+  <div class="container">
+    <div class="eyebrow reveal">
+      <span class="pill">SouthPay Builders</span> The team behind the product
+    </div>
+    <h1 class="reveal d1">Building the bridge between crypto buyers and <em>ecommerce stores.</em></h1>
+    <p class="lede reveal d2">
+      SouthPay is a global crypto payment solution built for the way commerce actually works today. Accept USDT, USDC, and 60+ cryptocurrencies with one simple integration - settle in cash, stablecoins, or crypto.
+    </p>
+  </div>
+</section>
+
+<section class="mission-section">
+  <div class="container">
+    <div class="mission-grid">
+      <div>
+        <span class="section-tag">Our mission</span>
+        <h2>Make crypto a <em>checkout option,</em> not a project.</h2>
+      </div>
+      <div class="mission-copy">
+        <p><strong>Crypto is no longer optional.</strong> Stores that accept crypto convert more customers, pay less in fees, and expand globally, instantly.</p>
+        <p>But every existing path to "accept crypto" comes with months of integration work, KYC trees that scare off merchants, and settlement flows that leave you holding a coin you didn't want.</p>
+        <p>SouthPay makes that transition effortless. One integration. Flat 1.99%. Zero chargebacks. Settle however you want - USD wire, stablecoin balance, or hold the crypto.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="values-section">
+  <div class="container">
+    <span class="section-tag">What we believe</span>
+    <h2>Three principles <em>we don't compromise on.</em></h2>
+
+    <div class="values-grid">
+      <div class="value-card">
+        <div class="value-icon">01</div>
+        <h4>The complexity stays on our side.</h4>
+        <p>Wallets, networks, volatility, settlement. Merchants shouldn't have to learn any of it. They should see "+ $260.00, USD" and move on.</p>
+      </div>
+      <div class="value-card">
+        <div class="value-icon">02</div>
+        <h4>Pricing is transparent or it's broken.</h4>
+        <p>No interchange-plus games. No surprise FX spreads. 1.99% flat is the number you pay - that's the number we charge.</p>
+      </div>
+      <div class="value-card">
+        <div class="value-icon">03</div>
+        <h4>The store owner is the customer.</h4>
+        <p>Every decision goes through a single filter: does this make a busy merchant's day easier? If not, it doesn't ship.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="team-section">
+  <div class="container">
+    <span class="section-tag">SouthPay Builders</span>
+    <h2>Three co-founders. <em>One thesis.</em></h2>
+    <p class="section-intro">We've spent the last decade inside payments, infrastructure, and crypto. SouthPay is what we wished existed when we were trying to ship a real product.</p>
+
+    <div class="team-grid">
+      <div class="founder-card">
+        <div class="founder-avatar"><img src="/assets/img/alberto.avif" alt="Alberto Conceição"></div>
+        <div class="founder-name">Alberto Conceição</div>
+        <div class="founder-role">Co-founder</div>
+        <p class="founder-bio">Leads product and engineering. Spent years building consumer fintech and merchant tooling before deciding the checkout itself was the part that needed rebuilding.</p>
+      </div>
+      <div class="founder-card">
+        <div class="founder-avatar"><img src="/assets/img/daniel.avif" alt="Daniel Rocha"></div>
+        <div class="founder-name">Daniel Rocha</div>
+        <div class="founder-role">Co-founder</div>
+        <p class="founder-bio">Leads go-to-market and merchant success. Talks to every customer in the first 90 days. Believes the best product feedback comes from the operator who has to refund a chargeback at 11pm.</p>
+      </div>
+      <div class="founder-card">
+        <div class="founder-avatar"><img src="/assets/img/tomas.avif" alt="Tomás Almeida"></div>
+        <div class="founder-name">Tomás Almeida</div>
+        <div class="founder-role">Co-founder</div>
+        <p class="founder-bio">Leads infrastructure and protocol work. Lives in the parts of the stack most merchants will never see - settlement, custody, compliance - so the parts they do see stay simple.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="stats-section">
+  <div class="container">
+    <span class="section-tag">By the numbers</span>
+    <h2>What "effortless" actually <em>looks like.</em></h2>
+
+    <div class="stats-grid">
+      <div class="stat-card">
+        <div class="stat-num">1.99<span class="unit">%</span></div>
+        <div class="stat-label">Flat per transaction</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-num">5<span class="unit">min</span></div>
+        <div class="stat-label">From signup to first sale</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-num">0</div>
+        <div class="stat-label">Chargebacks, ever</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-num">8+</div>
+        <div class="stat-label">Currencies supported</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section style="padding-top: 40px;">
+  <div class="container">
+    <div class="final-cta-wrap">
+      <span class="section-tag">Join us</span>
+      <h2>Join the future of <em>commerce payments.</em></h2>
+      <p>Sign up in five minutes, paste your wallet or bank, take your first crypto order today.</p>
+      <div class="cta-row">
+        <a href="https://app.southpay.io/" class="btn-primary" target="_blank" rel="noopener">Get started free <span class="arrow">→</span></a>
+        <a href="https://calendly.com/daniel-southpay/intro-call" class="btn-secondary" target="_blank" rel="noopener">Talk to a founder</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <div class="container">
+    <div class="footer-inner">
+      <div class="footer-brand">
+        <a href="/" class="logo">
+          <img src="/assets/img/southpay-logo.avif" alt="SouthPay" class="logo-img">
+        </a>
+        <p>Crypto payments for stores, ledgers, and invoices. Zero chargebacks. Settle in any currency.</p>
+        <div class="footer-social">
+          <a href="https://www.linkedin.com/company/southpay/" target="_blank" rel="noopener" aria-label="LinkedIn">
+            <svg viewBox="0 0 24 24" width="18" height="18" fill="currentColor" aria-hidden="true"><path d="M4.98 3.5a2.5 2.5 0 1 1 0 5 2.5 2.5 0 0 1 0-5zM3 9h4v12H3V9zm7 0h3.8v1.7h.06c.53-.95 1.83-1.95 3.77-1.95 4.03 0 4.77 2.5 4.77 5.74V21H18.6v-5.65c0-1.35-.03-3.08-1.96-3.08-1.96 0-2.26 1.45-2.26 2.98V21H10V9z"/></svg>
+          </a>
+          <a href="https://www.instagram.com/southpay.io/" target="_blank" rel="noopener" aria-label="Instagram">
+            <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="3" width="18" height="18" rx="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.5" cy="6.5" r="1" fill="currentColor" stroke="none"/></svg>
+          </a>
+        </div>
+      </div>
+      <div class="footer-cols">
+        <div class="footer-col">
+          <h4>Products</h4>
+          <a href="/commerce">Commerce</a>
+          <a href="/ledger">Ledger</a>
+          <a href="/invoice">Invoice</a>
+        </div>
+        <div class="footer-col industries-col">
+          <h4>Industries</h4>
+          <div class="footer-col-grid">
+            <a href="/industries">All industries</a>
+            <a href="/industries/ecommerce-stores">Ecommerce stores</a>
+            <a href="/industries/gaming">Gaming</a>
+            <a href="/industries/trading-investments">Trading & investments</a>
+            <a href="/industries/stablecoin-top-ups">Stablecoin top-ups</a>
+            <a href="/industries/it-solutions">IT & SaaS</a>
+            <a href="/industries/web3">Web3</a>
+            <a href="/industries/cross-border-trade">Cross-border trade</a>
+            <a href="/industries/digital-goods">Digital goods</a>
+            <a href="/industries/payment-service-providers">Payment service providers</a>
+            <a href="/industries/creator-economy">Creator economy</a>
+            <a href="/industries/professional-services">Professional services</a>
+            <a href="/industries/travel-hospitality">Travel & hospitality</a>
+            <a href="/industries/luxury-rentals">Luxury rentals</a>
+          </div>
+        </div>
+        <div class="footer-col">
+          <h4>Company</h4>
+          <a href="/about">About</a>
+          <a href="https://docs.southpay.io/" target="_blank" rel="noopener">Docs</a>
+          <a href="/pricing">Pricing</a>
+          <a href="mailto:support@southpay.io">Support</a>
+        </div>
+        <div class="footer-col">
+          <h4>Legal</h4>
+          <a href="/aml-policy">AML policy</a>
+          <a href="/merchant-services-agreement">Merchant agreement</a>
+          <a href="/privacy-policy">Privacy policy</a>
+          <a href="/terms-and-conditions">Terms and conditions</a>
+        </div>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <span>© 2026 SouthPay. All rights reserved.</span>
+      <span>SouthPay is an <a href="https://alc.media/" target="_blank" rel="noopener" class="alc-link">ALC Media</a> brand.</span>
+    </div>
+  </div>
+</footer>
+
+<script src="/assets/southpay.js"></script>
+
+<!-- LANG_JS_BEGIN -->
+<script>
+(function(){
+  // Delegate clicks at the document level — works on desktop and mobile,
+  // doesn't depend on when .nav-lang elements were inserted.
+  document.addEventListener('click', function(e){
+    var trigger = e.target.closest('.nav-lang-trigger');
+    if(trigger){
+      e.preventDefault();
+      e.stopPropagation();
+      var lang = trigger.closest('.nav-lang');
+      var wasOpen = lang.classList.contains('open');
+      document.querySelectorAll('.nav-lang.open').forEach(function(o){ o.classList.remove('open'); });
+      if(!wasOpen) lang.classList.add('open');
+      return;
+    }
+    if(!e.target.closest('.nav-lang-menu')){
+      document.querySelectorAll('.nav-lang.open').forEach(function(o){ o.classList.remove('open'); });
+    }
+  }, false);
+  // Close on Escape for keyboard users
+  document.addEventListener('keydown', function(e){
+    if(e.key === 'Escape'){
+      document.querySelectorAll('.nav-lang.open').forEach(function(o){ o.classList.remove('open'); });
+    }
+  });
+})();
+</script>
+<!-- LANG_JS_END -->
+</body>
+</html>

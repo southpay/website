@@ -1,0 +1,471 @@
+<!DOCTYPE html>
+
+<html lang="pt-PT">
+<head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<link href="/favicon.svg" rel="icon" type="image/svg+xml"/>
+<title>Política AML - SouthPay</title>
+<meta content="Declaração da política anti-branqueamento de capitais da SouthPay: como examinamos os comerciantes, monitorizamos as transações, cumprimos as sanções e cooperamos com as autoridades." name="description"/>
+<link href="https://fonts.googleapis.com" rel="preconnect"/>
+<link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
+<link href="https://fonts.googleapis.com/css2?family=Inter:ital,wght@0,400;0,500;0,600;0,700;1,500;1,600;1,700&amp;family=Geist:wght@400;500;600;700&amp;family=Geist+Mono:wght@400;500&amp;display=swap" rel="stylesheet"/>
+<link href="/southpay.css" rel="stylesheet"/>
+<style>
+.legal-page { padding: 90px 0 80px; }
+.legal-hero {
+  max-width: 820px;
+  margin: 0 auto 64px;
+  text-align: center;
+}
+.legal-hero h1 {
+  font-family: var(--display);
+  font-size: clamp(38px, 5vw, 60px);
+  font-weight: 600;
+  letter-spacing: -0.035em;
+  line-height: 1.06;
+  margin: 18px 0 14px;
+}
+.legal-hero h1 em { font-style: italic; color: var(--brand); font-weight: 600; }
+.legal-meta {
+  font-family: var(--mono);
+  font-size: 12.5px;
+  color: var(--ink-mute);
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  margin-top: 6px;
+}
+.legal-intro {
+  max-width: 720px;
+  margin: 22px auto 0;
+  font-size: 17px;
+  line-height: 1.6;
+  color: var(--ink-soft);
+}
+.legal-content {
+  max-width: 760px;
+  margin: 0 auto;
+  font-size: 16px;
+  line-height: 1.72;
+  color: var(--ink-soft);
+}
+.legal-content h2 {
+  font-family: var(--display);
+  font-size: 26px;
+  font-weight: 600;
+  letter-spacing: -0.02em;
+  color: var(--ink);
+  margin: 52px 0 18px;
+  padding-top: 32px;
+  border-top: 1px solid var(--line-soft);
+}
+.legal-content > h2:first-child { padding-top: 0; border-top: none; margin-top: 8px; }
+.legal-content h3 {
+  font-family: var(--display);
+  font-size: 18px;
+  font-weight: 600;
+  color: var(--ink);
+  margin: 30px 0 10px;
+  letter-spacing: -0.015em;
+}
+.legal-content p { margin: 0 0 16px; }
+.legal-content ul, .legal-content ol { margin: 0 0 20px 22px; padding: 0; }
+.legal-content li { margin-bottom: 9px; }
+.legal-content strong { color: var(--ink); font-weight: 600; }
+.legal-content em { font-style: italic; color: var(--ink); }
+.legal-content a {
+  color: var(--brand); text-decoration: underline;
+  text-decoration-thickness: 1px; text-underline-offset: 3px;
+}
+.legal-content a:hover { color: var(--brand-deep); }
+.legal-content blockquote {
+  border-left: 3px solid var(--brand);
+  padding: 14px 20px;
+  margin: 22px 0;
+  color: var(--ink);
+  background: var(--bg-lavender-soft);
+  border-radius: 0 var(--r-md) var(--r-md) 0;
+  font-size: 15.5px;
+}
+.legal-content .callout-quote {
+  display: block;
+  font-family: var(--display);
+  font-style: italic;
+  font-size: 18px;
+  line-height: 1.5;
+  color: var(--ink);
+  border-left: 3px solid var(--brand);
+  padding: 4px 18px;
+  margin: 8px 0 18px;
+}
+.legal-contact {
+  background: var(--surface);
+  border: 1px solid var(--line);
+  border-radius: var(--r-xl);
+  padding: 26px 28px;
+  margin-top: 18px;
+  font-size: 15px;
+  line-height: 1.65;
+  color: var(--ink);
+}
+.legal-contact div { margin-bottom: 4px; }
+.legal-contact strong { color: var(--ink); }
+</style>
+<!-- GA_BEGIN -->
+<script async="" src="https://www.googletagmanager.com/gtag/js?id=G-G1YWDRHW8T"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+  gtag('config', 'G-G1YWDRHW8T');
+</script>
+<!-- GA_END -->
+<!-- AMPLITUDE_BEGIN -->
+<script src="https://cdn.eu.amplitude.com/script/30b70e5e6ec2360a6c262a482628baf0.js"></script>
+<script>
+  window.amplitude.init('30b70e5e6ec2360a6c262a482628baf0', {
+    serverZone: 'EU',
+    serverUrl: 'https://api.eu.amplitude.com/2/httpapi',
+    fetchRemoteConfig: true,
+    autocapture: {
+      attribution: true,
+      fileDownloads: true,
+      formInteractions: true,
+      pageViews: true,
+      sessions: true,
+      elementInteractions: true,
+      networkTracking: true,
+      webVitals: true,
+      frustrationInteractions: true
+    }
+  });
+</script>
+<!-- AMPLITUDE_END -->
+<!-- OG_BEGIN -->
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="SouthPay">
+<meta property="og:title" content="Política AML - SouthPay">
+<meta property="og:description" content="Crypto payments for stores, ledgers, and invoices.">
+<meta property="og:url" content="https://southpay.io/pt/aml-policy">
+<meta property="og:image" content="https://southpay.io/assets/img/og-image.png">
+<meta property="og:image:secure_url" content="https://southpay.io/assets/img/og-image.png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:image:alt" content="SouthPay - crypto payments for stores, ledgers, and invoices">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Política AML - SouthPay">
+<meta name="twitter:description" content="Crypto payments for stores, ledgers, and invoices.">
+<meta name="twitter:image" content="https://southpay.io/assets/img/og-image.png">
+<meta name="twitter:image:alt" content="SouthPay - crypto payments for stores, ledgers, and invoices">
+<!-- OG_END -->
+<!-- HREFLANG_BEGIN -->
+<link rel="alternate" hreflang="en" href="https://southpay.io/aml-policy">
+<link rel="alternate" hreflang="es" href="https://southpay.io/es/aml-policy">
+<link rel="alternate" hreflang="pt" href="https://southpay.io/pt/aml-policy">
+<link rel="alternate" hreflang="x-default" href="https://southpay.io/aml-policy">
+<!-- HREFLANG_END -->
+</head>
+<body>
+<div class="hex-bg" id="hexBg">
+<svg id="hexSvg" preserveaspectratio="xMidYMid slice" xmlns="http://www.w3.org/2000/svg"></svg>
+</div>
+<nav class="site-nav">
+<div class="container">
+<div class="nav-inner">
+<a class="logo" href="/pt/">
+<img alt="SouthPay" class="logo-img" src="/assets/img/southpay-logo.avif"/>
+</a>
+<div class="nav-links">
+<div class="nav-products">
+<span class="nav-products-trigger">Produtos<svg fill="none" stroke="currentColor" stroke-width="2" viewbox="0 0 10 10"><path d="M2 4l3 3 3-3"></path></svg></span>
+<div class="nav-products-menu">
+<a class="nav-product-item" href="/pt/commerce">
+<div class="motif motif-ecom"><svg fill="none" stroke="currentColor" stroke-width="2" viewbox="0 0 24 24"><path d="M3 7h18l-2 12H5L3 7z"></path><path d="M8 7V5a4 4 0 018 0v2"></path></svg></div>
+<div class="nav-product-info">
+<div class="nav-product-name">Commerce</div>
+<div class="nav-product-desc">Checkout em crypto para a tua loja. 1.99% flat.</div>
+</div>
+</a>
+<a class="nav-product-item" href="/pt/ledger">
+<div class="motif motif-ledger"><svg fill="none" stroke="currentColor" stroke-width="2" viewbox="0 0 24 24"><path d="M4 12h8M4 7h12M4 17h6"></path><circle cx="18" cy="17" r="2"></circle></svg></div>
+<div class="nav-product-info">
+<div class="nav-product-name">Ledger</div>
+<div class="nav-product-desc">API de partida dobrada para fintechs. A partir de 97$/mês.</div>
+</div>
+</a>
+<a class="nav-product-item" href="/pt/invoice">
+<div class="motif motif-invoice"><svg fill="none" stroke="currentColor" stroke-width="2" viewbox="0 0 24 24"><rect height="18" rx="1" width="14" x="5" y="3"></rect><path d="M8 8h8M8 12h8M8 16h5"></path></svg></div>
+<div class="nav-product-info">
+<div class="nav-product-name">Invoice</div>
+<div class="nav-product-desc">Recebe em crypto, recebe em euros.</div>
+</div>
+</a>
+</div>
+</div>
+<div class="nav-industries">
+<span class="nav-industries-trigger">Indústrias<svg fill="none" stroke="currentColor" stroke-width="2" viewbox="0 0 10 10"><path d="M2 4l3 3 3-3"></path></svg></span>
+<div class="nav-industries-menu">
+<a class="nav-industry-item" href="/pt/industries/ecommerce-stores">
+<div class="nav-industry-icon"><svg fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" viewbox="0 0 24 24"><path d="M3 7h18l-2 12H5L3 7z"></path><path d="M8 7V5a4 4 0 018 0v2"></path></svg></div>
+<div>
+<div class="nav-industry-name">Lojas ecommerce</div>
+<div class="nav-industry-desc">Check-out em crypto para retalhistas globais</div>
+</div>
+</a>
+<a class="nav-industry-item" href="/pt/industries/gaming">
+<div class="nav-industry-icon"><svg fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" viewbox="0 0 24 24"><rect height="10" rx="3" width="18" x="3" y="8"></rect><path d="M8 13h4M10 11v4"></path><circle cx="16" cy="12.5" fill="currentColor" r="0.8"></circle><circle cx="17.5" cy="14.5" fill="currentColor" r="0.8"></circle></svg></div>
+<div>
+<div class="nav-industry-name">Gaming</div>
+<div class="nav-industry-desc">Recargas e pagamentos aos criadores</div>
+</div>
+</a>
+<a class="nav-industry-item" href="/pt/industries/trading-investments">
+<div class="nav-industry-icon"><svg fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" viewbox="0 0 24 24"><path d="M3 17l6-6 4 4 8-8"></path><path d="M14 7h7v7"></path></svg></div>
+<div>
+<div class="nav-industry-name">Trading e investimentos</div>
+<div class="nav-industry-desc">Depósitos, levantamentos, rampa de acesso</div>
+</div>
+</a>
+<a class="nav-industry-item" href="/pt/industries/stablecoin-top-ups">
+<div class="nav-industry-icon"><svg fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" viewbox="0 0 24 24"><rect height="13" rx="2" width="18" x="3" y="6"></rect><path d="M15 12h-2a2 2 0 100 4h2"></path><path d="M3 10h18"></path></svg></div>
+<div>
+<div class="nav-industry-name">Recargas com stablecoin</div>
+<div class="nav-industry-desc">Fluxos de recarga de carteira e fintech</div>
+</div>
+</a>
+<a class="nav-industry-item" href="/pt/industries/it-solutions">
+<div class="nav-industry-icon"><svg fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" viewbox="0 0 24 24"><rect height="7" rx="2" width="18" x="3" y="4"></rect><rect height="7" rx="2" width="18" x="3" y="13"></rect><path d="M7 7.5h.01M7 16.5h.01"></path></svg></div>
+<div>
+<div class="nav-industry-name">IT e SaaS</div>
+<div class="nav-industry-desc">Cloud, alojamento, software</div>
+</div>
+</a>
+<a class="nav-industry-item" href="/pt/industries/web3">
+<div class="nav-industry-icon"><svg fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" viewbox="0 0 24 24"><path d="M12 3l8 4.5v9L12 21l-8-4.5v-9z"></path><path d="M12 12L4 7.5M12 12l8-4.5M12 12v9"></path></svg></div>
+<div>
+<div class="nav-industry-name">Web3</div>
+<div class="nav-industry-desc">Rails cripto-nativos para protocolos</div>
+</div>
+</a>
+<a class="nav-industry-item" href="/pt/industries/cross-border-trade">
+<div class="nav-industry-icon"><svg fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" viewbox="0 0 24 24"><circle cx="12" cy="12" r="9"></circle><path d="M3 12h18"></path><path d="M12 3c2.5 3 2.5 15 0 18M12 3c-2.5 3-2.5 15 0 18"></path></svg></div>
+<div>
+<div class="nav-industry-name">Comércio transfronteiriço</div>
+<div class="nav-industry-desc">Importação, exportação, pagamentos a fornecedores</div>
+</div>
+</a>
+<a class="nav-industry-item" href="/pt/industries/digital-goods">
+<div class="nav-industry-icon"><svg fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" viewbox="0 0 24 24"><path d="M12 3v12"></path><path d="M7 10l5 5 5-5"></path><rect height="4" rx="1" width="18" x="3" y="17"></rect></svg></div>
+<div>
+<div class="nav-industry-name">Bens digitais</div>
+<div class="nav-industry-desc">Software, jogos, conteúdos, downloads</div>
+</div>
+</a>
+<a class="nav-industry-item" href="/pt/industries/payment-service-providers">
+<div class="nav-industry-icon"><svg fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" viewbox="0 0 24 24"><rect height="11" rx="2" width="20" x="2" y="7"></rect><path d="M2 11h20"></path><path d="M6 15h3"></path></svg></div>
+<div>
+<div class="nav-industry-name">Payment service providers</div>
+<div class="nav-industry-desc">Crypto as a feature for your stack</div>
+</div>
+</a>
+<a class="nav-industry-item" href="/pt/industries/creator-economy">
+<div class="nav-industry-icon"><svg fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" viewbox="0 0 24 24"><rect height="11" rx="3" width="6" x="9" y="3"></rect><path d="M7 11a5 5 0 0010 0"></path><path d="M12 16v4M9 20h6"></path></svg></div>
+<div>
+<div class="nav-industry-name">Economia de criadores</div>
+<div class="nav-industry-desc">Pagamentos e gorjetas aos criadores</div>
+</div>
+</a>
+<a class="nav-industry-item" href="/pt/industries/professional-services">
+<div class="nav-industry-icon"><svg fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" viewbox="0 0 24 24"><rect height="12" rx="2" width="18" x="3" y="8"></rect><path d="M9 8V5a2 2 0 012-2h2a2 2 0 012 2v3"></path><path d="M3 13h18"></path></svg></div>
+<div>
+<div class="nav-industry-name">Serviços profissionais</div>
+<div class="nav-industry-desc">Agências, consultoras, freelancers</div>
+</div>
+</a>
+<a class="nav-industry-item" href="/pt/industries/travel-hospitality">
+<div class="nav-industry-icon"><svg fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" viewbox="0 0 24 24"><path d="M3 12l18-6-5 17-3-9-10-2z"></path></svg></div>
+<div>
+<div class="nav-industry-name">Viagens e hospitalidade</div>
+<div class="nav-industry-desc">Hotéis, OTAs, tours, experiências</div>
+</div>
+</a>
+<a class="nav-industry-item" href="/pt/industries/luxury-rentals">
+<div class="nav-industry-icon"><svg fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" viewbox="0 0 24 24"><path d="M3 17l3-10 4 4 2-8 2 8 4-4 3 10z"></path><circle cx="12" cy="20" fill="currentColor" r="1"></circle></svg></div>
+<div>
+<div class="nav-industry-name">Alugueres de luxo</div>
+<div class="nav-industry-desc">Aviação, iates, supercarros, experiências</div>
+</div>
+</a>
+<a class="nav-industries-cta" href="/pt/industries">Todas as indústrias<span class="arrow">→</span></a>
+</div>
+</div>
+<a href="/pt/about">Sobre</a>
+<a href="https://docs.southpay.io/" rel="noopener" target="_blank">Docs</a>
+<a class="nav-cta" href="https://app.southpay.io/" rel="noopener" target="_blank">Começar →</a><!-- LANG_BEGIN --><div class="nav-lang"><button class="nav-lang-trigger" type="button" aria-haspopup="true" aria-label="Language"><span class="nav-lang-flag">🇵🇹</span><span class="nav-lang-code">PT</span><svg class="nav-lang-chev" viewBox="0 0 10 10" width="10" height="10" fill="none" stroke="currentColor" stroke-width="2"><path d="M2 4l3 3 3-3"/></svg></button><div class="nav-lang-menu" role="menu"><a href="/aml-policy" class="nav-lang-opt" role="menuitem"><span class="nav-lang-flag">🇺🇸</span> English</a><a href="/es/aml-policy" class="nav-lang-opt" role="menuitem"><span class="nav-lang-flag">🇪🇸</span> Español</a><a href="/pt/aml-policy" class="nav-lang-opt nav-lang-opt--active" role="menuitem"><span class="nav-lang-flag">🇵🇹</span> Português</a></div></div><!-- LANG_END --></div>
+</div>
+</div>
+</nav>
+<section class="legal-page">
+<div class="container">
+<div class="legal-hero">
+<span class="section-tag reveal">Conformidade</span>
+<h1 class="reveal d1">Combate ao branqueamento de capitais <em>declaração política.</em></h1>
+<p class="legal-meta reveal d2">Última atualização · 2 de maio de 2026 · v1.0</p>
+<p class="legal-intro reveal d2">How SouthPay screens merchants, monitors transactions, complies with sanctions, and cooperates with regulators. This statement is a public summary of the binding ALC Media Política AML.</p>
+</div>
+<div class="legal-content">
+<h2>1. O nosso compromisso</h2>
+<p>A SouthPay é uma plataforma de software e orquestração de pagamentos operada pela ALC Media LLC, uma sociedade de responsabilidade limitada do Wyoming ("ALC Media"). A SouthPay permite que os comerciantes aceitem pagamentos em cryptomoedas através de integrações com fornecedores de serviços de pagamento terceiros regulamentados ("PSPs").</p>
+<p>Estamos empenhados em operar a SouthPay de uma forma que <em>protege a integridade do sistema financeiro e impede que a plataforma seja utilizada para facilitar o branqueamento de capitais, o financiamento do terrorismo, a evasão de sanções, a fraude ou outros crimes financeiros.</em> Esta declaração resume os principais compromissos e controlos que se aplicam aos comerciantes e às transações na SouthPay.</p>
+<p><strong>Política governamental.</strong> This statement is a summary intended for merchants and the public. The full and binding policy is the ALC Media LLC Anti-Money Laundering, Counter-Terrorist Financing, and Sanctions Compliance Policy (the "ALC Media Política AML"), available on the ALC Media website. In the event of any inconsistency between this statement and the ALC Media Política AML, the ALC Media Política AML prevails.</p>
+<h2>2. Como funciona o SouthPay</h2>
+<p><em>A SouthPay não assume a custódia dos fundos do comerciante ou do utilizador final em qualquer momento.</em> Cada ligação de pagamento emitida através da SouthPay está associada a um endereço de depósito fornecido por um fornecedor de infraestruturas regulado. Os fundos recebidos são encaminhados diretamente para o destino de pagamento designado pelo comerciante, seja uma conta bancária fiduciária ou uma carteira encriptada especificada pelo comerciante.</p>
+<p>O pagamento regulamentado, a custódia, a liquidação, a conversão fiduciária e os serviços financeiros relacionados são realizados exclusivamente pelos nossos PSP, cada um dos quais opera sob a tua própria licença, registo ou autorização regulamentar, e cada um deles conduz o teu próprio programa de diligências do cliente e de crime financeiro. A SouthPay é a camada de orquestração entre o comerciante, o pagador e a PSP.</p>
+<h2>3. Integração do comerciante e due diligence</h2>
+<p>Integramos os comerciantes em coordenação com o PSP aplicável. Dependendo da gama de serviço e do PSP, os comerciantes estão sujeitos a procedimentos de conhecimento do teu negócio ("KYB") que podem incluir a verificação de:</p>
+<ul>
+<li>nome legal, dados de registo e endereço registado;</li>
+<li>a natureza do negócio do comerciante e os produtos ou serviços que oferece;</li>
+<li>administradores, representantes autorizados e proprietários beneficiários finais que detenham 25% ou mais do comerciante;</li>
+<li>volumes de transações esperados e perfil da contraparte; e</li>
+<li>destinos de pagamento, incluindo informações de conta bancária ou carteira.</li>
+</ul>
+<p>Quando as circunstâncias de um comerciante apresentam um risco elevado, incluindo o envolvimento de uma pessoa politicamente exposta, a exposição a uma jurisdição de alto risco ou a operação num setor de alto risco, aplicamos a devida diligência reforçada antes de a integração ser finalizada. Os comerciantes são obrigados a fornecer informações precisas e completas e a atualizar-nos imediatamente quando as tuas circunstâncias mudarem.</p>
+<p><strong>Gama de encriptação para crypto.</strong> Os requisitos KYB para a gama de encriptação para encriptação são determinados pela PSP aplicável e pela lei aplicável. Mesmo quando o KYB formal não é exigido por um PSP, os comerciantes continuam sujeitos à triagem de sanções, regras de relacionamento proibido e monitorização contínua, conforme descrito nesta declaração.</p>
+<p><strong>Trilha de crypto para moeda fiduciária.</strong> O KYB é obrigatório para a gama de crypto para moeda fiduciária. Os comerciantes que não cumpram os requisitos KYB não serão integrados, e os comerciantes existentes que não cumpram as obrigações KYB em curso poderão ter o teu acesso à liquidação suspenso ou rescindido.</p>
+<h2>4.º Cumprimento de sanções</h2>
+<p>Examinamos os comerciantes, os teus principais e beneficiários e destinos de pagamento em relação a listas de sanções internacionais, incluindo as geridas pela OFAC, pelo Conselho de Segurança das Nações Unidas, pela União Europeia e pelo Tesouro de Tua Majestade, e por designações analíticas de blockchain de endereços de ativos digitais sancionados. A triagem é realizada na integração e de forma contínua à medida que as listas são atualizadas.</p>
+<p><em>Não integramos nem transacionamos com pessoas ou entidades sujeitas a sanções aplicáveis ​​e não facilitamos transações associadas a jurisdições amplamente sancionadas,</em> including (without limitation) North Korea, Iran, Cuba, Syria, and the Crimea, Donetsk, and Luhansk regions of Ukraine. Additional jurisdictions may be subject to enhanced restrictions or exclusion based on sanctions designations, regulatory risk, FATF identifications, or PSP requirements. The full classification is set out in the ALC Media Política AML, which is updated from time to time.</p>
+<p>Os acertos de sanções confirmados são bloqueados ou rejeitados e comunicados às autoridades competentes, conforme necessário.</p>
+<h2>5. Monitorização contínua</h2>
+<p>As transações na SouthPay estão sujeitas a monitorização em camadas concebida para detetar atividades incomuns, inconsistentes com o perfil estabelecido do comerciante ou de outra forma sugestivas de Crime Financeiro.</p>
+<ul>
+<li>As transações on-chain de saída, incluindo pagamentos e reembolsos de comerciantes, são verificadas pelo nosso fornecedor de infraestruturas antes da execução. As transações que falharem esta triagem serão bloqueadas.</li>
+<li>Ao nível da plataforma, aplicamos uma monitorização comportamental e baseada em normas em toda a base de comerciantes, concebida para detetar atividades consistentes com tipologias estabelecidas de crimes financeiros. As regras e limites específicos são confidenciais.</li>
+<li>Os relacionamentos comerciais estão sujeitos a revisões periódicas com uma frequência determinada pela tua classificação de risco e a revisões orientadas por eventos quando as circunstâncias mudam materialmente.</li>
+</ul>
+<p>Quando a atividade for classificada como suspeita, reportamos às autoridades competentes, conforme exigido pela lei aplicável, e coordenamos com o PSP aplicável. Não divulgamos aos comerciantes ou a terceiros se uma denúncia foi ou poderá ser apresentada, exceto conforme expressamente permitido por lei.</p>
+<h2>6. Uso proibido da SouthPay</h2>
+<p>Os comerciantes não podem utilizar o SouthPay, e nós recusaremos, suspenderemos ou encerraremos o acesso onde a SouthPay for utilizado ou proposto para ser utilizado:</p>
+<ul>
+<li>facilitar o crime financeiro, incluindo o branqueamento de capitais, o financiamento do terrorismo, a evasão de sanções ou a fraude;</li>
+<li>em nome de qualquer pessoa ou entidade sujeita a sanções aplicáveis, ou de qualquer parte localizada ou organizada ao abrigo das leis de uma jurisdição amplamente sancionada;</li>
+<li>prestar serviços monetários não licenciados, serviços de ativos virtuais não licenciados, serviços de mistura ou mistura ou serviços de ativos com anonimato melhorado;</li>
+<li>ocultar a identidade do cliente subjacente através de acordos aninhados, pagáveis ​​ou de fachada; ou</li>
+<li>in any other manner prohibited by the ALC Media Política AML, the SouthPay Merchant Payment Services Agreement, or applicable law.</li>
+</ul>
+<h2>7.º Cooperação com as autoridades</h2>
+<p>Cooperamos com os pedidos legais das autoridades competentes, das autoridades policiais e dos nossos PSP, de acordo com a lei aplicável. Intimações, ordens judiciais e consultas regulamentares equivalentes devem ser dirigidas ao contacto abaixo.</p>
+<h2>8. Retenção de registos</h2>
+<p><em>Mantemos registos relacionados com a integração do comerciante, transações, triagem de sanções e decisões de conformidade durante pelo menos cinco (5) anos</em> a partir da data da atividade relevante ou do termo da relação comercial, consoante o que ocorrer mais tarde, ou por um período mais longo exigido pela lei aplicável.</p>
+<h2>9. Atualizações desta declaração</h2>
+<p>Poderemos atualizar esta declaração periodicamente sem aviso prévio. A versão publicada no site SouthPay em cada momento é a versão então em vigor. A utilização continuada da SouthPay após uma atualização constitui a aceitação da declaração atualizada.</p>
+<h2>10.º Contato</h2>
+<p>As perguntas e relatórios relacionados com esta declaração podem ser direcionados para:</p>
+<div class="legal-contact">
+<div><strong>SouthPay</strong> (operado por <a class="alc-link" href="https://alc.media/" rel="noopener" target="_blank">ALC Media LLC</a>)</div>
+<div>Aos cuidados de: Diretor de Compliance</div>
+<div>Avenida Coffeen 1309, STE 1200</div>
+<div>Sheridan, Wyoming 82801, Estados Unidos</div>
+<div>E-mail: <a href="mailto:compliance@southpay.io">compliance@southpay.io</a></div>
+</div>
+</div>
+</div>
+</section>
+<footer>
+<div class="container">
+<div class="footer-inner">
+<div class="footer-brand">
+<a class="logo" href="/pt/">
+<img alt="SouthPay" class="logo-img" src="/assets/img/southpay-logo.avif"/>
+</a>
+<p>Pagamentos em crypto para lojas, livros de contabilidade e faturas. Zero chargebacks. Recebe em qualquer moeda.</p>
+<div class="footer-social">
+<a aria-label="LinkedIn" href="https://www.linkedin.com/company/southpay/" rel="noopener" target="_blank">
+<svg aria-hidden="true" fill="currentColor" height="18" viewbox="0 0 24 24" width="18"><path d="M4.98 3.5a2.5 2.5 0 1 1 0 5 2.5 2.5 0 0 1 0-5zM3 9h4v12H3V9zm7 0h3.8v1.7h.06c.53-.95 1.83-1.95 3.77-1.95 4.03 0 4.77 2.5 4.77 5.74V21H18.6v-5.65c0-1.35-.03-3.08-1.96-3.08-1.96 0-2.26 1.45-2.26 2.98V21H10V9z"></path></svg>
+</a>
+<a aria-label="Instagram" href="https://www.instagram.com/southpay.io/" rel="noopener" target="_blank">
+<svg aria-hidden="true" fill="none" height="18" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.8" viewbox="0 0 24 24" width="18"><rect height="18" rx="5" width="18" x="3" y="3"></rect><circle cx="12" cy="12" r="4"></circle><circle cx="17.5" cy="6.5" fill="currentColor" r="1" stroke="none"></circle></svg>
+</a>
+</div>
+</div>
+<div class="footer-cols">
+<div class="footer-col">
+<h4>Produtos</h4>
+<a href="/pt/commerce">Commerce</a>
+<a href="/pt/ledger">Ledger</a>
+<a href="/pt/invoice">Invoice</a>
+</div>
+<div class="footer-col industries-col">
+<h4>Indústrias</h4>
+<div class="footer-col-grid">
+<a href="/pt/industries">Todas as indústrias</a>
+<a href="/pt/industries/ecommerce-stores">Lojas ecommerce</a>
+<a href="/pt/industries/gaming">Gaming</a>
+<a href="/pt/industries/trading-investments">Trading e investimentos</a>
+<a href="/pt/industries/stablecoin-top-ups">Recargas com stablecoin</a>
+<a href="/pt/industries/it-solutions">IT e SaaS</a>
+<a href="/pt/industries/web3">Web3</a>
+<a href="/pt/industries/cross-border-trade">Comércio transfronteiriço</a>
+<a href="/pt/industries/digital-goods">Bens digitais</a>
+<a href="/pt/industries/payment-service-providers">Payment service providers</a>
+<a href="/pt/industries/creator-economy">Economia de criadores</a>
+<a href="/pt/industries/professional-services">Serviços profissionais</a>
+<a href="/pt/industries/travel-hospitality">Viagens e hospitalidade</a>
+<a href="/pt/industries/luxury-rentals">Alugueres de luxo</a>
+</div>
+</div>
+<div class="footer-col">
+<h4>Empresa</h4>
+<a href="/pt/about">Sobre</a>
+<a href="https://docs.southpay.io/" rel="noopener" target="_blank">Docs</a>
+<a href="/pt/pricing">Preços</a>
+<a href="mailto:support@southpay.io">Apoio</a>
+</div>
+<div class="footer-col">
+<h4>Legal</h4>
+<a href="/pt/aml-policy">Política AML</a>
+<a href="/pt/merchant-services-agreement">Acordo de comerciante</a>
+<a href="/pt/privacy-policy">Política de Privacidade</a>
+<a href="/pt/terms-and-conditions">Termos e Condições</a>
+</div>
+</div>
+</div>
+<div class="footer-bottom">
+<span>© 2026 SouthPay. Todos os direitos reservados.</span>
+<span>A SouthPay é um <a class="alc-link" href="https://alc.media/" rel="noopener" target="_blank">ALC Media</a> marca.</span>
+</div>
+</div>
+</footer>
+<script src="/assets/southpay.js"></script>
+<!-- LANG_JS_BEGIN -->
+<script>
+(function(){
+  // Delegate clicks at the document level — works on desktop and mobile,
+  // doesn't depend on when .nav-lang elements were inserted.
+  document.addEventListener('click', function(e){
+    var trigger = e.target.closest('.nav-lang-trigger');
+    if(trigger){
+      e.preventDefault();
+      e.stopPropagation();
+      var lang = trigger.closest('.nav-lang');
+      var wasOpen = lang.classList.contains('open');
+      document.querySelectorAll('.nav-lang.open').forEach(function(o){ o.classList.remove('open'); });
+      if(!wasOpen) lang.classList.add('open');
+      return;
+    }
+    if(!e.target.closest('.nav-lang-menu')){
+      document.querySelectorAll('.nav-lang.open').forEach(function(o){ o.classList.remove('open'); });
+    }
+  }, false);
+  // Close on Escape for keyboard users
+  document.addEventListener('keydown', function(e){
+    if(e.key === 'Escape'){
+      document.querySelectorAll('.nav-lang.open').forEach(function(o){ o.classList.remove('open'); });
+    }
+  });
+})();
+</script>
+<!-- LANG_JS_END -->
+</body>
+</html>

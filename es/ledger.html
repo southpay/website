@@ -1,0 +1,960 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<link href="/favicon.svg" rel="icon" type="image/svg+xml"/>
+<title>SouthPay Ledger - API de Ledger de doble entrada para fintechs</title>
+<meta content="Una API de contabilidad de nivel de producción para fintechs, procesadores de pagos y plataformas que mueven dinero. Autoservicio. Sin llamada de demostración. Desde $97/mes." name="description"/>
+<link href="https://fonts.googleapis.com" rel="preconnect"/>
+<link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
+<link href="https://fonts.googleapis.com/css2?family=Inter:ital,wght@0,400;0,500;0,600;0,700;1,500;1,600;1,700&amp;family=Geist:wght@400;500;600;700&amp;family=Geist+Mono:wght@400;500&amp;display=swap" rel="stylesheet"/>
+<link href="/southpay.css" rel="stylesheet"/>
+<style>
+/* Ledger-specific hero floating cards */
+.card-ledger {
+  top: 0; left: 4%; width: 78%;
+  padding: 22px 22px 18px; transform: rotate(-3deg); z-index: 3;
+  animation: drift-a 6s ease-in-out infinite;
+}
+.card-ledger:hover { animation-play-state: paused; }
+.card-ledger-head { display: flex; justify-content: space-between; align-items: center; margin-bottom: 16px; }
+.card-ledger-ref { font-family: var(--mono); font-size: 11px; color: var(--ink-mute); letter-spacing: 0.02em; }
+.card-ledger-badge {
+  display: inline-flex; align-items: center; gap: 6px;
+  background: rgba(46, 204, 139, 0.12); color: var(--mint);
+  font-size: 11px; font-weight: 600; padding: 4px 10px; border-radius: 999px;
+}
+.card-ledger-badge::before { content: ''; width: 6px; height: 6px; border-radius: 50%; background: var(--mint); }
+.card-ledger-rows {
+  border-top: 1px solid var(--line); border-bottom: 1px solid var(--line);
+  padding: 8px 0;
+}
+.ledger-row { display: grid; grid-template-columns: 1.4fr 1fr 1fr; padding: 8px 0; font-size: 13px; }
+.ledger-row .acct { font-family: var(--mono); color: var(--ink-soft); font-size: 12.5px; }
+.ledger-row .amt-dr, .ledger-row .amt-cr { text-align: right; font-family: var(--mono); font-size: 13px; font-weight: 500; }
+.ledger-row .amt-dr { color: var(--ink); }
+.ledger-row .amt-cr { color: var(--brand); }
+.ledger-row .dash { text-align: right; color: var(--ink-dim); }
+.card-ledger-foot {
+  display: flex; justify-content: space-between; align-items: center;
+  margin-top: 8px; font-size: 12px; color: var(--ink-mute);
+  text-transform: uppercase; letter-spacing: 0.08em;
+}
+.card-ledger-foot b { color: var(--mint); font-size: 13px; }
+
+.card-api {
+  bottom: 30px; right: 0; width: 320px;
+  transform: rotate(4deg); z-index: 4;
+  animation: drift-b 7s ease-in-out infinite;
+}
+.card-api:hover { animation-play-state: paused; }
+.card-api-head {
+  padding: 12px 16px; display: flex; align-items: center; gap: 6px;
+  background: var(--ink); border-radius: 18px 18px 0 0;
+}
+.card-api-head .dot { width: 10px; height: 10px; border-radius: 50%; }
+.card-api-head .dot.r { background: #ff5f57; }
+.card-api-head .dot.y { background: #ffbd2e; }
+.card-api-head .dot.g { background: #28c940; }
+.card-api-title { margin-left: 8px; font-family: var(--mono); font-size: 11.5px; color: rgba(255,255,255,0.7); }
+.card-api-body {
+  font-family: var(--mono); font-size: 11.5px; line-height: 1.65;
+  padding: 16px; background: #0f1019; color: #e6e6e6;
+  white-space: pre; overflow-x: auto;
+  border-radius: 0 0 18px 18px;
+}
+.card-api-body .tk-c { color: #777; }
+.card-api-body .tk-k { color: #a3aeff; }
+.card-api-body .tk-s { color: #ffd145; }
+.card-api-body .tk-n { color: #7bb8ff; }
+.card-api-body .tk-r { color: var(--mint); }
+
+.card-chip {
+  top: 240px; left: 8%;
+  background: var(--brand) !important; color: #fff !important;
+  padding: 16px 22px; border-radius: 16px;
+  display: flex; align-items: center; gap: 14px;
+  transform: rotate(8deg);
+  box-shadow: 0 24px 50px -20px rgba(55,75,236,0.5) !important;
+  animation: drift-c 5s ease-in-out infinite;
+  z-index: 2;
+}
+.card-chip:hover { animation-play-state: paused; }
+.card-chip svg { width: 32px; height: 32px; }
+.card-chip .label { font-size: 11px; color: rgba(255,255,255,0.7); text-transform: uppercase; letter-spacing: 0.1em; display: block; }
+.card-chip .val { font-family: var(--display); font-weight: 700; letter-spacing: -0.025em; font-size: 22px; line-height: 1.1; display: block; }
+
+/* Solution section showpiece */
+.balance-card {
+  background: #fff; border: 1px solid var(--line);
+  border-radius: var(--r-xl); padding: 32px;
+  box-shadow: 0 30px 80px -30px rgba(14, 23, 38, 0.25);
+}
+.balance-meta { font-family: var(--mono); font-size: 11px; color: var(--ink-mute); letter-spacing: 0.04em; margin-bottom: 22px; }
+.balance-table { width: 100%; border-collapse: collapse; }
+.balance-table thead th {
+  text-align: left; padding: 10px 0;
+  font-size: 11px; letter-spacing: 0.08em; text-transform: uppercase;
+  color: var(--ink-mute); border-bottom: 1px solid var(--line); font-weight: 600;
+}
+.balance-table thead th.num { text-align: right; }
+.balance-table tbody td { padding: 14px 0; font-size: 14px; }
+.balance-table tbody td:first-child { font-family: var(--mono); font-size: 13px; color: var(--ink-soft); }
+.balance-table tbody td.num { text-align: right; font-family: var(--mono); font-weight: 500; }
+.balance-table tbody td.dr { color: var(--ink); }
+.balance-table tbody td.cr { color: var(--brand); }
+.balance-table tbody td.dash { color: var(--ink-dim); }
+.balance-foot {
+  display: flex; justify-content: space-between; align-items: center;
+  margin-top: 12px; padding-top: 18px; border-top: 1px solid var(--line);
+  font-size: 13px;
+}
+.balance-foot b { font-size: 12px; letter-spacing: 0.08em; text-transform: uppercase; color: var(--ink-mute); }
+.balance-foot .balanced {
+  display: inline-flex; align-items: center; gap: 6px;
+  background: rgba(46, 204, 139, 0.12); color: var(--mint);
+  font-size: 12px; font-weight: 600; padding: 5px 12px; border-radius: 999px;
+}
+.balance-foot .balanced::before { content: '✓'; }
+</style>
+<!-- GA_BEGIN -->
+<script async="" src="https://www.googletagmanager.com/gtag/js?id=G-G1YWDRHW8T"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+  gtag('config', 'G-G1YWDRHW8T');
+</script>
+<!-- GA_END -->
+<!-- AMPLITUDE_BEGIN -->
+<script src="https://cdn.eu.amplitude.com/script/30b70e5e6ec2360a6c262a482628baf0.js"></script>
+<script>
+  window.amplitude.init('30b70e5e6ec2360a6c262a482628baf0', {
+    serverZone: 'EU',
+    serverUrl: 'https://api.eu.amplitude.com/2/httpapi',
+    fetchRemoteConfig: true,
+    autocapture: {
+      attribution: true,
+      fileDownloads: true,
+      formInteractions: true,
+      pageViews: true,
+      sessions: true,
+      elementInteractions: true,
+      networkTracking: true,
+      webVitals: true,
+      frustrationInteractions: true
+    }
+  });
+</script>
+<!-- AMPLITUDE_END -->
+<!-- OG_BEGIN -->
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="SouthPay">
+<meta property="og:title" content="SouthPay Ledger - API de Ledger de doble entrada para fintechs">
+<meta property="og:description" content="Crypto payments for stores, ledgers, and invoices.">
+<meta property="og:url" content="https://southpay.io/es/ledger">
+<meta property="og:image" content="https://southpay.io/assets/img/og-image.png">
+<meta property="og:image:secure_url" content="https://southpay.io/assets/img/og-image.png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:image:alt" content="SouthPay - crypto payments for stores, ledgers, and invoices">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="SouthPay Ledger - API de Ledger de doble entrada para fintechs">
+<meta name="twitter:description" content="Crypto payments for stores, ledgers, and invoices.">
+<meta name="twitter:image" content="https://southpay.io/assets/img/og-image.png">
+<meta name="twitter:image:alt" content="SouthPay - crypto payments for stores, ledgers, and invoices">
+<!-- OG_END -->
+<!-- HREFLANG_BEGIN -->
+<link rel="alternate" hreflang="en" href="https://southpay.io/ledger">
+<link rel="alternate" hreflang="es" href="https://southpay.io/es/ledger">
+<link rel="alternate" hreflang="pt" href="https://southpay.io/pt/ledger">
+<link rel="alternate" hreflang="x-default" href="https://southpay.io/ledger">
+<!-- HREFLANG_END -->
+</head>
+<body>
+<div class="hex-bg" id="hexBg">
+<svg id="hexSvg" preserveaspectratio="xMidYMid slice" xmlns="http://www.w3.org/2000/svg"></svg>
+</div>
+<nav class="site-nav">
+<div class="container">
+<div class="nav-inner">
+<a class="logo" href="/es/">
+<img alt="SouthPay" class="logo-img" src="/assets/img/southpay-logo.avif"/>
+<span class="logo-text"><span class="slash">/</span><span class="product">ledger</span></span>
+</a>
+<div class="nav-links">
+<div class="nav-products">
+<span class="nav-products-trigger">Productos<svg fill="none" stroke="currentColor" stroke-width="2" viewbox="0 0 10 10"><path d="M2 4l3 3 3-3"></path></svg></span>
+<div class="nav-products-menu">
+<a class="nav-product-item" href="/es/commerce">
+<div class="motif motif-ecom"><svg fill="none" stroke="currentColor" stroke-width="2" viewbox="0 0 24 24"><path d="M3 7h18l-2 12H5L3 7z"></path><path d="M8 7V5a4 4 0 018 0v2"></path></svg></div>
+<div class="nav-product-info">
+<div class="nav-product-name">Commerce</div>
+<div class="nav-product-desc">Pagos con cripto para tu tienda. 1.99% flat.</div>
+</div>
+</a>
+<a class="nav-product-item" href="/es/ledger">
+<div class="motif motif-ledger"><svg fill="none" stroke="currentColor" stroke-width="2" viewbox="0 0 24 24"><path d="M4 12h8M4 7h12M4 17h6"></path><circle cx="18" cy="17" r="2"></circle></svg></div>
+<div class="nav-product-info">
+<div class="nav-product-name">Ledger</div>
+<div class="nav-product-desc">API de doble entrada para fintechs. Desde $97/mes.</div>
+</div>
+</a>
+<a class="nav-product-item" href="/es/invoice">
+<div class="motif motif-invoice"><svg fill="none" stroke="currentColor" stroke-width="2" viewbox="0 0 24 24"><rect height="18" rx="1" width="14" x="5" y="3"></rect><path d="M8 8h8M8 12h8M8 16h5"></path></svg></div>
+<div class="nav-product-info">
+<div class="nav-product-name">Invoice</div>
+<div class="nav-product-desc">Cobra en cripto, liquida en efectivo.</div>
+</div>
+</a>
+</div>
+</div>
+<div class="nav-industries">
+<span class="nav-industries-trigger">Industrias<svg fill="none" stroke="currentColor" stroke-width="2" viewbox="0 0 10 10"><path d="M2 4l3 3 3-3"></path></svg></span>
+<div class="nav-industries-menu">
+<a class="nav-industry-item" href="/es/industries/ecommerce-stores">
+<div class="nav-industry-icon"><svg fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" viewbox="0 0 24 24"><path d="M3 7h18l-2 12H5L3 7z"></path><path d="M8 7V5a4 4 0 018 0v2"></path></svg></div>
+<div>
+<div class="nav-industry-name">Tiendas ecommerce</div>
+<div class="nav-industry-desc">Pago criptográfico para minoristas globales</div>
+</div>
+</a>
+<a class="nav-industry-item" href="/es/industries/gaming">
+<div class="nav-industry-icon"><svg fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" viewbox="0 0 24 24"><rect height="10" rx="3" width="18" x="3" y="8"></rect><path d="M8 13h4M10 11v4"></path><circle cx="16" cy="12.5" fill="currentColor" r="0.8"></circle><circle cx="17.5" cy="14.5" fill="currentColor" r="0.8"></circle></svg></div>
+<div>
+<div class="nav-industry-name">Gaming</div>
+<div class="nav-industry-desc">Recargas y pagos a creadores</div>
+</div>
+</a>
+<a class="nav-industry-item" href="/es/industries/trading-investments">
+<div class="nav-industry-icon"><svg fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" viewbox="0 0 24 24"><path d="M3 17l6-6 4 4 8-8"></path><path d="M14 7h7v7"></path></svg></div>
+<div>
+<div class="nav-industry-name">Trading e inversiones</div>
+<div class="nav-industry-desc">Depósitos, retiros, rampa de acceso</div>
+</div>
+</a>
+<a class="nav-industry-item" href="/es/industries/stablecoin-top-ups">
+<div class="nav-industry-icon"><svg fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" viewbox="0 0 24 24"><rect height="13" rx="2" width="18" x="3" y="6"></rect><path d="M15 12h-2a2 2 0 100 4h2"></path><path d="M3 10h18"></path></svg></div>
+<div>
+<div class="nav-industry-name">Recargas con stablecoin</div>
+<div class="nav-industry-desc">Flujos de recarga de carteras y fintech</div>
+</div>
+</a>
+<a class="nav-industry-item" href="/es/industries/it-solutions">
+<div class="nav-industry-icon"><svg fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" viewbox="0 0 24 24"><rect height="7" rx="2" width="18" x="3" y="4"></rect><rect height="7" rx="2" width="18" x="3" y="13"></rect><path d="M7 7.5h.01M7 16.5h.01"></path></svg></div>
+<div>
+<div class="nav-industry-name">TI y SaaS</div>
+<div class="nav-industry-desc">Nube, alojamiento, software</div>
+</div>
+</a>
+<a class="nav-industry-item" href="/es/industries/web3">
+<div class="nav-industry-icon"><svg fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" viewbox="0 0 24 24"><path d="M12 3l8 4.5v9L12 21l-8-4.5v-9z"></path><path d="M12 12L4 7.5M12 12l8-4.5M12 12v9"></path></svg></div>
+<div>
+<div class="nav-industry-name">Web3</div>
+<div class="nav-industry-desc">Rieles cripto nativos para protocolos</div>
+</div>
+</a>
+<a class="nav-industry-item" href="/es/industries/cross-border-trade">
+<div class="nav-industry-icon"><svg fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" viewbox="0 0 24 24"><circle cx="12" cy="12" r="9"></circle><path d="M3 12h18"></path><path d="M12 3c2.5 3 2.5 15 0 18M12 3c-2.5 3-2.5 15 0 18"></path></svg></div>
+<div>
+<div class="nav-industry-name">Comercio transfronterizo</div>
+<div class="nav-industry-desc">Importación, exportación, pagos a proveedores.</div>
+</div>
+</a>
+<a class="nav-industry-item" href="/es/industries/digital-goods">
+<div class="nav-industry-icon"><svg fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" viewbox="0 0 24 24"><path d="M12 3v12"></path><path d="M7 10l5 5 5-5"></path><rect height="4" rx="1" width="18" x="3" y="17"></rect></svg></div>
+<div>
+<div class="nav-industry-name">Bienes digitales</div>
+<div class="nav-industry-desc">Software, juegos, contenido, descargas.</div>
+</div>
+</a>
+<a class="nav-industry-item" href="/es/industries/payment-service-providers">
+<div class="nav-industry-icon"><svg fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" viewbox="0 0 24 24"><rect height="11" rx="2" width="20" x="2" y="7"></rect><path d="M2 11h20"></path><path d="M6 15h3"></path></svg></div>
+<div>
+<div class="nav-industry-name">Payment service providers</div>
+<div class="nav-industry-desc">Cripto como característica de tu pila</div>
+</div>
+</a>
+<a class="nav-industry-item" href="/es/industries/creator-economy">
+<div class="nav-industry-icon"><svg fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" viewbox="0 0 24 24"><rect height="11" rx="3" width="6" x="9" y="3"></rect><path d="M7 11a5 5 0 0010 0"></path><path d="M12 16v4M9 20h6"></path></svg></div>
+<div>
+<div class="nav-industry-name">Economía de creadores</div>
+<div class="nav-industry-desc">Pagos y propinas para creadores</div>
+</div>
+</a>
+<a class="nav-industry-item" href="/es/industries/professional-services">
+<div class="nav-industry-icon"><svg fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" viewbox="0 0 24 24"><rect height="12" rx="2" width="18" x="3" y="8"></rect><path d="M9 8V5a2 2 0 012-2h2a2 2 0 012 2v3"></path><path d="M3 13h18"></path></svg></div>
+<div>
+<div class="nav-industry-name">Servicios profesionales</div>
+<div class="nav-industry-desc">Agencias, consultorías, autónomos</div>
+</div>
+</a>
+<a class="nav-industry-item" href="/es/industries/travel-hospitality">
+<div class="nav-industry-icon"><svg fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" viewbox="0 0 24 24"><path d="M3 12l18-6-5 17-3-9-10-2z"></path></svg></div>
+<div>
+<div class="nav-industry-name">Viajes y hospitalidad</div>
+<div class="nav-industry-desc">Hoteles, OTAs, tours, experiencias</div>
+</div>
+</a>
+<a class="nav-industry-item" href="/es/industries/luxury-rentals">
+<div class="nav-industry-icon"><svg fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" viewbox="0 0 24 24"><path d="M3 17l3-10 4 4 2-8 2 8 4-4 3 10z"></path><circle cx="12" cy="20" fill="currentColor" r="1"></circle></svg></div>
+<div>
+<div class="nav-industry-name">Alquileres de lujo</div>
+<div class="nav-industry-desc">Aviación, yates, superdeportivos, experiencias.</div>
+</div>
+</a>
+<a class="nav-industries-cta" href="/es/industries">Todas las industrias <span class="arrow">→</span></a>
+</div>
+</div>
+<a href="/es/about">Acerca de</a>
+<a href="https://docs.southpay.io/" target="_blank" rel="noopener">Docs</a>
+<a class="nav-cta" href="https://app.southpay.io/ledger" target="_blank" rel="noopener">Empieza gratis →</a><!-- LANG_BEGIN --><div class="nav-lang"><button class="nav-lang-trigger" type="button" aria-haspopup="true" aria-label="Language"><span class="nav-lang-flag">🇪🇸</span><span class="nav-lang-code">ES</span><svg class="nav-lang-chev" viewBox="0 0 10 10" width="10" height="10" fill="none" stroke="currentColor" stroke-width="2"><path d="M2 4l3 3 3-3"/></svg></button><div class="nav-lang-menu" role="menu"><a href="/ledger" class="nav-lang-opt" role="menuitem"><span class="nav-lang-flag">🇺🇸</span> English</a><a href="/es/ledger" class="nav-lang-opt nav-lang-opt--active" role="menuitem"><span class="nav-lang-flag">🇪🇸</span> Español</a><a href="/pt/ledger" class="nav-lang-opt" role="menuitem"><span class="nav-lang-flag">🇵🇹</span> Português</a></div></div><!-- LANG_END --></div>
+</div>
+</div>
+</nav>
+<div class="breadcrumb-strip">
+<div class="container">
+<div class="breadcrumb-inner">
+<a class="breadcrumb-link" href="/es/">← Todos los productos</a>
+</div>
+</div>
+</div>
+<section class="hero">
+<div class="container">
+<div class="hero-grid">
+<div>
+<div class="eyebrow reveal d1">
+<span class="pill">Nuevo</span> Ledger como servicio · En vivo hoy
+        </div>
+<h1 class="reveal d2">Las fintechs API de contabilidad se basan en, <em>sin la llamada de demostración.</em></h1>
+<p class="hero-sub reveal d3">
+          Contabilidad por partida doble, seguimiento de movimientos de dinero e infraestructura de conciliación para fintechs, procesadores de pagos, criptorieles y plataformas de fidelización. <strong>Autoservicio. Listo para producción. Desde $97/mes.</strong>
+</p>
+<div class="cta-row reveal d4">
+<a class="btn-primary" href="https://app.southpay.io/ledger" target="_blank" rel="noopener">
+            Empieza a construir gratis <span class="arrow">→</span>
+</a>
+<a class="btn-secondary" href="#how">Míralo en 60 segundos</a>
+</div>
+<div class="hero-meta reveal d5">
+<span><span class="check">✓</span> Sin llamada de ventas</span>
+<span><span class="check">✓</span> Claves API en 5 min</span>
+<span><span class="check">✓</span> Cancelar en cualquier momento</span>
+</div>
+</div>
+<div class="hero-visual reveal d3">
+<div class="float-card card-ledger">
+<div class="card-ledger-head">
+<span class="card-ledger-ref">REF·tx_01HXKJZN8</span>
+<span class="card-ledger-badge">Posted</span>
+</div>
+<div class="card-ledger-rows">
+<div class="ledger-row">
+<span class="acct">user:alice</span>
+<span class="amt-dr">49.00</span>
+<span class="dash">-</span>
+</div>
+<div class="ledger-row">
+<span class="acct">merchant:42</span>
+<span class="dash">-</span>
+<span class="amt-cr">47,53</span>
+</div>
+<div class="ledger-row">
+<span class="acct">fees:platform</span>
+<span class="dash">-</span>
+<span class="amt-cr">1.47</span>
+</div>
+</div>
+<div class="card-ledger-foot">
+<span>TOTAL · USD</span>
+<b>Balanced ✓</b>
+</div>
+</div>
+<div class="float-card card-api">
+<div class="card-api-head">
+<span class="dot r"></span><span class="dot y"></span><span class="dot g"></span>
+<span class="card-api-title">POST /v1/transactions</span>
+</div>
+<div class="card-api-body"><span class="tk-c">// Balanced in one call</span>
+<span class="tk-k">curl</span> <span class="tk-s">"api.southpay.io/v1/tx"</span> \
+  -d <span class="tk-s">'{ "postings": [</span>
+<span class="tk-s">    { "a": "merchant", "amt":</span><span class="tk-n">4753</span> <span class="tk-s">},</span>
+<span class="tk-s">    { "a": "fees", "amt":</span><span class="tk-n">147</span> <span class="tk-s">}</span>
+<span class="tk-s">  ] }'</span>
+<span class="tk-r">→ 201 { "balanced": true }</span></div>
+</div>
+<div class="float-card card-chip">
+<svg fill="none" viewbox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+<circle cx="12" cy="12" r="10" stroke="white" stroke-width="2"></circle>
+<path d="M8 12l3 3 5-6" stroke="white" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"></path>
+</svg>
+<div>
+<span class="label">reconciliado</span>
+<span class="val">12,847 tx</span>
+</div>
+</div>
+</div>
+</div>
+</div>
+</section>
+<div class="integrations">
+<div class="container">
+<div class="integrations-inner">
+<span class="integrations-label">Creado para equipos que mueven dinero:</span>
+<div class="integrations-logos">
+<span>Fintech</span>
+<span>Pago rails</span>
+<span>Procesadores criptográficos</span>
+<span>Plataformas de fidelización</span>
+<span>Neobancos</span>
+</div>
+</div>
+</div>
+</div>
+<section id="problem">
+<div class="container">
+<span class="section-tag">El problema</span>
+<h2>Tus ingenieros siguen <em>reconstruir el mismo Ledger.</em></h2>
+<p class="section-intro">Todas las fintech acaban chocando contra el mismo muro. El muro tiene un nombre: un libro de contabilidad interno de doble entrada que se convierte en un microservicio de ruta crítica que nadie quiere poseer.</p>
+<div class="problem-grid">
+<div class="problem-card">
+<div class="problem-icon">✕</div>
+<div class="problem-headline">La reconciliación se come tus fines de semana.</div>
+<div class="problem-body">Stripe dice una cosa. Tu DB dice otro. Tu banco dice un tercio. El domingo por la noche escribiste otro guión que no sobrevivirá al próximo caso límite.</div>
+</div>
+<div class="problem-card">
+<div class="problem-icon">✕</div>
+<div class="problem-headline">Tu "Ledger" es una tabla de Postgres.</div>
+<div class="problem-body">Construido rápidamente, enviado más rápido. Ahora no es tolerante a fallos, las garantías de doble entrada se encuentran en el código de la aplicación y cada migración está a punto de fracasar.</div>
+</div>
+<div class="problem-card">
+<div class="problem-icon">✕</div>
+<div class="problem-headline">Las alternativas están vigiladas.</div>
+<div class="problem-body">Los titulares comienzan con $15 mil al año y solo después de una llamada de demostración. Otros quieren un ciclo de adquisiciones. Todos quieren hablar antes de que puedas leer los documentos.</div>
+</div>
+</div>
+</div>
+</section>
+<section class="solution-section" id="how">
+<div class="container">
+<div style="text-align: left; margin-bottom: 48px;">
+<span class="section-tag">lo que obtienes</span>
+<h2>Una API de Ledger de doble entrada con <em>las partes duras manipuladas.</em></h2>
+<p class="section-intro">Podrías construir esto en Postgres. La mayoría de los equipos lo hacen, luego pasan un trimestre persiguiendo carreras de equilibrio, postes dobles y derivas de reconciliación. Comienza una capa hacia arriba.</p>
+</div>
+<div class="solution-hero">
+<div class="balance-card">
+<div class="balance-meta">REF · tx_01HXKJZN8 - PUBLICADO 2026-05-14 13:02 UTC</div>
+<table class="balance-table">
+<thead>
+<tr>
+<th>Cuenta</th>
+<th class="num">Débito</th>
+<th class="num">Crédito</th>
+</tr>
+</thead>
+<tbody>
+<tr><td>user:alice</td><td class="num dr">49.00</td><td class="num dash">-</td></tr>
+<tr><td>merchant:42</td><td class="num dash">-</td><td class="num cr">47,53</td></tr>
+<tr><td>fees:platform</td><td class="num dash">-</td><td class="num cr">1.47</td></tr>
+</tbody>
+</table>
+<div class="balance-foot">
+<b>TOTAL · USD</b>
+<span class="balanced">Equilibrado</span>
+</div>
+</div>
+<div class="solution-copy">
+<h3>Un PUBLICACIÓN. Tres publicaciones. <em>Siempre equilibrado.</em></h3>
+<p>
+          Cada transacción en SouthPay Ledger es un conjunto de <strong>publicaciones</strong> que debe sumar cero. La API rechaza todo lo que no esté equilibrado. Tu libro de contabilidad se mantiene correcto por construcción, no por esperanza.
+        </p>
+<p>
+          Debajo: un motor transaccional tolerante a fallas con historial de solo agregar, repeticiones deterministas y movimientos atómicos de múltiples cuentas. Los mismos primitivos que construyeron los actuales. Sin la llamada.
+        </p>
+</div>
+</div>
+<div class="feature-grid">
+<div class="feature featured">
+<div class="feature-icon"><svg fill="none" stroke="currentColor" stroke-linecap="round" stroke-width="2" viewbox="0 0 24 24"><path d="M4 8h16M4 16h16"></path><circle cx="12" cy="12" r="9"></circle></svg></div>
+<div class="feature-title">Balanzas que no pueden derivar</div>
+<div class="feature-desc">Cada transacción se equilibra por moneda y se verifica en el lado del servidor antes de confirmarse. Las correcciones son reversiones, nunca ediciones: el historial permanece solo para agregar. Los libros se reconcilian después de cada escritura, no en un trabajo nocturno.</div>
+</div>
+<div class="feature">
+<div class="feature-icon"><svg fill="none" stroke="currentColor" stroke-width="2" viewbox="0 0 24 24"><circle cx="12" cy="12" r="9"></circle><path d="M3 12h18M12 3a14 14 0 010 18M12 3a14 14 0 000 18"></path></svg></div>
+<div class="feature-title">La multidivisa es una primitiva</div>
+<div class="feature-desc">Fiat, monedas estables y criptomonedas en un libro de contabilidad equilibrado. USD, EUR, USDC, BTC: cualquier símbolo, en unidades enteras menores. Nada de flotaciones, nada de suposiciones silenciosas sobre una moneda única.</div>
+</div>
+<div class="feature">
+<div class="feature-icon"><svg fill="none" stroke="currentColor" stroke-linecap="round" stroke-width="2" viewbox="0 0 24 24"><path d="M3 12a9 9 0 1015.5-6.2"></path><path d="M19 3v4h-4"></path></svg></div>
+<div class="feature-title">Creado para reintentos</div>
+<div class="feature-desc">Claves de idempotencia duraderas, saldos pendientes y publicados separados y webhooks en cada transacción publicada. Tu integración se reproduce limpiamente porque la nuestra lo hace.</div>
+</div>
+<div class="feature featured">
+<div class="feature-icon"><svg fill="none" stroke="currentColor" stroke-width="2" viewbox="0 0 24 24"><path d="M12 3v14m0 0l-4-4m4 4l4-4M4 21h16"></path></svg></div>
+<div class="feature-title">Exportación CSV, en cualquier momento</div>
+<div class="feature-desc">Exportación del Ledger completo para auditorías, contadores y aquel inversor que insiste.</div>
+</div>
+<div class="feature">
+<div class="feature-icon"><svg fill="none" stroke="currentColor" stroke-width="2" viewbox="0 0 24 24"><path d="M5 12h14M13 6l6 6-6 6"></path><circle cx="5" cy="12" fill="currentColor" r="1.5"></circle></svg></div>
+<div class="feature-title">Raya / Sabio / Revolut</div>
+<div class="feature-desc">Extraiga movimientos de tus procesadores y bancos. Conciliar sin los trabajos cron.</div>
+</div>
+<div class="feature featured">
+<div class="feature-icon"><svg fill="none" stroke="currentColor" stroke-width="2" viewbox="0 0 24 24"><rect height="18" rx="3" width="18" x="3" y="3"></rect><path d="M9 9h6v6H9z"></path></svg></div>
+<div class="feature-title">Xero, QuickBooks, sabio</div>
+<div class="feature-desc">Ingrese a tu pila de contabilidad para que Finanzas deje de solicitar un CSV todos los viernes.</div>
+</div>
+<div class="feature">
+<div class="feature-icon"><svg fill="none" stroke="currentColor" stroke-width="2" viewbox="0 0 24 24"><path d="M12 8v4l3 2"></path><circle cx="12" cy="12" r="9"></circle></svg></div>
+<div class="feature-title">Historial de solo agregar</div>
+<div class="feature-desc">Cada estado es rejugable. Cada entrada es inmutable. A los auditores les encanta. Tú también.</div>
+</div>
+<div class="feature">
+<div class="feature-icon"><svg fill="none" stroke="currentColor" stroke-width="2" viewbox="0 0 24 24"><path d="M13 2L3 14h7l-1 8 10-12h-7l1-8z" stroke-linejoin="round"></path></svg></div>
+<div class="feature-title">Configuración en 5 minutos</div>
+<div class="feature-desc">Regístrese, obtén una clave y publique tu primera transacción. Ninguna llamada. Sin cita. Sin acuerdo de confidencialidad.</div>
+</div>
+</div>
+</div>
+</section>
+<section id="model">
+<div class="container">
+<div style="text-align: center; max-width: 720px; margin: 0 auto 56px;">
+<span class="section-tag">el modelo</span>
+<h2>Cuatro primitivos. <em>Nada más que aprender.</em></h2>
+<p class="section-intro" style="margin-top: 16px;">Tú escribes la lógica empresarial. Guardamos los libros.</p>
+</div>
+<div class="feature-grid">
+<div class="feature">
+<div class="feature-icon"><svg fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" viewbox="0 0 24 24"><rect height="14" rx="2" width="18" x="3" y="5"></rect><path d="M3 9h18"></path><path d="M7 14h4"></path></svg></div>
+<div class="feature-title">Cuenta</div>
+<div class="feature-desc">Un saldo en una moneda, en un plan de cuentas que tú defina. Activo, pasivo, ingreso, gasto o patrimonio.</div>
+</div>
+<div class="feature">
+<div class="feature-icon"><svg fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" viewbox="0 0 24 24"><path d="M4 7h12l-3-3M20 17H8l3 3"></path></svg></div>
+<div class="feature-title">Transacción</div>
+<div class="feature-desc">Un conjunto equilibrado de publicaciones, que se vuelven idempotentes gracias a una clave que tú proporciona. Escrito una vez, inmutable después.</div>
+</div>
+<div class="feature">
+<div class="feature-icon"><svg fill="none" stroke="currentColor" stroke-linecap="round" stroke-width="2" viewbox="0 0 24 24"><path d="M5 12h6m2 0h6"></path><path d="M9 8v8M15 8v8"></path></svg></div>
+<div class="feature-title">Destino</div>
+<div class="feature-desc">Un débito o crédito único en unidades menores enteras. Solo para agregar, nunca actualizado en tu lugar.</div>
+</div>
+<div class="feature">
+<div class="feature-icon"><svg fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" viewbox="0 0 24 24"><path d="M4 20V10M10 20V4M16 20v-8M22 20H2"></path></svg></div>
+<div class="feature-title">Balance</div>
+<div class="feature-desc">Vistas disponibles, pendientes y publicadas, derivadas de publicaciones y siempre conciliadas.</div>
+</div>
+</div>
+</div>
+</section>
+<section id="also-included">
+<div class="container">
+<div style="text-align: center; max-width: 720px; margin: 0 auto 56px;">
+<span class="section-tag">También incluido</span>
+<h2>Todo alrededor <em>el Ledger también.</em></h2>
+</div>
+<div class="feature-grid" style="grid-template-columns: repeat(3, minmax(0, 1fr));">
+<div class="feature">
+<div class="feature-title">Ganchos web</div>
+<div class="feature-desc">Dispare en cada transacción publicada, entregada con seguridad para reproducción.</div>
+</div>
+<div class="feature">
+<div class="feature-title">Reconciliación</div>
+<div class="feature-desc">Compare las publicaciones con las del mundo exterior y marque las que no están registradas.</div>
+</div>
+<div class="feature">
+<div class="feature-title">Reversiones</div>
+<div class="feature-desc">Corregir con una transacción reversa. La historia nunca se edita.</div>
+</div>
+<div class="feature">
+<div class="feature-title">Cierre de periodo</div>
+<div class="feature-desc">Bloquee un período para que los libros cerrados no puedan cambiar.</div>
+</div>
+<div class="feature">
+<div class="feature-title">Exportar</div>
+<div class="feature-desc">Transmita el diario completo, solo anexándolo y ordenado, para auditoría o BI.</div>
+</div>
+<div class="feature">
+<div class="feature-title">Plantillas de cuenta</div>
+<div class="feature-desc">Defina tu propio plan de cuentas, aplicado según plantilla.</div>
+</div>
+<div class="feature">
+<div class="feature-title">Prueba + modo en vivo</div>
+<div class="feature-desc">Claves y datos separados. Cada respuesta dice qué modo es.</div>
+</div>
+<div class="feature">
+<div class="feature-title">Conectores <span style="display: inline-block; background: var(--bg-lavender); color: var(--brand); font-size: 10px; padding: 2px 8px; border-radius: 999px; font-weight: 600; text-transform: uppercase; letter-spacing: 0.06em; vertical-align: middle; margin-left: 6px;">Próximamente</span></div>
+<div class="feature-desc">Introduzca el movimiento de dinero de sistemas externos en el Ledger, sin código adhesivo.</div>
+</div>
+<div class="feature">
+<div class="feature-title">SDK <span style="display: inline-block; background: var(--bg-lavender); color: var(--brand); font-size: 10px; padding: 2px 8px; border-radius: 999px; font-weight: 600; text-transform: uppercase; letter-spacing: 0.06em; vertical-align: middle; margin-left: 6px;">Próximamente</span></div>
+<div class="feature-desc">Mecanografiado, Python, Ruby, Go.</div>
+</div>
+</div>
+</div>
+</section>
+<section id="compare">
+<div class="container">
+<span class="section-tag">Contra los vigilantes</span>
+<h2>Mismo motor. <em>Ninguna fricción.</em></h2>
+<p class="section-intro">Respetamos a nuestros competidores. Simplemente no creemos que deba programar una llamada para leer los precios.</p>
+<div class="compare-wrap">
+<table class="compare-table">
+<thead>
+<tr>
+<th></th>
+<th class="us">Ledger de pago sur</th>
+<th class="them">Competidores</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Precios visibles en el sitio web.</td>
+<td class="us-cell"><span class="check-y">✓</span>Sí, tres niveles publicados</td>
+<td class="them-cell"><span class="check-n">✕</span>"Contactar con ventas"</td>
+</tr>
+<tr>
+<td>Tiempo hasta la primera llamada API</td>
+<td class="us-cell">~5 minutos</td>
+<td class="them-cell">2 a 4 semanas (después de la demostración)</td>
+</tr>
+<tr>
+<td>Precio de entrada</td>
+<td class="us-cell">$97 / mes</td>
+<td class="them-cell">$15,000+ / año, facturado anualmente</td>
+</tr>
+<tr>
+<td>Registro de autoservicio</td>
+<td class="us-cell"><span class="check-y">✓</span>Tarjeta de crédito, done</td>
+<td class="them-cell"><span class="check-n">✕</span>Solo calificado para ventas</td>
+</tr>
+<tr>
+<td>Garantías de doble entrada</td>
+<td class="us-cell"><span class="check-y">✓</span></td>
+<td class="them-cell"><span class="check-y">✓</span></td>
+</tr>
+<tr>
+<td>Conectores de procesador nativos</td>
+<td class="us-cell"><span class="check-y">✓</span>Raya, Sabio, Revolut</td>
+<td class="them-cell">enrolla el tuyo</td>
+</tr>
+<tr>
+<td>Integraciones contables</td>
+<td class="us-cell"><span class="check-y">✓</span>Xero, QuickBooks, sabio</td>
+<td class="them-cell">Principalmente bricolaje</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+</section>
+<section>
+<div class="container">
+<span class="section-tag">Por qué lo construimos</span>
+<h2>Una nota del equipo.</h2>
+<p class="section-intro">SouthPay Ledger es el mismo motor que creamos para nuestro propio producto de criptopagos. Aquí está la versión corta de por qué la enviamos como una API independiente.</p>
+<div class="founder-note">
+<div class="founder-note-photo">
+<img alt="Daniel Rocha" src="/assets/img/daniel.avif"/>
+</div>
+<div class="founder-note-body">
+<p>Creamos SouthPay Ledger para resolver nuestro propio problema. Necesitábamos un libro de contabilidad de doble entrada de nivel de producción para ejecutar nuestros pagos criptográficos. Todas las opciones existentes venían con una llamada de demostración, un precio inicial de seis cifras y un ciclo de adquisición.</p>
+<p>Entonces enviamos lo que construimos. El mismo motor. Autoservicio. Precios en el sitio web. Regístrate con tarjeta, envío la misma tarde.</p>
+<p>Si eres una fintech, un procesador de pagos, una plataforma de fidelización o una red de tarjetas de regalo, eventualmente necesitarás un libro de contabilidad. Hemos terminado de ver a los equipos pagar $15 mil al año por uno o mantener silenciosamente una versión casera que les teme. Esta es la salida.</p>
+<div class="founder-note-sign">
+<div class="founder-note-name">Daniel Rocha</div>
+<div class="founder-note-role">Cofundador de SouthPay</div>
+</div>
+</div>
+</div>
+</div>
+</section>
+<style>
+.founder-note {
+  background: var(--surface);
+  border: 1px solid var(--line);
+  border-radius: var(--r-2xl);
+  padding: 44px;
+  display: grid;
+  grid-template-columns: 160px 1fr;
+  gap: 40px;
+  align-items: start;
+  max-width: 920px;
+  margin: 40px auto 0;
+  box-shadow: 0 24px 60px -28px rgba(55, 75, 236, 0.18);
+}
+.founder-note-photo {
+  width: 160px; height: 160px;
+  border-radius: 50%;
+  overflow: hidden;
+  background: var(--bg-lavender);
+}
+.founder-note-photo img { width: 100%; height: 100%; object-fit: cover; display: block; }
+.founder-note-body p {
+  font-family: var(--display);
+  font-size: 19px;
+  line-height: 1.6;
+  color: var(--ink);
+  margin-bottom: 18px;
+  font-weight: 400;
+  font-style: italic;
+  letter-spacing: -0.005em;
+}
+.founder-note-body p:last-of-type { margin-bottom: 26px; }
+.founder-note-sign {
+  border-top: 1px solid var(--line-soft);
+  padding-top: 18px;
+}
+.founder-note-name {
+  font-family: var(--display);
+  font-size: 18px;
+  font-weight: 600;
+  color: var(--ink);
+  letter-spacing: -0.02em;
+}
+.founder-note-role {
+  font-family: var(--mono);
+  font-size: 12px;
+  color: var(--ink-mute);
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  margin-top: 4px;
+}
+@media (max-width: 720px) {
+  .founder-note { grid-template-columns: 1fr; padding: 28px; gap: 24px; text-align: left; }
+  .founder-note-photo { width: 110px; height: 110px; }
+}
+</style>
+<section id="pricing">
+<div class="container">
+<span class="section-tag">Precios</span>
+<h2>Elige un nivel. <em>O empezar gratis.</em></h2>
+<p class="section-intro">Precios basados ​​en el uso. Sin compromiso anual. No se requiere llamada de ventas para ver los números. Actualice o cancele desde el panel.</p>
+<div class="pricing-grid">
+<div class="tier">
+<div class="tier-name">Motor de arranque</div>
+<div class="tier-price"><span class="currency">$</span>9,97<span class="unit">/ mes</span></div>
+<div class="tier-desc">Para fintechs en etapa inicial que validan un producto de movimiento de dinero.</div>
+<ul class="tier-features">
+<li>100k publicaciones <span class="mute">/ mes</span></li>
+<li>10 raíces del plan de cuentas</li>
+<li>Panel de autoservicio</li>
+<li>Exportación CSV</li>
+<li>1 conector de procesador</li>
+<li>Soporte por correo electrónico</li>
+</ul>
+<a class="tier-cta" href="https://ledger.southpay.io/" target="_blank" rel="noopener">Comienza la prueba gratis →</a>
+</div>
+<div class="tier featured">
+<div class="tier-name">Crecimiento</div>
+<div class="tier-price"><span class="currency">$</span>497<span class="unit">/ mes</span></div>
+<div class="tier-desc">Para fintechs y procesadores que ejecutan un volumen real de producción.</div>
+<ul class="tier-features">
+<li>1 millón de publicaciones <span class="mute">/ mes</span></li>
+<li>Cuentas ilimitadas</li>
+<li>Raya + Sabio + Revolut</li>
+<li>Xero + QuickBooks + Sage</li>
+<li>Webhooks y repetición</li>
+<li>Multiactivos (divisas y criptomonedas)</li>
+<li>Soporte prioritario de Slack</li>
+</ul>
+<a class="tier-cta" href="https://ledger.southpay.io/" target="_blank" rel="noopener">Comienza la prueba gratis →</a>
+</div>
+<div class="tier">
+<div class="tier-name">Empresa</div>
+<div class="tier-price" style="font-size:42px;">Costumbre</div>
+<div class="tier-desc">Ferrocarriles de gran volumen, entidades reguladas y plataformas financieras integradas.</div>
+<ul class="tier-features">
+<li>Publicaciones ilimitadas</li>
+<li>Infraestructura dedicada</li>
+<li>SOC 2 y soporte de auditoría</li>
+<li>Integraciones personalizadas</li>
+<li>99,99% de tiempo de actividad SLA</li>
+<li>ingeniero de soluciones</li>
+</ul>
+<a class="tier-cta" href="https://calendly.com/daniel-southpay/intro-call" target="_blank" rel="noopener">Habla con nosotros →</a>
+</div>
+</div>
+</div>
+</section>
+<section id="faq">
+<div class="container">
+<div class="faq-grid">
+<div>
+<span class="section-tag">Preguntas frecuentes</span>
+<h2 style="font-size: clamp(36px, 4.5vw, 54px);">tenemos todos los <em>respuestas.</em></h2>
+<p style="color: var(--ink-soft); font-size: 16px; line-height: 1.55; margin-top: 18px;">
+          Couldn't find your answer? Lee la documentación at <a href="https://docs.southpay.io/" style="color: var(--brand); text-decoration: underline; text-decoration-thickness: 1px; text-underline-offset: 4px;" target="_blank" rel="noopener">docs.southpay.io/ledger</a> o correo electrónico <a href="mailto:hello@southpay.io" style="color: var(--brand); text-decoration: underline; text-decoration-thickness: 1px; text-underline-offset: 4px;">hola@southpay.io</a>.
+        </p>
+</div>
+<div class="faq-list">
+<div class="faq-item open">
+<div class="faq-q">¿Qué es una API de Ledger de entrada doble? <span class="faq-toggle">+</span></div>
+<div class="faq-a">Una API de libro de contabilidad de doble entrada es un servicio que mantiene registros financieros a través de HTTP. Cada transacción es un conjunto de contabilizaciones donde los débitos equivalen a créditos por moneda, por lo que los saldos de las cuentas siempre se concilian. Integra cuentas, transacciones y saldos a través de puntos finales REST en lugar de crear tú mismo tablas de contabilidad, invariantes y trabajos de conciliación.</div>
+</div>
+<div class="faq-item">
+<div class="faq-q">¿Por qué utilizar una API de Ledger en lugar de basarse en Postgres? <span class="faq-toggle">+</span></div>
+<div class="faq-a">Puedes, y la mayoría de los equipos lo hacen, y luego pasas un cuarto persiguiendo carreras de equilibrio, postes dobles y derivas de reconciliación. SouthPay Ledger lo inicia en una capa superior: un motor transaccional con historial de solo agregar, movimientos atómicos de múltiples cuentas, idempotencia y webhooks reproducibles ya resueltos. Tú escribes la lógica empresarial; guardamos los libros.</div>
+</div>
+<div class="faq-item">
+<div class="faq-q">¿Cómo funciona la multidivisa? <span class="faq-toggle">+</span></div>
+<div class="faq-a">Fiat, monedas estables y criptomonedas conviven en un libro de contabilidad equilibrado. USD, EUR, USDC, BTC o cualquier símbolo simbólico que tú defina, cada uno en unidades enteras menores, nunca flotantes. Cada transacción se equilibra por moneda y se verifica en el lado del servidor antes de confirmarse. No hay supuestos silenciosos sobre una moneda única.</div>
+</div>
+<div class="faq-item">
+<div class="faq-q">¿El Ledger es solo para anexar? <span class="faq-toggle">+</span></div>
+<div class="faq-a">Sí. Cada publicación es inmutable una vez escrita y las correcciones se realizan mediante la publicación de una transacción reversa. El estado siempre se puede reproducir desde el diario, que es exactamente lo que esperan los auditores y los equipos financieros.</div>
+</div>
+<div class="faq-item">
+<div class="faq-q">¿Cómo se manejan los reintentos y la idempotencia? <span class="faq-toggle">+</span></div>
+<div class="faq-a">Cada transacción está codificada por una clave de idempotencia duradera que tú proporciona, por lo que los reintentos son seguros de forma predeterminada. Los saldos pendientes y publicados se rastrean por separado, y los webhooks se activan de forma segura en cada transacción publicada. Tu integración se reproduce limpiamente porque la nuestra lo hace.</div>
+</div>
+<div class="faq-item">
+<div class="faq-q">¿Cómo obtengo acceso? <span class="faq-toggle">+</span></div>
+<div class="faq-a">Regístrese en <a href="https://ledger.southpay.io/" style="color: var(--brand); text-decoration: underline; text-decoration-thickness: 1px; text-underline-offset: 3px;" target="_blank" rel="noopener">Ledger.southpay.io</a>, pegue una tarjeta y obtén una clave activa en menos de cinco minutos. El modo de prueba y en vivo comparten la misma superficie API pero usan claves y datos separados. No se requiere llamada de demostración.</div>
+</div>
+<div class="faq-item">
+<div class="faq-q">¿Es esto realmente autoservicio? <span class="faq-toggle">+</span></div>
+<div class="faq-a">Sí. Regístrese con correo electrónico o Google, pegue una tarjeta y obtén una clave API en vivo. El único momento en el que hablaría con nosotros es si desea el nivel Enterprise o si tiene una pregunta de cumplimiento específica.</div>
+</div>
+<div class="faq-item">
+<div class="faq-q">¿En qué se diferencia esto de los actuales? <span class="faq-toggle">+</span></div>
+<div class="faq-a">Técnicamente, las primitivas son similares. Contabilizaciones por partida doble, cuentas, saldos, soporte multiactivo. Comercialmente, publicamos los precios, no solicitamos el registro detrás de una demostración y comenzamos con $97/mes en lugar de $15K/año. Respetamos lo que han construido. Simplemente no estamos de acuerdo sobre cómo venderlo.</div>
+</div>
+<div class="faq-item">
+<div class="faq-q">¿Qué se considera una "publicación"? <span class="faq-toggle">+</span></div>
+<div class="faq-a">Una contabilización es un débito o crédito en una cuenta. Una transacción de pago típica tiene de 2 a 4 contabilizaciones (débito de usuario, crédito comercial, crédito de tarifa de plataforma, etc.). Medimos las publicaciones, no las llamadas API, por lo que una única transacción equilibrada con tres tramos cuenta como tres publicaciones.</div>
+</div>
+<div class="faq-item">
+<div class="faq-q">¿Ofrecen un nivel gratuito? <span class="faq-toggle">+</span></div>
+<div class="faq-a">Cada plan comienza con una prueba gratuita de 14 días. No se requiere tarjeta para leer los documentos o probar la zona de pruebas. El nivel Starter en sí cuesta $97/mes una vez que esté listo para ejecutar tráfico de producción.</div>
+</div>
+<div class="faq-item">
+<div class="faq-q">¿Qué pasa con SOC 2, PCI y pistas de auditoría? <span class="faq-toggle">+</span></div>
+<div class="faq-a">Todos los planes obtienen un historial inmutable de solo agregar y registros de auditoría completos. Los informes SOC 2, las DPA personalizadas y el soporte de entidades reguladas se encuentran en el nivel Empresarial.</div>
+</div>
+<div class="faq-item">
+<div class="faq-q">¿Puedo importar un libro de contabilidad existente? <span class="faq-toggle">+</span></div>
+<div class="faq-a">Sí. Tenemos un punto final de importación masiva para publicaciones históricas, además de un asistente de migración que incorpora exportaciones CSV de otros sistemas de contabilidad o de uno propio.</div>
+</div>
+<div class="faq-item">
+<div class="faq-q">¿Es el motor el mismo que el del producto principal de SouthPay? <span class="faq-toggle">+</span></div>
+<div class="faq-a">Sí. SouthPay Ledger se ejecuta en el mismo motor OLTP que impulsa nuestro producto de pagos de criptomonedas a USD. Lo hemos estado endureciendo en producción para nuestro propio uso. Ahora puedes usarlo directamente.</div>
+</div>
+</div>
+</div>
+</div>
+</section>
+<section style="padding-bottom: 60px;">
+<div class="container">
+<div class="final-cta-wrap">
+<span class="section-tag">Únete al futuro</span>
+<h2>dejar de mantener <em>su libro de contabilidad interno.</em></h2>
+<p>Claves API en cinco minutos. Primeros 14 días gratis. Cancele desde el tablero cuando quiera. Nunca es necesario llamar.</p>
+<div class="cta-row">
+<a class="btn-primary" href="https://app.southpay.io/ledger" target="_blank" rel="noopener">
+            Empieza a construir gratis <span class="arrow">→</span></a>
+<a class="btn-secondary" href="https://docs.southpay.io/" target="_blank" rel="noopener">Lee la documentación</a>
+</div>
+</div>
+</div>
+</section>
+<footer>
+<div class="container">
+<div class="footer-inner">
+<div class="footer-brand">
+<a class="logo" href="/es/">
+<img alt="SouthPay" class="logo-img" src="/assets/img/southpay-logo.avif"/>
+</a>
+<p>Pagos criptográficos para tiendas, libros de contabilidad y facturas. Cero devoluciones de cargo. Liquidar en cualquier moneda.</p>
+        <div class="footer-social">
+          <a href="https://www.linkedin.com/company/southpay/" target="_blank" rel="noopener" aria-label="LinkedIn">
+            <svg viewBox="0 0 24 24" width="18" height="18" fill="currentColor" aria-hidden="true"><path d="M4.98 3.5a2.5 2.5 0 1 1 0 5 2.5 2.5 0 0 1 0-5zM3 9h4v12H3V9zm7 0h3.8v1.7h.06c.53-.95 1.83-1.95 3.77-1.95 4.03 0 4.77 2.5 4.77 5.74V21H18.6v-5.65c0-1.35-.03-3.08-1.96-3.08-1.96 0-2.26 1.45-2.26 2.98V21H10V9z"/></svg>
+          </a>
+          <a href="https://www.instagram.com/southpay.io/" target="_blank" rel="noopener" aria-label="Instagram">
+            <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="3" width="18" height="18" rx="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.5" cy="6.5" r="1" fill="currentColor" stroke="none"/></svg>
+          </a>
+        </div>
+</div>
+<div class="footer-cols">
+<div class="footer-col">
+<h4>Productos</h4>
+<a href="/es/commerce">Commerce</a>
+<a href="/es/ledger">Ledger</a>
+<a href="/es/invoice">Invoice</a>
+</div>
+<div class="footer-col industries-col">
+<h4>Industrias</h4>
+<div class="footer-col-grid">
+<a href="/es/industries">Todas las industrias </a>
+<a href="/es/industries/ecommerce-stores">Tiendas ecommerce</a>
+<a href="/es/industries/gaming">Gaming</a>
+<a href="/es/industries/trading-investments">Trading e inversiones</a>
+<a href="/es/industries/stablecoin-top-ups">Recargas con stablecoin</a>
+<a href="/es/industries/it-solutions">TI y SaaS</a>
+<a href="/es/industries/web3">Web3</a>
+<a href="/es/industries/cross-border-trade">Comercio transfronterizo</a>
+<a href="/es/industries/digital-goods">Bienes digitales</a>
+<a href="/es/industries/payment-service-providers">Payment service providers</a>
+<a href="/es/industries/creator-economy">Economía de creadores</a>
+<a href="/es/industries/professional-services">Servicios profesionales</a>
+<a href="/es/industries/travel-hospitality">Viajes y hospitalidad</a>
+<a href="/es/industries/luxury-rentals">Alquileres de lujo</a>
+</div>
+</div>
+<div class="footer-col">
+<h4>Empresa</h4>
+<a href="/es/about">Acerca de</a>
+<a href="https://docs.southpay.io/" target="_blank" rel="noopener">Docs</a>
+<a href="/es/pricing">Precios</a>
+<a href="mailto:support@southpay.io">Soporte</a>
+</div>
+<div class="footer-col">
+<h4>Legal</h4>
+<a href="/es/aml-policy">Política AML</a>
+<a href="/es/merchant-services-agreement">Acuerdo comercial</a>
+<a href="/es/privacy-policy">Política de privacidad</a>
+<a href="/es/terms-and-conditions">Términos y condiciones</a>
+</div>
+</div>
+</div>
+<div class="footer-bottom">
+<span>© 2026 SouthPay. Todos los derechos reservados.</span>
+<span>SouthPay es una marca de <a class="alc-link" href="https://alc.media/" rel="noopener" target="_blank">ALC Media</a>.</span>
+</div>
+</div>
+</footer>
+<script src="/assets/southpay.js"></script>
+<!-- LANG_JS_BEGIN -->
+<script>
+(function(){
+  // Delegate clicks at the document level — works on desktop and mobile,
+  // doesn't depend on when .nav-lang elements were inserted.
+  document.addEventListener('click', function(e){
+    var trigger = e.target.closest('.nav-lang-trigger');
+    if(trigger){
+      e.preventDefault();
+      e.stopPropagation();
+      var lang = trigger.closest('.nav-lang');
+      var wasOpen = lang.classList.contains('open');
+      document.querySelectorAll('.nav-lang.open').forEach(function(o){ o.classList.remove('open'); });
+      if(!wasOpen) lang.classList.add('open');
+      return;
+    }
+    if(!e.target.closest('.nav-lang-menu')){
+      document.querySelectorAll('.nav-lang.open').forEach(function(o){ o.classList.remove('open'); });
+    }
+  }, false);
+  // Close on Escape for keyboard users
+  document.addEventListener('keydown', function(e){
+    if(e.key === 'Escape'){
+      document.querySelectorAll('.nav-lang.open').forEach(function(o){ o.classList.remove('open'); });
+    }
+  });
+})();
+</script>
+<!-- LANG_JS_END -->
+</body>
+</html>

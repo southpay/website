@@ -1,0 +1,454 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<link href="/favicon.svg" rel="icon" type="image/svg+xml"/>
+<title>Precios - SouthPay</title>
+<meta content="Precios transparentes para SouthPay Commerce, Ledger y Invoice. Tarifas fijas por transacción o suscripciones escalonadas, todo visible desde el principio. No se requiere llamada de demostración." name="description"/>
+<link href="https://fonts.googleapis.com" rel="preconnect"/>
+<link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
+<link href="https://fonts.googleapis.com/css2?family=Inter:ital,wght@0,400;0,500;0,600;0,700;1,500;1,600;1,700&amp;family=Geist:wght@400;500;600;700&amp;family=Geist+Mono:wght@400;500&amp;display=swap" rel="stylesheet"/>
+<link href="/southpay.css" rel="stylesheet"/>
+<style>
+/* Pricing hero */
+.pricing-hero { padding: 100px 0 30px; text-align: center; }
+.pricing-hero .eyebrow { margin: 0 auto 24px; }
+.pricing-hero h1 {
+  font-family: var(--display);
+  font-size: clamp(44px, 6vw, 76px);
+  font-weight: 600;
+  letter-spacing: -0.04em;
+  line-height: 1.04;
+  margin-bottom: 22px;
+}
+.pricing-hero h1 em { font-style: italic; color: var(--brand); font-weight: 600; }
+.pricing-hero .lede {
+  font-size: 18px; line-height: 1.6;
+  color: var(--ink-soft);
+  max-width: 640px;
+  margin: 0 auto;
+}
+
+/* Single unified pricing section */
+.all-pricing-section { padding: 40px 0 70px; }
+.pricing-intro {
+  text-align: center;
+  max-width: 720px;
+  margin: 0 auto 40px;
+}
+.pricing-intro h2 {
+  font-family: var(--display);
+  font-size: clamp(30px, 3.8vw, 42px);
+  font-weight: 600;
+  letter-spacing: -0.035em;
+  line-height: 1.1;
+  margin: 14px 0 12px;
+}
+.pricing-intro h2 em { font-style: italic; color: var(--brand); font-weight: 600; }
+.pricing-intro .section-intro {
+  font-size: 16px; line-height: 1.55;
+  color: var(--ink-soft);
+}
+
+.all-pricing-section .pricing-grid .tier .motif { width: 44px; height: 44px; margin-bottom: 14px; }
+.all-pricing-section .pricing-grid .tier .motif svg { width: 22px; height: 22px; }
+.tier-starting {
+  font-family: var(--mono);
+  font-size: 11px;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--ink-mute);
+  margin-bottom: 4px;
+}
+
+.pricing-foot {
+  display: flex; justify-content: center; gap: 32px; flex-wrap: wrap;
+  margin: 30px 0 44px;
+}
+.pricing-foot .explore-link {
+  font-family: var(--mono);
+  font-size: 12px;
+  color: var(--brand);
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  text-decoration: none;
+}
+.pricing-foot .explore-link:hover { color: var(--brand-deep); }
+.pricing-foot .explore-link .arrow { display: inline-block; transition: transform .2s; }
+.pricing-foot .explore-link:hover .arrow { transform: translateX(3px); }
+
+.custom-callout {
+  background: var(--bg-lavender-soft);
+  border: 1px solid var(--line-soft);
+  border-radius: var(--r-xl);
+  padding: 32px 40px;
+  display: flex; justify-content: space-between; align-items: center;
+  gap: 28px; flex-wrap: wrap;
+}
+.custom-callout .copy { flex: 1; min-width: 260px; }
+.custom-callout .section-tag {
+  display: inline-block;
+  font-family: var(--mono);
+  font-size: 11px;
+  color: var(--brand);
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  margin-bottom: 6px;
+}
+.custom-callout h3 {
+  font-family: var(--display);
+  font-size: 24px; font-weight: 600;
+  letter-spacing: -0.025em;
+  line-height: 1.15;
+  margin: 4px 0 8px;
+}
+.custom-callout h3 em { font-style: italic; color: var(--brand); font-weight: 600; }
+.custom-callout p {
+  color: var(--ink-soft);
+  font-size: 15px;
+  line-height: 1.5;
+  max-width: 560px;
+  margin: 0;
+}
+
+.faq-pricing-section { padding: 60px 0 40px; }
+
+@media (max-width: 720px) {
+  .custom-callout { padding: 26px 24px; flex-direction: column; align-items: flex-start; }
+}
+</style>
+<!-- GA_BEGIN -->
+<script async="" src="https://www.googletagmanager.com/gtag/js?id=G-G1YWDRHW8T"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+  gtag('config', 'G-G1YWDRHW8T');
+</script>
+<!-- GA_END -->
+<!-- AMPLITUDE_BEGIN -->
+<script src="https://cdn.eu.amplitude.com/script/30b70e5e6ec2360a6c262a482628baf0.js"></script>
+<script>
+  window.amplitude.init('30b70e5e6ec2360a6c262a482628baf0', {
+    serverZone: 'EU',
+    serverUrl: 'https://api.eu.amplitude.com/2/httpapi',
+    fetchRemoteConfig: true,
+    autocapture: {
+      attribution: true,
+      fileDownloads: true,
+      formInteractions: true,
+      pageViews: true,
+      sessions: true,
+      elementInteractions: true,
+      networkTracking: true,
+      webVitals: true,
+      frustrationInteractions: true
+    }
+  });
+</script>
+<!-- AMPLITUDE_END -->
+<!-- OG_BEGIN -->
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="SouthPay">
+<meta property="og:title" content="Precios - SouthPay">
+<meta property="og:description" content="Crypto payments for stores, ledgers, and invoices.">
+<meta property="og:url" content="https://southpay.io/es/pricing">
+<meta property="og:image" content="https://southpay.io/assets/img/og-image.png">
+<meta property="og:image:secure_url" content="https://southpay.io/assets/img/og-image.png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:image:alt" content="SouthPay - crypto payments for stores, ledgers, and invoices">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Precios - SouthPay">
+<meta name="twitter:description" content="Crypto payments for stores, ledgers, and invoices.">
+<meta name="twitter:image" content="https://southpay.io/assets/img/og-image.png">
+<meta name="twitter:image:alt" content="SouthPay - crypto payments for stores, ledgers, and invoices">
+<!-- OG_END -->
+<!-- HREFLANG_BEGIN -->
+<link rel="alternate" hreflang="en" href="https://southpay.io/pricing">
+<link rel="alternate" hreflang="es" href="https://southpay.io/es/pricing">
+<link rel="alternate" hreflang="pt" href="https://southpay.io/pt/pricing">
+<link rel="alternate" hreflang="x-default" href="https://southpay.io/pricing">
+<!-- HREFLANG_END -->
+</head>
+<body>
+<div class="hex-bg" id="hexBg">
+<svg id="hexSvg" preserveaspectratio="xMidYMid slice" xmlns="http://www.w3.org/2000/svg"></svg>
+</div>
+<nav class="site-nav">
+<div class="container">
+<div class="nav-inner">
+<a class="logo" href="/es/">
+<img alt="SouthPay" class="logo-img" src="/assets/img/southpay-logo.avif"/>
+</a>
+<div class="nav-links">
+<div class="nav-products">
+<span class="nav-products-trigger">Productos<svg fill="none" stroke="currentColor" stroke-width="2" viewbox="0 0 10 10"><path d="M2 4l3 3 3-3"></path></svg></span>
+<div class="nav-products-menu">
+<a class="nav-product-item" href="/es/commerce">
+<div class="motif motif-ecom"><svg fill="none" stroke="currentColor" stroke-width="2" viewbox="0 0 24 24"><path d="M3 7h18l-2 12H5L3 7z"></path><path d="M8 7V5a4 4 0 018 0v2"></path></svg></div>
+<div class="nav-product-info">
+<div class="nav-product-name">Commerce</div>
+<div class="nav-product-desc">Pagos con cripto para tu tienda. 1.99% flat.</div>
+</div>
+</a>
+<a class="nav-product-item" href="/es/ledger">
+<div class="motif motif-ledger"><svg fill="none" stroke="currentColor" stroke-width="2" viewbox="0 0 24 24"><path d="M4 12h8M4 7h12M4 17h6"></path><circle cx="18" cy="17" r="2"></circle></svg></div>
+<div class="nav-product-info">
+<div class="nav-product-name">Ledger</div>
+<div class="nav-product-desc">API de doble entrada para fintechs. Desde $97/mes.</div>
+</div>
+</a>
+<a class="nav-product-item" href="/es/invoice">
+<div class="motif motif-invoice"><svg fill="none" stroke="currentColor" stroke-width="2" viewbox="0 0 24 24"><rect height="18" rx="1" width="14" x="5" y="3"></rect><path d="M8 8h8M8 12h8M8 16h5"></path></svg></div>
+<div class="nav-product-info">
+<div class="nav-product-name">Invoice</div>
+<div class="nav-product-desc">Cobra en cripto, liquida en efectivo.</div>
+</div>
+</a>
+</div>
+</div>
+<a href="/es/about">Acerca de</a>
+<a href="https://docs.southpay.io/" target="_blank" rel="noopener">Docs</a>
+<a class="nav-cta" href="https://app.southpay.io/" target="_blank" rel="noopener">Empezar →</a><!-- LANG_BEGIN --><div class="nav-lang"><button class="nav-lang-trigger" type="button" aria-haspopup="true" aria-label="Language"><span class="nav-lang-flag">🇪🇸</span><span class="nav-lang-code">ES</span><svg class="nav-lang-chev" viewBox="0 0 10 10" width="10" height="10" fill="none" stroke="currentColor" stroke-width="2"><path d="M2 4l3 3 3-3"/></svg></button><div class="nav-lang-menu" role="menu"><a href="/pricing" class="nav-lang-opt" role="menuitem"><span class="nav-lang-flag">🇺🇸</span> English</a><a href="/es/pricing" class="nav-lang-opt nav-lang-opt--active" role="menuitem"><span class="nav-lang-flag">🇪🇸</span> Español</a><a href="/pt/pricing" class="nav-lang-opt" role="menuitem"><span class="nav-lang-flag">🇵🇹</span> Português</a></div></div><!-- LANG_END --></div>
+</div>
+</div>
+</nav>
+<section class="pricing-hero">
+<div class="container">
+<div class="eyebrow reveal">
+<span class="pill">Precios</span> Tres productos. Tres precios honestos.
+    </div>
+<h1 class="reveal d1">Paga por lo que usas. <em>Nada más.</em></h1>
+<p class="lede reveal d2">Tarifas fijas por transacción en Commerce y Invoice. Suscripciones basadas en el uso en Ledger. Sin tarifas de instalación, sin mínimos mensuales, sin contratos anuales, no se requiere llamada de ventas para ver un número.</p>
+</div>
+</section>
+<!-- ============ All three products, one table ============ -->
+<section class="all-pricing-section" id="pricing-table">
+<div class="container">
+<div class="pricing-intro">
+<span class="section-tag">Lo que pagarás</span>
+<h2>Tres productos. <em>Una tabla sencilla.</em></h2>
+<p class="section-intro">Tarifas fijas por transacción en Commerce y Invoice. Suscripciones basadas en el uso en Ledger. ¿Mayor volumen? Tarifas personalizadas para los tres.</p>
+</div>
+<div class="pricing-grid">
+<!-- Commerce -->
+<div class="tier" id="pricing-commerce">
+<div class="motif motif-ecom">
+<svg fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" viewbox="0 0 24 24"><path d="M3 7h18l-2 12H5L3 7z"></path><path d="M8 7V5a4 4 0 018 0v2"></path></svg>
+</div>
+<div class="tier-name">Commerce</div>
+<div class="tier-price"><span class="currency">%</span>1,99<span class="unit">/ transacción</span></div>
+<div class="tier-desc">Pago criptográfico para tiendas en línea. Shopify, WooCommerce y personalizado. Sin cuotas mensuales.</div>
+<ul class="tier-features">
+<li>Volumen de transacciones ilimitado</li>
+<li>BTC, USDT, USDC, ETH y 60 más</li>
+<li>Liquidar en USD o monedas estables</li>
+<li>Panel de autoservicio</li>
+</ul>
+<a class="tier-cta" href="https://app.southpay.io/" target="_blank" rel="noopener">Empieza gratis →</a>
+</div>
+<!-- Ledger -->
+<div class="tier" id="pricing-ledger">
+<div class="motif motif-ledger">
+<svg fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" viewbox="0 0 24 24"><path d="M4 12h8M4 7h12M4 17h6"></path><circle cx="18" cy="17" r="2"></circle></svg>
+</div>
+<div class="tier-name">Ledger</div>
+<div class="tier-starting">desde</div>
+<div class="tier-price"><span class="currency">$</span>97<span class="unit">/ mes</span></div>
+<div class="tier-desc">API de doble entrada para fintechs. Infraestructura de contabilidad de nivel de producción. Sin compromiso anual.</div>
+<ul class="tier-features">
+<li>Asignación de publicaciones basadas en el uso</li>
+<li>Multiactivos (FX + criptografía)</li>
+<li>Conectores Stripe, Wise, Revolut</li>
+<li>Panel de autoservicio</li>
+</ul>
+<a class="tier-cta" href="https://ledger.southpay.io/" target="_blank" rel="noopener">Comienza la prueba gratis →</a>
+</div>
+<!-- Invoice -->
+<div class="tier" id="pricing-invoice">
+<div class="motif motif-invoice">
+<svg fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" viewbox="0 0 24 24"><rect height="18" rx="1" width="14" x="5" y="3"></rect><path d="M8 8h8M8 12h8M8 16h5"></path></svg>
+</div>
+<div class="tier-name">Invoice</div>
+<div class="tier-price"><span class="currency">%</span>1,99<span class="unit">/ factura pagada</span></div>
+<div class="tier-desc">Envía facturas ilimitadas y enlaces de pago. Paga sólo cuando a uno le paguen.</div>
+<ul class="tier-features">
+<li>Invoices y enlaces ilimitados</li>
+<li>Aceptación de tarjeta Crypto +</li>
+<li>Exportación de QuickBooks + Xero</li>
+<li>Recordatorios recurrentes + automáticos</li>
+</ul>
+<a class="tier-cta" href="https://app.southpay.io/" target="_blank" rel="noopener">Empieza gratis →</a>
+</div>
+</div>
+<div class="pricing-foot">
+<a class="explore-link" href="/es/commerce">Explora Commerce <span class="arrow">→</span></a>
+<a class="explore-link" href="/es/ledger">Ledger de exploración <span class="arrow">→</span></a>
+<a class="explore-link" href="/es/invoice">Invoice Explora <span class="arrow">→</span></a>
+</div>
+<div class="custom-callout">
+<div class="copy">
+<span class="section-tag">Volumen personalizado</span>
+<h3>¿Haciendo volumen real? <em>Habla con nosotros.</em></h3>
+<p>Tarifas reducidas en Commerce y Invoice para comerciantes de alto volumen. Precios empresariales en Ledger con infraestructura dedicada y soporte SOC 2.</p>
+</div>
+<a class="btn-secondary" href="https://calendly.com/daniel-southpay/intro-call" target="_blank" rel="noopener">Habla con un fundador →</a>
+</div>
+</div>
+</section>
+<!-- ============ FAQ ============ -->
+<section class="faq-pricing-section">
+<div class="container">
+<div class="faq-grid">
+<div>
+<span class="section-tag">Preguntas sobre precios</span>
+<h2 style="font-size: clamp(36px, 4.5vw, 54px);">Respuestas honestas sobre <em>los números.</em></h2>
+<p class="section-intro" style="margin-top: 18px; margin-bottom: 28px;">Si los precios en esta página plantean alguna pregunta, aquí es donde la respondemos.</p>
+<a class="btn-secondary" href="https://calendly.com/daniel-southpay/intro-call" target="_blank" rel="noopener">Habla con un fundador</a>
+</div>
+<div class="faq-list">
+<div class="faq-item open">
+<div class="faq-q">¿Existen tarifas de instalación, mínimos mensuales o contratos anuales? <span class="faq-toggle">+</span></div>
+<div class="faq-a">No. Ninguno de los tres productos tiene tarifas de instalación, mínimos mensuales o contratos anuales. Commerce y Invoice cobran un % fijo por transacción. El Ledger es mensual y se puede cancelar desde el tablero.</div>
+</div>
+<div class="faq-item">
+<div class="faq-q">¿Necesito comprometerme con un nivel? <span class="faq-toggle">+</span></div>
+<div class="faq-a">No. Las descripciones de los niveles de Commerce y Invoice son solo para mayor claridad: no hay un registro por separado. Ledger le permite elegir un nivel en el panel y cambiarlo cada vez que cambie tu uso.</div>
+</div>
+<div class="faq-item">
+<div class="faq-q">¿Qué incluye realmente el 1,99% en Commerce y Invoice? <span class="faq-toggle">+</span></div>
+<div class="faq-a">Todo por lo que cobramos. Sin tarifas de cumplimiento de PCI, sin tarifas de intercambio, sin tarifas de entrada, sin seguro de contracargo, sin recargos cambiarios para transacciones transfronterizas. El número que ve al finalizar la compra es el número que mantenemos.</div>
+</div>
+<div class="faq-item">
+<div class="faq-q">¿Cuándo pago en Commerce y Invoice? <span class="faq-toggle">+</span></div>
+<div class="faq-a">Sólo cuando te pagan. La tarifa se deduce de cada transacción en el momento de la liquidación. Si un cliente nunca paga, tú tampoco.</div>
+</div>
+<div class="faq-item">
+<div class="faq-q">¿Qué cuenta como una "publicación" en Ledger? <span class="faq-toggle">+</span></div>
+<div class="faq-a">Una contabilización es un débito o crédito en una cuenta. Una transacción de pago típica tiene de 2 a 4 contabilizaciones (débito de usuario, crédito comercial, crédito de tarifa de plataforma, etc.). Medimos las publicaciones, no las llamadas API, por lo que una única transacción equilibrada con tres tramos cuenta como tres publicaciones.</div>
+</div>
+<div class="faq-item">
+<div class="faq-q">¿Cuándo califico para los precios personalizados? <span class="faq-toggle">+</span></div>
+<div class="faq-a">Ofrecemos precios personalizados en Commerce y Invoice para comerciantes, mercados y plataformas de gran volumen. No hay un umbral fijo. Si procesa un volumen significativo cada mes y desea una mejor tarifa, reserve una llamada y elaboraremos un acuerdo que se adapte a tu negocio.</div>
+</div>
+<div class="faq-item">
+<div class="faq-q">¿Cuándo debería hablarte sobre Enterprise? <span class="faq-toggle">+</span></div>
+<div class="faq-a">Cuando necesite precios personalizados, un entorno dedicado, marca blanca, un contrato de nivel de servicio (SLA) de tiempo de actividad o soporte de cumplimiento más allá de los niveles estándar. Si el autoservicio lo cubre, no hay motivo para llamar.</div>
+</div>
+</div>
+</div>
+</div>
+</section>
+<!-- ============ Final CTA ============ -->
+<section style="padding-top: 0; padding-bottom: 80px;">
+<div class="container">
+<div class="final-cta-wrap">
+<span class="section-tag">empezar</span>
+<h2>Un registro. <em>Tres productos.</em></h2>
+<p>La misma cuenta app.southpay.io le brinda Commerce, Ledger y Invoice. Enciende lo que necesitas, deja el resto apagado.</p>
+<div class="cta-row">
+<a class="btn-primary" href="https://app.southpay.io/" target="_blank" rel="noopener">Empieza gratis <span class="arrow">→</span></a>
+<a class="btn-secondary" href="https://calendly.com/daniel-southpay/intro-call" target="_blank" rel="noopener">Habla con nosotros primero</a>
+</div>
+</div>
+</div>
+</section>
+<footer>
+<div class="container">
+<div class="footer-inner">
+<div class="footer-brand">
+<a class="logo" href="/es/">
+<img alt="SouthPay" class="logo-img" src="/assets/img/southpay-logo.avif"/>
+</a>
+<p>Pagos criptográficos para tiendas, libros de contabilidad y facturas. Cero devoluciones de cargo. Liquidar en cualquier moneda.</p>
+        <div class="footer-social">
+          <a href="https://www.linkedin.com/company/southpay/" target="_blank" rel="noopener" aria-label="LinkedIn">
+            <svg viewBox="0 0 24 24" width="18" height="18" fill="currentColor" aria-hidden="true"><path d="M4.98 3.5a2.5 2.5 0 1 1 0 5 2.5 2.5 0 0 1 0-5zM3 9h4v12H3V9zm7 0h3.8v1.7h.06c.53-.95 1.83-1.95 3.77-1.95 4.03 0 4.77 2.5 4.77 5.74V21H18.6v-5.65c0-1.35-.03-3.08-1.96-3.08-1.96 0-2.26 1.45-2.26 2.98V21H10V9z"/></svg>
+          </a>
+          <a href="https://www.instagram.com/southpay.io/" target="_blank" rel="noopener" aria-label="Instagram">
+            <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="3" width="18" height="18" rx="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.5" cy="6.5" r="1" fill="currentColor" stroke="none"/></svg>
+          </a>
+        </div>
+</div>
+<div class="footer-cols">
+<div class="footer-col">
+<h4>Productos</h4>
+<a href="/es/commerce">Commerce</a>
+<a href="/es/ledger">Ledger</a>
+<a href="/es/invoice">Invoice</a>
+</div>
+<div class="footer-col industries-col">
+<h4>Industrias</h4>
+<div class="footer-col-grid">
+<a href="/es/industries">Todas las industrias </a>
+<a href="/es/industries/ecommerce-stores">Tiendas ecommerce</a>
+<a href="/es/industries/gaming">Gaming</a>
+<a href="/es/industries/trading-investments">Trading e inversiones</a>
+<a href="/es/industries/stablecoin-top-ups">Recargas con stablecoin</a>
+<a href="/es/industries/it-solutions">TI y SaaS</a>
+<a href="/es/industries/web3">Web3</a>
+<a href="/es/industries/cross-border-trade">Comercio transfronterizo</a>
+<a href="/es/industries/digital-goods">Bienes digitales</a>
+<a href="/es/industries/payment-service-providers">Payment service providers</a>
+<a href="/es/industries/creator-economy">Economía de creadores</a>
+<a href="/es/industries/professional-services">Servicios profesionales</a>
+<a href="/es/industries/travel-hospitality">Viajes y hospitalidad</a>
+<a href="/es/industries/luxury-rentals">Alquileres de lujo</a>
+</div>
+</div>
+<div class="footer-col">
+<h4>Empresa</h4>
+<a href="/es/about">Acerca de</a>
+<a href="https://docs.southpay.io/" target="_blank" rel="noopener">Docs</a>
+<a href="/es/pricing">Precios</a>
+<a href="mailto:support@southpay.io">Soporte</a>
+</div>
+<div class="footer-col">
+<h4>Legal</h4>
+<a href="/es/aml-policy">Política AML</a>
+<a href="/es/merchant-services-agreement">Acuerdo comercial</a>
+<a href="/es/privacy-policy">Política de privacidad</a>
+<a href="/es/terms-and-conditions">Términos y condiciones</a>
+</div>
+</div>
+</div>
+<div class="footer-bottom">
+<span>© 2026 SouthPay. Todos los derechos reservados.</span>
+<span>SouthPay es una marca de <a class="alc-link" href="https://alc.media/" rel="noopener" target="_blank">ALC Media</a>.</span>
+</div>
+</div>
+</footer>
+<script src="/assets/southpay.js"></script>
+<!-- LANG_JS_BEGIN -->
+<script>
+(function(){
+  // Delegate clicks at the document level — works on desktop and mobile,
+  // doesn't depend on when .nav-lang elements were inserted.
+  document.addEventListener('click', function(e){
+    var trigger = e.target.closest('.nav-lang-trigger');
+    if(trigger){
+      e.preventDefault();
+      e.stopPropagation();
+      var lang = trigger.closest('.nav-lang');
+      var wasOpen = lang.classList.contains('open');
+      document.querySelectorAll('.nav-lang.open').forEach(function(o){ o.classList.remove('open'); });
+      if(!wasOpen) lang.classList.add('open');
+      return;
+    }
+    if(!e.target.closest('.nav-lang-menu')){
+      document.querySelectorAll('.nav-lang.open').forEach(function(o){ o.classList.remove('open'); });
+    }
+  }, false);
+  // Close on Escape for keyboard users
+  document.addEventListener('keydown', function(e){
+    if(e.key === 'Escape'){
+      document.querySelectorAll('.nav-lang.open').forEach(function(o){ o.classList.remove('open'); });
+    }
+  });
+})();
+</script>
+<!-- LANG_JS_END -->
+</body>
+</html>

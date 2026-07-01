@@ -1,0 +1,798 @@
+<!DOCTYPE html>
+
+<html lang="pt-PT">
+<head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<link href="/favicon.svg" rel="icon" type="image/svg+xml"/>
+<title>SouthPay Invoice - Cobra em crypto. Recebe em euros.</title>
+<meta content="Envia faturas e links de pagamento pagos em crypto, euros ou euros. Para freelancers, agências e empresas de serviços que pretendam cobrar aos clientes em qualquer moeda." name="description"/>
+<link href="https://fonts.googleapis.com" rel="preconnect"/>
+<link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
+<link href="https://fonts.googleapis.com/css2?family=Inter:ital,wght@0,400;0,500;0,600;0,700;1,500;1,600;1,700&amp;family=Geist:wght@400;500;600;700&amp;family=Geist+Mono:wght@400;500&amp;display=swap" rel="stylesheet"/>
+<link href="/southpay.css" rel="stylesheet"/>
+<style>
+/* Invoice-specific hero cards */
+.hero-card-invoice {
+  top: 10px; right: 30px;
+  width: 320px;
+  transform: rotate(-4deg);
+  animation: drift-a 8s ease-in-out infinite;
+  overflow: hidden;
+}
+.hero-card-invoice:hover { animation-play-state: paused; }
+.hero-card-invoice .inv-head {
+  padding: 18px 22px; background: var(--bg-lavender);
+  display: flex; justify-content: space-between; align-items: center;
+  border-bottom: 1px solid var(--line);
+}
+.hero-card-invoice .inv-num {
+  font-family: var(--mono); font-size: 11px;
+  color: var(--brand); letter-spacing: 0.1em;
+  text-transform: uppercase;
+}
+.hero-card-invoice .inv-status {
+  font-family: var(--body); font-size: 11px;
+  font-weight: 600; color: var(--mint);
+  display: inline-flex; align-items: center; gap: 4px;
+}
+.hero-card-invoice .inv-status::before { content: ''; width: 6px; height: 6px; border-radius: 50%; background: var(--mint); }
+.hero-card-invoice .inv-body { padding: 20px 22px; }
+.hero-card-invoice .inv-label { font-size: 11px; color: var(--ink-mute); font-family: var(--mono); text-transform: uppercase; letter-spacing: 0.08em; margin-bottom: 6px; }
+.hero-card-invoice .inv-client { font-size: 14px; font-weight: 600; margin-bottom: 14px; }
+.hero-card-invoice .inv-line { display: flex; justify-content: space-between; font-size: 13px; padding: 6px 0; color: var(--ink-soft); }
+.hero-card-invoice .inv-line.tot { padding-top: 12px; margin-top: 6px; border-top: 1px solid var(--line); font-weight: 600; color: var(--ink); font-size: 15px; }
+.hero-card-invoice .inv-line .amt { font-family: var(--mono); }
+
+.hero-card-link {
+  bottom: 100px; left: 0;
+  width: 290px; padding: 22px;
+  transform: rotate(5deg);
+  animation: drift-b 9s ease-in-out infinite;
+}
+.hero-card-link:hover { animation-play-state: paused; }
+.hero-card-link .link-label { font-size: 11px; color: var(--ink-mute); font-family: var(--mono); text-transform: uppercase; letter-spacing: 0.1em; margin-bottom: 14px; }
+.hero-card-link .link-amount { font-family: var(--display); font-weight: 700; font-size: 36px; line-height: 1; letter-spacing: -0.04em; margin-bottom: 14px; }
+.hero-card-link .link-amount .ccy { font-size: 17px; color: var(--ink-mute); font-weight: 600; }
+.hero-card-link .link-url {
+  font-family: var(--mono); font-size: 12px;
+  background: var(--bg-lavender); color: var(--brand);
+  padding: 8px 10px; border-radius: 8px;
+  display: flex; align-items: center; gap: 8px;
+  margin-bottom: 12px;
+}
+.hero-card-link .copy-ico { width: 14px; height: 14px; opacity: 0.6; flex-shrink: 0; }
+.hero-card-link .link-pays {
+  display: flex; gap: 6px; flex-wrap: wrap;
+}
+.hero-card-link .link-pays span {
+  font-size: 11px; padding: 4px 8px;
+  background: #fff; border: 1px solid var(--line);
+  border-radius: 999px; font-family: var(--mono); color: var(--ink-soft);
+}
+
+.hero-card-paid {
+  bottom: 20px; right: 60px;
+  width: 250px; padding: 20px;
+  transform: rotate(-3deg);
+  animation: drift-c 10s ease-in-out infinite;
+}
+.hero-card-paid:hover { animation-play-state: paused; }
+.hero-card-paid .paid-row { display: flex; align-items: center; gap: 12px; margin-bottom: 14px; }
+.hero-card-paid .paid-check {
+  width: 30px; height: 30px; border-radius: 50%;
+  background: var(--mint); color: #fff;
+  display: inline-flex; align-items: center; justify-content: center;
+  font-size: 14px; font-weight: 700;
+}
+.hero-card-paid .paid-label { font-size: 12px; color: var(--ink-mute); font-family: var(--mono); text-transform: uppercase; letter-spacing: 0.08em; }
+.hero-card-paid .paid-name { font-size: 14px; font-weight: 600; margin-top: 2px; font-family: var(--display); letter-spacing: -0.02em; }
+.hero-card-paid .paid-from { font-size: 12px; color: var(--ink-mute); padding-top: 12px; border-top: 1px solid var(--line); }
+.hero-card-paid .paid-from b { color: var(--ink); font-weight: 600; }
+.hero-card-paid .paid-to { font-size: 12px; color: var(--ink-mute); margin-top: 4px; }
+.hero-card-paid .paid-to b { color: var(--mint); font-weight: 600; }
+
+@media (max-width: 980px) {
+  .hero-visual { height: 460px; }
+  .hero-card-invoice { right: 0; top: 0; width: 280px; }
+  .hero-card-link { left: 0; bottom: 140px; width: 260px; }
+  .hero-card-paid { right: 0; bottom: 0; }
+}
+
+/* Invoice mockup in solution section */
+.invoice-showpiece {
+  background: #fff; border: 1px solid var(--line);
+  border-radius: var(--r-xl); padding: 0;
+  box-shadow: 0 30px 80px -30px rgba(55, 75, 236, 0.25);
+  overflow: hidden;
+}
+.invoice-showpiece .invoice-header {
+  padding: 24px 28px; background: var(--bg-lavender);
+  display: flex; justify-content: space-between; align-items: flex-start;
+  border-bottom: 1px solid var(--line);
+}
+.invoice-showpiece .invoice-from {
+  font-family: var(--display); font-size: 22px;
+  font-weight: 600; font-style: italic;
+  letter-spacing: -0.025em; color: var(--brand);
+}
+.invoice-showpiece .invoice-meta-block { text-align: right; }
+.invoice-showpiece .invoice-num {
+  font-family: var(--mono); font-size: 12px;
+  color: var(--brand); letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+.invoice-showpiece .invoice-date { font-size: 12px; color: var(--ink-mute); margin-top: 4px; }
+.invoice-showpiece .invoice-body { padding: 28px; }
+.invoice-showpiece .invoice-to {
+  font-size: 11px; color: var(--ink-mute); text-transform: uppercase;
+  letter-spacing: 0.1em; margin-bottom: 6px; font-family: var(--mono);
+}
+.invoice-showpiece .invoice-client { font-size: 16px; font-weight: 600; margin-bottom: 22px; }
+.invoice-showpiece .invoice-rows { border-top: 1px solid var(--line); margin-top: 18px; }
+.invoice-showpiece .invoice-row {
+  display: grid; grid-template-columns: 1fr 70px 110px;
+  padding: 14px 0; border-bottom: 1px solid var(--line-soft);
+  font-size: 14px; align-items: center;
+}
+.invoice-showpiece .invoice-row .desc { color: var(--ink); }
+.invoice-showpiece .invoice-row .qty { color: var(--ink-mute); font-family: var(--mono); text-align: right; }
+.invoice-showpiece .invoice-row .amount { color: var(--ink); font-family: var(--mono); text-align: right; font-weight: 500; }
+.invoice-showpiece .invoice-totals { padding-top: 14px; }
+.invoice-showpiece .total-row {
+  display: flex; justify-content: space-between; padding: 6px 0;
+  font-size: 14px;
+}
+.invoice-showpiece .total-row.grand {
+  padding-top: 14px; margin-top: 10px;
+  border-top: 1px solid var(--line);
+  font-family: var(--display); font-weight: 700;
+  font-size: 26px; letter-spacing: -0.035em;
+}
+.invoice-showpiece .total-row.grand .amount { color: var(--brand); }
+.invoice-showpiece .invoice-pay {
+  padding: 18px 28px;
+  background: var(--brand); color: #fff;
+  display: flex; justify-content: space-between; align-items: center;
+}
+.invoice-showpiece .pay-options { font-size: 12px; opacity: 0.8; }
+.invoice-showpiece .pay-cta {
+  background: #fff; color: var(--brand);
+  padding: 10px 16px; border-radius: var(--r-pill);
+  font-size: 13px; font-weight: 600;
+}
+</style>
+<!-- GA_BEGIN -->
+<script async="" src="https://www.googletagmanager.com/gtag/js?id=G-G1YWDRHW8T"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+  gtag('config', 'G-G1YWDRHW8T');
+</script>
+<!-- GA_END -->
+<!-- AMPLITUDE_BEGIN -->
+<script src="https://cdn.eu.amplitude.com/script/30b70e5e6ec2360a6c262a482628baf0.js"></script>
+<script>
+  window.amplitude.init('30b70e5e6ec2360a6c262a482628baf0', {
+    serverZone: 'EU',
+    serverUrl: 'https://api.eu.amplitude.com/2/httpapi',
+    fetchRemoteConfig: true,
+    autocapture: {
+      attribution: true,
+      fileDownloads: true,
+      formInteractions: true,
+      pageViews: true,
+      sessions: true,
+      elementInteractions: true,
+      networkTracking: true,
+      webVitals: true,
+      frustrationInteractions: true
+    }
+  });
+</script>
+<!-- AMPLITUDE_END -->
+<!-- OG_BEGIN -->
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="SouthPay">
+<meta property="og:title" content="SouthPay Invoice - Cobra em crypto. Recebe em euros.">
+<meta property="og:description" content="Crypto payments for stores, ledgers, and invoices.">
+<meta property="og:url" content="https://southpay.io/pt/invoice">
+<meta property="og:image" content="https://southpay.io/assets/img/og-image.png">
+<meta property="og:image:secure_url" content="https://southpay.io/assets/img/og-image.png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:image:alt" content="SouthPay - crypto payments for stores, ledgers, and invoices">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="SouthPay Invoice - Cobra em crypto. Recebe em euros.">
+<meta name="twitter:description" content="Crypto payments for stores, ledgers, and invoices.">
+<meta name="twitter:image" content="https://southpay.io/assets/img/og-image.png">
+<meta name="twitter:image:alt" content="SouthPay - crypto payments for stores, ledgers, and invoices">
+<!-- OG_END -->
+<!-- HREFLANG_BEGIN -->
+<link rel="alternate" hreflang="en" href="https://southpay.io/invoice">
+<link rel="alternate" hreflang="es" href="https://southpay.io/es/invoice">
+<link rel="alternate" hreflang="pt" href="https://southpay.io/pt/invoice">
+<link rel="alternate" hreflang="x-default" href="https://southpay.io/invoice">
+<!-- HREFLANG_END -->
+</head>
+<body>
+<div class="hex-bg" id="hexBg">
+<svg id="hexSvg" preserveaspectratio="xMidYMid slice" xmlns="http://www.w3.org/2000/svg"></svg>
+</div>
+<nav class="site-nav">
+<div class="container">
+<div class="nav-inner">
+<a class="logo" href="/pt/">
+<img alt="SouthPay" class="logo-img" src="/assets/img/southpay-logo.avif"/>
+<span class="logo-text"><span class="slash">/</span><span class="product">invoice</span></span>
+</a>
+<div class="nav-links">
+<div class="nav-products">
+<span class="nav-products-trigger">Produtos<svg fill="none" stroke="currentColor" stroke-width="2" viewbox="0 0 10 10"><path d="M2 4l3 3 3-3"></path></svg></span>
+<div class="nav-products-menu">
+<a class="nav-product-item" href="/pt/commerce">
+<div class="motif motif-ecom"><svg fill="none" stroke="currentColor" stroke-width="2" viewbox="0 0 24 24"><path d="M3 7h18l-2 12H5L3 7z"></path><path d="M8 7V5a4 4 0 018 0v2"></path></svg></div>
+<div class="nav-product-info">
+<div class="nav-product-name">Commerce</div>
+<div class="nav-product-desc">Checkout em crypto para a tua loja. 1.99% flat.</div>
+</div>
+</a>
+<a class="nav-product-item" href="/pt/ledger">
+<div class="motif motif-ledger"><svg fill="none" stroke="currentColor" stroke-width="2" viewbox="0 0 24 24"><path d="M4 12h8M4 7h12M4 17h6"></path><circle cx="18" cy="17" r="2"></circle></svg></div>
+<div class="nav-product-info">
+<div class="nav-product-name">Ledger</div>
+<div class="nav-product-desc">API de partida dobrada para fintechs. A partir de 97$/mês.</div>
+</div>
+</a>
+<a class="nav-product-item" href="/pt/invoice">
+<div class="motif motif-invoice"><svg fill="none" stroke="currentColor" stroke-width="2" viewbox="0 0 24 24"><rect height="18" rx="1" width="14" x="5" y="3"></rect><path d="M8 8h8M8 12h8M8 16h5"></path></svg></div>
+<div class="nav-product-info">
+<div class="nav-product-name">Invoice</div>
+<div class="nav-product-desc">Recebe em crypto, recebe em euros.</div>
+</div>
+</a>
+</div>
+</div>
+<div class="nav-industries">
+<span class="nav-industries-trigger">Indústrias<svg fill="none" stroke="currentColor" stroke-width="2" viewbox="0 0 10 10"><path d="M2 4l3 3 3-3"></path></svg></span>
+<div class="nav-industries-menu">
+<a class="nav-industry-item" href="/pt/industries/ecommerce-stores">
+<div class="nav-industry-icon"><svg fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" viewbox="0 0 24 24"><path d="M3 7h18l-2 12H5L3 7z"></path><path d="M8 7V5a4 4 0 018 0v2"></path></svg></div>
+<div>
+<div class="nav-industry-name">Lojas ecommerce</div>
+<div class="nav-industry-desc">Check-out em crypto para retalhistas globais</div>
+</div>
+</a>
+<a class="nav-industry-item" href="/pt/industries/gaming">
+<div class="nav-industry-icon"><svg fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" viewbox="0 0 24 24"><rect height="10" rx="3" width="18" x="3" y="8"></rect><path d="M8 13h4M10 11v4"></path><circle cx="16" cy="12.5" fill="currentColor" r="0.8"></circle><circle cx="17.5" cy="14.5" fill="currentColor" r="0.8"></circle></svg></div>
+<div>
+<div class="nav-industry-name">Gaming</div>
+<div class="nav-industry-desc">Recargas e pagamentos aos criadores</div>
+</div>
+</a>
+<a class="nav-industry-item" href="/pt/industries/trading-investments">
+<div class="nav-industry-icon"><svg fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" viewbox="0 0 24 24"><path d="M3 17l6-6 4 4 8-8"></path><path d="M14 7h7v7"></path></svg></div>
+<div>
+<div class="nav-industry-name">Trading e investimentos</div>
+<div class="nav-industry-desc">Depósitos, levantamentos, rampa de acesso</div>
+</div>
+</a>
+<a class="nav-industry-item" href="/pt/industries/stablecoin-top-ups">
+<div class="nav-industry-icon"><svg fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" viewbox="0 0 24 24"><rect height="13" rx="2" width="18" x="3" y="6"></rect><path d="M15 12h-2a2 2 0 100 4h2"></path><path d="M3 10h18"></path></svg></div>
+<div>
+<div class="nav-industry-name">Recargas com stablecoin</div>
+<div class="nav-industry-desc">Fluxos de recarga de carteira e fintech</div>
+</div>
+</a>
+<a class="nav-industry-item" href="/pt/industries/it-solutions">
+<div class="nav-industry-icon"><svg fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" viewbox="0 0 24 24"><rect height="7" rx="2" width="18" x="3" y="4"></rect><rect height="7" rx="2" width="18" x="3" y="13"></rect><path d="M7 7.5h.01M7 16.5h.01"></path></svg></div>
+<div>
+<div class="nav-industry-name">IT e SaaS</div>
+<div class="nav-industry-desc">Cloud, alojamento, software</div>
+</div>
+</a>
+<a class="nav-industry-item" href="/pt/industries/web3">
+<div class="nav-industry-icon"><svg fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" viewbox="0 0 24 24"><path d="M12 3l8 4.5v9L12 21l-8-4.5v-9z"></path><path d="M12 12L4 7.5M12 12l8-4.5M12 12v9"></path></svg></div>
+<div>
+<div class="nav-industry-name">Web3</div>
+<div class="nav-industry-desc">Rails cripto-nativos para protocolos</div>
+</div>
+</a>
+<a class="nav-industry-item" href="/pt/industries/cross-border-trade">
+<div class="nav-industry-icon"><svg fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" viewbox="0 0 24 24"><circle cx="12" cy="12" r="9"></circle><path d="M3 12h18"></path><path d="M12 3c2.5 3 2.5 15 0 18M12 3c-2.5 3-2.5 15 0 18"></path></svg></div>
+<div>
+<div class="nav-industry-name">Comércio transfronteiriço</div>
+<div class="nav-industry-desc">Importação, exportação, pagamentos a fornecedores</div>
+</div>
+</a>
+<a class="nav-industry-item" href="/pt/industries/digital-goods">
+<div class="nav-industry-icon"><svg fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" viewbox="0 0 24 24"><path d="M12 3v12"></path><path d="M7 10l5 5 5-5"></path><rect height="4" rx="1" width="18" x="3" y="17"></rect></svg></div>
+<div>
+<div class="nav-industry-name">Bens digitais</div>
+<div class="nav-industry-desc">Software, jogos, conteúdos, downloads</div>
+</div>
+</a>
+<a class="nav-industry-item" href="/pt/industries/payment-service-providers">
+<div class="nav-industry-icon"><svg fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" viewbox="0 0 24 24"><rect height="11" rx="2" width="20" x="2" y="7"></rect><path d="M2 11h20"></path><path d="M6 15h3"></path></svg></div>
+<div>
+<div class="nav-industry-name">Payment service providers</div>
+<div class="nav-industry-desc">Crypto as a feature for your stack</div>
+</div>
+</a>
+<a class="nav-industry-item" href="/pt/industries/creator-economy">
+<div class="nav-industry-icon"><svg fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" viewbox="0 0 24 24"><rect height="11" rx="3" width="6" x="9" y="3"></rect><path d="M7 11a5 5 0 0010 0"></path><path d="M12 16v4M9 20h6"></path></svg></div>
+<div>
+<div class="nav-industry-name">Economia de criadores</div>
+<div class="nav-industry-desc">Pagamentos e gorjetas aos criadores</div>
+</div>
+</a>
+<a class="nav-industry-item" href="/pt/industries/professional-services">
+<div class="nav-industry-icon"><svg fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" viewbox="0 0 24 24"><rect height="12" rx="2" width="18" x="3" y="8"></rect><path d="M9 8V5a2 2 0 012-2h2a2 2 0 012 2v3"></path><path d="M3 13h18"></path></svg></div>
+<div>
+<div class="nav-industry-name">Serviços profissionais</div>
+<div class="nav-industry-desc">Agências, consultoras, freelancers</div>
+</div>
+</a>
+<a class="nav-industry-item" href="/pt/industries/travel-hospitality">
+<div class="nav-industry-icon"><svg fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" viewbox="0 0 24 24"><path d="M3 12l18-6-5 17-3-9-10-2z"></path></svg></div>
+<div>
+<div class="nav-industry-name">Viagens e hospitalidade</div>
+<div class="nav-industry-desc">Hotéis, OTAs, tours, experiências</div>
+</div>
+</a>
+<a class="nav-industry-item" href="/pt/industries/luxury-rentals">
+<div class="nav-industry-icon"><svg fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" viewbox="0 0 24 24"><path d="M3 17l3-10 4 4 2-8 2 8 4-4 3 10z"></path><circle cx="12" cy="20" fill="currentColor" r="1"></circle></svg></div>
+<div>
+<div class="nav-industry-name">Alugueres de luxo</div>
+<div class="nav-industry-desc">Aviação, iates, supercarros, experiências</div>
+</div>
+</a>
+<a class="nav-industries-cta" href="/pt/industries">Todas as indústrias<span class="arrow">→</span></a>
+</div>
+</div>
+<a href="/pt/about">Sobre</a>
+<a href="#how-it-works">Como funciona</a>
+<a href="https://docs.southpay.io/" rel="noopener" target="_blank">Docs</a>
+<a class="nav-cta" href="https://app.southpay.io/" rel="noopener" target="_blank">Começa grátis →</a><!-- LANG_BEGIN --><div class="nav-lang"><button class="nav-lang-trigger" type="button" aria-haspopup="true" aria-label="Language"><span class="nav-lang-flag">🇵🇹</span><span class="nav-lang-code">PT</span><svg class="nav-lang-chev" viewBox="0 0 10 10" width="10" height="10" fill="none" stroke="currentColor" stroke-width="2"><path d="M2 4l3 3 3-3"/></svg></button><div class="nav-lang-menu" role="menu"><a href="/invoice" class="nav-lang-opt" role="menuitem"><span class="nav-lang-flag">🇺🇸</span> English</a><a href="/es/invoice" class="nav-lang-opt" role="menuitem"><span class="nav-lang-flag">🇪🇸</span> Español</a><a href="/pt/invoice" class="nav-lang-opt nav-lang-opt--active" role="menuitem"><span class="nav-lang-flag">🇵🇹</span> Português</a></div></div><!-- LANG_END --></div>
+</div>
+</div>
+</nav>
+<div class="breadcrumb-strip">
+<div class="container">
+<div class="breadcrumb-inner">
+<a class="breadcrumb-link" href="/pt/">← Todos os produtos</a>
+</div>
+</div>
+</div>
+<section class="hero">
+<div class="container">
+<div class="hero-grid">
+<div>
+<div class="eyebrow reveal">
+<span class="pill">Novo</span> SouthPay Invoice · Ao vivo hoje
+        </div>
+<h1 class="reveal d1">Cobra em crypto. <em>Recebe em euros.</em></h1>
+<p class="hero-sub reveal d2">
+          Envia links de pagamento e faturas pagas em Bitcoin, USDT ou USD. Para freelancers, agências e empresas de serviços. <strong>1,99% fixo por fatura paga. Sem taxas mensais.</strong>
+</p>
+<div class="cta-row reveal d3">
+<a class="btn-primary" href="https://app.southpay.io/" rel="noopener" target="_blank">Começa a enviar faturas <span class="arrow">→</span></a>
+<a class="btn-secondary" href="#how-it-works">Vê em 60 segundos</a>
+</div>
+<div class="hero-meta reveal d4">
+<span><span class="check">✓</span> Grátis para enviar</span>
+<span><span class="check">✓</span> Faturar em qualquer moeda</span>
+<span><span class="check">✓</span> Liquide em USD, EUR ou crypto</span>
+</div>
+</div>
+<div class="hero-visual reveal d3">
+<div class="float-card hero-card-invoice">
+<div class="inv-head">
+<span class="inv-num">INV · 2026-0148</span>
+<span class="inv-status">Pago</span>
+</div>
+<div class="inv-body">
+<div class="inv-label">Faturado para</div>
+<div class="inv-client">Halcyon Ventures, Inc.</div>
+<div class="inv-line"><span>Retentor de estratégia do segundo trimestre</span><span class="amt">US$ 8.400,00</span></div>
+<div class="inv-line"><span>Facilitação de workshops</span><span class="amt">US$ 1.200,00</span></div>
+<div class="inv-line tot"><span>Pago em USDT</span><span class="amt">US$ 9.600,00</span></div>
+</div>
+</div>
+<div class="float-card hero-card-link">
+<div class="link-label">Link de pagamento</div>
+<div class="link-amount">US$ 2.400 <span class="ccy">USD</span></div>
+<div class="link-url">
+<span style="overflow: hidden; text-overflow: ellipsis; white-space: nowrap;">pay.southpay.io/j-thorne</span>
+<svg class="copy-ico" fill="none" stroke="currentColor" stroke-width="2" viewbox="0 0 24 24"><rect height="11" rx="1" width="11" x="9" y="9"></rect><path d="M5 15V5a1 1 0 011-1h10"></path></svg>
+</div>
+<div class="link-pays">
+<span>USDT</span><span>USDC</span><span>BTC</span><span>Cartão em euros</span>
+</div>
+</div>
+<div class="float-card hero-card-paid">
+<div class="paid-row">
+<div class="paid-check">✓</div>
+<div>
+<div class="paid-label">Assentou</div>
+<div class="paid-name">US$ 2.376,00</div>
+</div>
+</div>
+<div class="paid-from">Cliente pago <b>2.400 euros</b></div>
+<div class="paid-to">Tu recebeu<b>USD no teu banco</b></div>
+</div>
+</div>
+</div>
+</div>
+</section>
+<div class="integrations">
+<div class="container">
+<div class="integrations-inner">
+<span class="integrations-label">Utilizado por freelancers e agências em:</span>
+<div class="integrations-logos">
+<img alt="Webflow" loading="lazy" src="/assets/img/webflow-logo.svg" style="height: 26px;"/>
+<img alt="Figma" loading="lazy" src="/assets/img/figma-logo.webp" style="height: 38px;"/>
+<img alt="Noção" loading="lazy" src="/assets/img/notion-logo.png"/>
+<img alt="Stripe" loading="lazy" src="/assets/img/stripe-logo.png"/>
+<img alt="QuickBooks" loading="lazy" src="/assets/img/quickbooks-logo.png"/>
+<img alt="Xero" loading="lazy" src="/assets/img/xero-logo.webp" style="height: 38px;"/>
+</div>
+</div>
+</div>
+</div>
+<section>
+<div class="container">
+<span class="section-tag">O problema</span>
+<h2>Volume de negócios em 2026 <em>não deveria ser assim tão difícil.</em></h2>
+<p class="section-intro">Os teus clientes são globais. Uns querem pagar em euros. Alguns possuem encriptação. Alguns estão em países onde as transferências demoram uma semana e custam quarenta euros. A maioria das ferramentas de faturação finge que nada disto está a acontecer.</p>
+<div class="problem-grid">
+<div class="problem-card">
+<div class="problem-icon">$</div>
+<div class="problem-headline">Taxas de transferência e atrasos.</div>
+<div class="problem-body">As transferências internacionais demoram dias, custam ao cliente mais de 30 euros e custam mais 15 euros para receber. No momento em que o dinheiro chega, o câmbio mudou e está vendido.</div>
+</div>
+<div class="problem-card">
+<div class="problem-icon">%</div>
+<div class="problem-headline">O Stripe tem 2,9% em cada link.</div>
+<div class="problem-body">Os processadores de cartões recebem a tua parte mesmo em faturas B2B, onde o risco de fraude é zero. Num projeto de 5 mil euros, são 145 euros que está a pagar para movimentar dinheiro que nunca seria chargeback.</div>
+</div>
+<div class="problem-card">
+<div class="problem-icon">x</div>
+<div class="problem-headline">Os clientes em crypto não têm onde pagar.</div>
+<div class="problem-body">Se metade dos teus clientes quiser pagar em USDT, estará a enviar endereços de carteira por e-mail (incompleto) ou a dizer não (perda de receita). Nenhum dos dois é profissional.</div>
+</div>
+</div>
+</div>
+</section>
+<section class="solution-section" id="how-it-works">
+<div class="container">
+<div class="solution-hero">
+<div class="solution-copy">
+<span class="section-tag">Como funciona</span>
+<h3>Um link. Qualquer moeda. <em>Tu decide como será pago.</em></h3>
+<p>Faz uma fatura na SouthPay. Ou gere um link de pagamento em dois cliques. Tu envia. O teu cliente abre, vê as tuas opções e escolhe uma.</p>
+<p>Podem pagar em <strong>Bitcoin, USDT, USDC ou com cartão em USD ou EUR</strong>. Recebe-o de acordo com o que definir como a tua preferência de pagamento. Stablecoins para uma carteira. Dólares para o teu banco. Ambos, divididos. O que fizer sentido para o teu negócio.</p>
+</div>
+<div>
+<div class="invoice-showpiece">
+<div class="invoice-header">
+<div>
+<div class="invoice-from">Jordan Thorne</div>
+<div style="font-family: var(--body); font-size: 12px; color: var(--ink-mute); margin-top: 2px;">Design e Estratégia</div>
+</div>
+<div class="invoice-meta-block">
+<div class="invoice-num">INV-2026-0148</div>
+<div class="invoice-date">Vencimento em 30 de maio de 2026</div>
+</div>
+</div>
+<div class="invoice-body">
+<div class="invoice-to">Faturado para</div>
+<div class="invoice-client">Halcyon Ventures, Inc.</div>
+<div class="invoice-rows">
+<div class="invoice-row">
+<div class="desc">Retentor de estratégia de marca do segundo trimestre</div>
+<div class="qty">1</div>
+<div class="amount">US$ 8.400,00</div>
+</div>
+<div class="invoice-row">
+<div class="desc">Workshop para as partes interessadas, 1 dia</div>
+<div class="qty">1</div>
+<div class="amount">US$ 1.200,00</div>
+</div>
+</div>
+<div class="invoice-totals">
+<div class="total-row"><span>Subtotal</span><span style="font-family: var(--mono);">US$ 9.600,00</span></div>
+<div class="total-row grand"><span>Total</span><span class="amount">US$ 9.600,00</span></div>
+</div>
+</div>
+<div class="invoice-pay">
+<div>
+<div style="font-size: 13px; font-weight: 600;">Paga com encriptação ou cartão</div>
+<div class="pay-options">USDT, USDC, BTC ou Visa/Mastercard</div>
+</div>
+<span class="pay-cta">Pagar agora →</span>
+</div>
+</div>
+</div>
+</div>
+</div>
+</section>
+<section>
+<div class="container">
+<span class="section-tag">O que está na caixa</span>
+<h2>Faturamento criado para <em>como realmente trabalha.</em></h2>
+<p class="section-intro">Criado para a forma como as empresas de serviços modernas faturam: clientes internacionais, moedas mistas, sem tempo para dramas contabilísticos.</p>
+<div class="feature-grid">
+<div class="feature featured">
+<div class="feature-icon">
+<svg fill="none" stroke="currentColor" stroke-width="2" viewbox="0 0 24 24"><rect height="18" rx="1" width="14" x="5" y="3"></rect><path d="M8 8h8M8 12h8M8 16h5"></path></svg>
+</div>
+<div class="feature-title">Faturas de marca, enviadas em segundos.</div>
+<div class="feature-desc">Adicione o teu logótipo, as tuas cores, os teus termos. Envia por e-mail ou partilhe o link diretamente. Lembretes enviados automaticamente até ao pagamento.</div>
+</div>
+<div class="feature">
+<div class="feature-icon">
+<svg fill="none" stroke="currentColor" stroke-width="2" viewbox="0 0 24 24"><path d="M10 13a5 5 0 007.54.54l3-3a5 5 0 00-7.07-7.07l-1.72 1.71"></path><path d="M14 11a5 5 0 00-7.54-.54l-3 3a5 5 0 007.07 7.07l1.71-1.71"></path></svg>
+</div>
+<div class="feature-title">Links de pagamento em dois cliques.</div>
+<div class="feature-desc">Não precisa de uma fatura completa? Gere um link de pagamento para qualquer valor, copie, cole e está feito. Ótimo para depósitos, retentores e pontuais.</div>
+</div>
+<div class="feature">
+<div class="feature-icon">
+<svg fill="none" stroke="currentColor" stroke-width="2" viewbox="0 0 24 24"><circle cx="12" cy="12" r="9"></circle><path d="M2 12h20M12 2a15 15 0 010 20M12 2a15 15 0 000 20"></path></svg>
+</div>
+<div class="feature-title">Qualquer moeda, qualquer carteira.</div>
+<div class="feature-desc">O cliente paga em BTC, USDT, USDC, ETH ou com Visa/Mastercard em USD ou EUR. Não precisa de perguntar, eles apenas escolhem.</div>
+</div>
+<div class="feature">
+<div class="feature-icon">
+<svg fill="none" stroke="currentColor" stroke-width="2" viewbox="0 0 24 24"><path d="M21 12c0 5-9 9-9 9s-9-4-9-9 4-9 9-9 9 4 9 9z"></path></svg>
+</div>
+<div class="feature-title">Faturar globalmente, liquidar localmente.</div>
+<div class="feature-desc">Envia uma fatura em euros para um cliente em Singapura. Pagam em USDT. Recebe USD no teu banco. Toda a camada FX desaparece.</div>
+</div>
+<div class="feature">
+<div class="feature-icon">
+<svg fill="none" stroke="currentColor" stroke-width="2" viewbox="0 0 24 24"><circle cx="12" cy="12" r="9"></circle><path d="M12 6v6l4 2"></path></svg>
+</div>
+<div class="feature-title">Faturas recorrentes.</div>
+<div class="feature-desc">Configura-o uma vez para um cliente retentor. Envia automaticamente na mesma data todos os meses, recorda e reconcilia automaticamente. Deixa de perseguir.</div>
+</div>
+<div class="feature featured">
+<div class="feature-icon">
+<svg fill="none" stroke="currentColor" stroke-width="2" viewbox="0 0 24 24"><path d="M3 12l4 4L19 6"></path></svg>
+</div>
+<div class="feature-title">Reconciliação que não mente.</div>
+<div class="feature-desc">Cada fatura paga é mapeada para uma transação real na rede ou com cartão. Exporte para o QuickBooks ou Xero. O teu contabilista para de gritar com tu.</div>
+</div>
+<div class="feature">
+<div class="feature-icon">
+<svg fill="none" stroke="currentColor" stroke-width="2" viewbox="0 0 24 24"><path d="M12 2l10 5v6c0 5-4 9-10 11C6 22 2 18 2 13V7l10-5z"></path></svg>
+</div>
+<div class="feature-title">Sem chargebacks.</div>
+<div class="feature-desc">Os pagamentos em crypto são finais. Os pagamentos com cartão através da SouthPay obtêm a mesma proteção contra litígios que esperaria, sem reversões surpresa após seis semanas.</div>
+</div>
+<div class="feature">
+<div class="feature-icon">
+<svg fill="none" stroke="currentColor" stroke-width="2" viewbox="0 0 24 24"><path d="M21 15v4a2 2 0 01-2 2H5a2 2 0 01-2-2v-4M7 10l5 5 5-5M12 15V3"></path></svg>
+</div>
+<div class="feature-title">Exporte tudo.</div>
+<div class="feature-desc">CSV. PDF. JSON. API estilo Stripe para profissionais inclinados para a engenharia. Os teus dados são os teus dados. Leve-o quando e onde quiser.</div>
+</div>
+</div>
+</div>
+</section>
+<section>
+<div class="container">
+<span class="section-tag">Para quem é</span>
+<h2>Construído para o povo <em>realmente a ser pago.</em></h2>
+<p class="section-intro">Três padrões que vemos com mais frequência. Se isto soa como tu, o Invoice irá adequar-se ao teu fluxo de trabalho desde o primeiro dia.</p>
+<div class="problem-grid">
+<div class="problem-card">
+<div class="problem-icon" style="font-style: normal;">F</div>
+<div class="problem-headline">Freelancers com clientes globais.</div>
+<div class="problem-body">Designers, developers, escritores, consultores. Metade do teu trabalho é para clientes que nunca conheceu pessoalmente. Uns querem pagar em euros; os da Argentina ou da Nigéria querem USDT. Um link lida com ambos.</div>
+</div>
+<div class="problem-card">
+<div class="problem-icon" style="font-style: normal;">A</div>
+<div class="problem-headline">Retentores de cobrança de agências.</div>
+<div class="problem-body">Receita mensal recorrente, base de clientes em moedas mistas, uma pessoa de operações que já não precisa de correr atrás de fios. Configura faturas recorrentes uma vez, reconcilie automaticamente e concentre-se no trabalho.</div>
+</div>
+<div class="problem-card">
+<div class="problem-icon" style="font-style: normal;">S</div>
+<div class="problem-headline">Empresas de serviços a tornarem-se cripto-nativas.</div>
+<div class="problem-body">Advogados, contabilistas, CFOs fraccionados, balcões de balcão. Os teus clientes já estão na crypto. Querem pagar em stablecoins. Pretende uma fatura real e uma trilha de auditoria real. Nós fazemos ambos.</div>
+</div>
+</div>
+</div>
+</section>
+<section id="pricing">
+<div class="container">
+<span class="section-tag">Preços</span>
+<h2>1,99% por fatura paga. <em>É isso.</em></h2>
+<p class="section-intro">Sem taxas mensais. Sem taxas de configuração. Não há níveis para acompanhar. Só paga quando recebe o pagamento.</p>
+<div class="pricing-grid" style="grid-template-columns: repeat(2, minmax(0, 380px)); justify-content: center;">
+<div class="tier featured tier-solo">
+<div class="tier-name">Standard</div>
+<div class="tier-price"><span class="currency">%</span>1,99<span class="unit">/fatura paga</span></div>
+<div class="tier-desc">Uma única taxa fixa. Sem taxas mensais, sem taxas de configuração. Só paga quando uma fatura é paga.</div>
+<ul class="tier-features">
+<li>Faturas e links de pagamento ilimitados</li>
+<li>Aceitação de encriptação + cartão</li>
+<li>Liquide em USD, EUR ou stablecoins</li>
+<li>Faturas recorrentes e lembretes automáticos</li>
+<li>Exportação de QuickBooks e Xero</li>
+<li>Suporte por e-mail</li>
+</ul>
+<a class="tier-cta" href="https://app.southpay.io/" rel="noopener" target="_blank">Começa grátis →</a>
+</div>
+<div class="tier">
+<div class="tier-name">Custom</div>
+<div class="tier-price" style="font-size: 42px;">Personalizado</div>
+<div class="tier-desc">Taxas reduzidas para agências, mercados e plataformas de grande volume. Fala connosco sobre um acordo personalizado.</div>
+<ul class="tier-features">
+<li>Preços de transação personalizados</li>
+<li>Descontos por volume acima de 100 mil euros/mês</li>
+<li>Marca e domínio personalizados</li>
+<li>Faturação de marca branca</li>
+<li>Permissões baseadas em funções</li>
+<li>Solutions engineer dedicado</li>
+</ul>
+<a class="tier-cta" href="https://calendly.com/daniel-southpay/intro-call" rel="noopener" target="_blank">Fala connosco →</a>
+</div>
+</div>
+</div>
+</section>
+<section>
+<div class="container">
+<div class="faq-grid">
+<div>
+<span class="section-tag">Questões</span>
+<h2 style="font-size: clamp(36px, 4.5vw, 54px);">Todos nós temos <em>as respostas.</em></h2>
+<p style="color: var(--ink-soft); font-size: 16px; line-height: 1.55; margin-top: 18px; margin-bottom: 28px;">Se é novo no faturamento encriptado, estas são as coisas que as pessoas geralmente querem saber.</p>
+<a class="btn-secondary" href="https://app.southpay.io/" rel="noopener" target="_blank">Ou apenas experimenta</a>
+</div>
+<div class="faq-list">
+<div class="faq-item open">
+<div class="faq-q">Os meus clientes precisam de usar crypto? <span class="faq-toggle">+</span></div>
+<div class="faq-a">Não. Cada fatura e link de pagamento oferecem a opção de pagar com Visa ou Mastercard em euros ou euros. A opção de encriptação existe para os clientes que a pretendam. Não precisa de forçar ninguém.</div>
+</div>
+<div class="faq-item">
+<div class="faq-q">Como recebo o dinheiro? <span class="faq-toggle">+</span></div>
+<div class="faq-a">O que preferir. A maioria dos utilizadores transfere para o teu banco em euros. Alguns mantêm-no em stablecoins para flexibilidade de fluxo de caixa. Alguns consideram-no como Bitcoin. Define um padrão e substitui por fatura, se desejar.</div>
+</div>
+<div class="faq-item">
+<div class="faq-q">Como funciona o preço? <span class="faq-toggle">+</span></div>
+<div class="faq-a">Um valor fixo de 1,99% por fatura paga. Sem taxas mensais, sem taxas de configuração, sem mínimos. Pode enviar faturas ilimitadas e pagar apenas quando uma delas é realmente paga. Se ninguém lhe pagar, também não receberemos – os incentivos mantêm-se alinhados com os teus.</div>
+</div>
+<div class="faq-item">
+<div class="faq-q">Posso utilizar o meu próprio domínio para páginas de pagamento? <span class="faq-toggle">+</span></div>
+<div class="faq-a">Sim, na camada Personalizada. As páginas pagas estão disponíveis em pay.yourcompany.com em vez de pay.southpay.io. O teu logótipo, as tuas cores, o teu nome. O cliente nunca vê a marca SouthPay se não quiser.</div>
+</div>
+<div class="faq-item">
+<div class="faq-q">O que acontece se um cliente pagar o valor errado? <span class="faq-toggle">+</span></div>
+<div class="faq-a">Para encriptação, o preço é bloqueado no momento em que o link é aberto, pelo que pagarão sempre o valor exato convertido. Para pagamentos insuficientes (raros), recebe uma notificação e pode optar por aceitar, reembolsar ou solicitar a diferença.</div>
+</div>
+<div class="faq-item">
+<div class="faq-q">Funciona com o QuickBooks ou Xero? <span class="faq-toggle">+</span></div>
+<div class="faq-a">Sim. As faturas pagas são exportadas automaticamente. Mapeamos os pagamentos em crypto e com cartão para as contas certas. O teu contabilista não precisa de pensar sobre isso.</div>
+</div>
+<div class="faq-item">
+<div class="faq-q">Isto é apenas Stripe com passos extra? <span class="faq-toggle">+</span></div>
+<div class="faq-a">Não. O Stripe não aceita encriptação nativamente. A Stripe cobra 2,9% mesmo em faturas onde não há risco de fraude. A Stripe também não permite que o teu cliente paga em USDT a partir da tua MetaMask. Nós fazemos os três.</div>
+</div>
+</div>
+</div>
+</div>
+</section>
+<section style="padding-top: 0;">
+<div class="container">
+<div class="final-cta-wrap">
+<span class="section-tag">Começa</span>
+<h2>Envia a tua primeira fatura <em>esta tarde.</em></h2>
+<p>Registe-se gratuitamente, adicione um cliente, envia um link. Nós tratamos do resto. Se pagarem, fica com 99% dele. Se não o fizerem, não nos deve nada.</p>
+<div class="cta-row">
+<a class="btn-primary" href="https://app.southpay.io/" rel="noopener" target="_blank">Começa a enviar faturas <span class="arrow">→</span></a>
+<a class="btn-secondary" href="https://calendly.com/daniel-southpay/intro-call" rel="noopener" target="_blank">Fala connosco</a>
+</div>
+</div>
+</div>
+</section>
+<footer>
+<div class="container">
+<div class="footer-inner">
+<div class="footer-brand">
+<a class="logo" href="/pt/">
+<img alt="SouthPay" class="logo-img" src="/assets/img/southpay-logo.avif"/>
+</a>
+<p>Pagamentos em crypto para lojas, livros de contabilidade e faturas. Zero chargebacks. Recebe em qualquer moeda.</p>
+<div class="footer-social">
+<a aria-label="LinkedIn" href="https://www.linkedin.com/company/southpay/" rel="noopener" target="_blank">
+<svg aria-hidden="true" fill="currentColor" height="18" viewbox="0 0 24 24" width="18"><path d="M4.98 3.5a2.5 2.5 0 1 1 0 5 2.5 2.5 0 0 1 0-5zM3 9h4v12H3V9zm7 0h3.8v1.7h.06c.53-.95 1.83-1.95 3.77-1.95 4.03 0 4.77 2.5 4.77 5.74V21H18.6v-5.65c0-1.35-.03-3.08-1.96-3.08-1.96 0-2.26 1.45-2.26 2.98V21H10V9z"></path></svg>
+</a>
+<a aria-label="Instagram" href="https://www.instagram.com/southpay.io/" rel="noopener" target="_blank">
+<svg aria-hidden="true" fill="none" height="18" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.8" viewbox="0 0 24 24" width="18"><rect height="18" rx="5" width="18" x="3" y="3"></rect><circle cx="12" cy="12" r="4"></circle><circle cx="17.5" cy="6.5" fill="currentColor" r="1" stroke="none"></circle></svg>
+</a>
+</div>
+</div>
+<div class="footer-cols">
+<div class="footer-col">
+<h4>Produtos</h4>
+<a href="/pt/commerce">Commerce</a>
+<a href="/pt/ledger">Ledger</a>
+<a href="/pt/invoice">Invoice</a>
+</div>
+<div class="footer-col industries-col">
+<h4>Indústrias</h4>
+<div class="footer-col-grid">
+<a href="/pt/industries">Todas as indústrias</a>
+<a href="/pt/industries/ecommerce-stores">Lojas ecommerce</a>
+<a href="/pt/industries/gaming">Gaming</a>
+<a href="/pt/industries/trading-investments">Trading e investimentos</a>
+<a href="/pt/industries/stablecoin-top-ups">Recargas com stablecoin</a>
+<a href="/pt/industries/it-solutions">IT e SaaS</a>
+<a href="/pt/industries/web3">Web3</a>
+<a href="/pt/industries/cross-border-trade">Comércio transfronteiriço</a>
+<a href="/pt/industries/digital-goods">Bens digitais</a>
+<a href="/pt/industries/payment-service-providers">Payment service providers</a>
+<a href="/pt/industries/creator-economy">Economia de criadores</a>
+<a href="/pt/industries/professional-services">Serviços profissionais</a>
+<a href="/pt/industries/travel-hospitality">Viagens e hospitalidade</a>
+<a href="/pt/industries/luxury-rentals">Alugueres de luxo</a>
+</div>
+</div>
+<div class="footer-col">
+<h4>Empresa</h4>
+<a href="/pt/about">Sobre</a>
+<a href="https://docs.southpay.io/" rel="noopener" target="_blank">Docs</a>
+<a href="/pt/pricing">Preços</a>
+<a href="mailto:support@southpay.io">Apoio</a>
+</div>
+<div class="footer-col">
+<h4>Legal</h4>
+<a href="/pt/aml-policy">Política AML</a>
+<a href="/pt/merchant-services-agreement">Acordo de comerciante</a>
+<a href="/pt/privacy-policy">Política de Privacidade</a>
+<a href="/pt/terms-and-conditions">Termos e Condições</a>
+</div>
+</div>
+</div>
+<div class="footer-bottom">
+<span>© 2026 SouthPay. Todos os direitos reservados.</span>
+<span>A SouthPay é um <a class="alc-link" href="https://alc.media/" rel="noopener" target="_blank">ALC Media</a> marca.</span>
+</div>
+</div>
+</footer>
+<script src="/assets/southpay.js"></script>
+<!-- LANG_JS_BEGIN -->
+<script>
+(function(){
+  // Delegate clicks at the document level — works on desktop and mobile,
+  // doesn't depend on when .nav-lang elements were inserted.
+  document.addEventListener('click', function(e){
+    var trigger = e.target.closest('.nav-lang-trigger');
+    if(trigger){
+      e.preventDefault();
+      e.stopPropagation();
+      var lang = trigger.closest('.nav-lang');
+      var wasOpen = lang.classList.contains('open');
+      document.querySelectorAll('.nav-lang.open').forEach(function(o){ o.classList.remove('open'); });
+      if(!wasOpen) lang.classList.add('open');
+      return;
+    }
+    if(!e.target.closest('.nav-lang-menu')){
+      document.querySelectorAll('.nav-lang.open').forEach(function(o){ o.classList.remove('open'); });
+    }
+  }, false);
+  // Close on Escape for keyboard users
+  document.addEventListener('keydown', function(e){
+    if(e.key === 'Escape'){
+      document.querySelectorAll('.nav-lang.open').forEach(function(o){ o.classList.remove('open'); });
+    }
+  });
+})();
+</script>
+<!-- LANG_JS_END -->
+</body>
+</html>

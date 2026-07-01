@@ -1,0 +1,987 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<link rel="icon" type="image/svg+xml" href="/favicon.svg">
+<title>SouthPay Ledger - Double-entry ledger API for fintechs that ship</title>
+<meta name="description" content="A production-grade ledger API for fintechs, payment processors, and platforms moving money. Self-serve. No demo call. From $97/mo.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:ital,wght@0,400;0,500;0,600;0,700;1,500;1,600;1,700&family=Geist:wght@400;500;600;700&family=Geist+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="/southpay.css">
+<style>
+/* Ledger-specific hero floating cards */
+.card-ledger {
+  top: 0; left: 4%; width: 78%;
+  padding: 22px 22px 18px; transform: rotate(-3deg); z-index: 3;
+  animation: drift-a 6s ease-in-out infinite;
+}
+.card-ledger:hover { animation-play-state: paused; }
+.card-ledger-head { display: flex; justify-content: space-between; align-items: center; margin-bottom: 16px; }
+.card-ledger-ref { font-family: var(--mono); font-size: 11px; color: var(--ink-mute); letter-spacing: 0.02em; }
+.card-ledger-badge {
+  display: inline-flex; align-items: center; gap: 6px;
+  background: rgba(46, 204, 139, 0.12); color: var(--mint);
+  font-size: 11px; font-weight: 600; padding: 4px 10px; border-radius: 999px;
+}
+.card-ledger-badge::before { content: ''; width: 6px; height: 6px; border-radius: 50%; background: var(--mint); }
+.card-ledger-rows {
+  border-top: 1px solid var(--line); border-bottom: 1px solid var(--line);
+  padding: 8px 0;
+}
+.ledger-row { display: grid; grid-template-columns: 1.4fr 1fr 1fr; padding: 8px 0; font-size: 13px; }
+.ledger-row .acct { font-family: var(--mono); color: var(--ink-soft); font-size: 12.5px; }
+.ledger-row .amt-dr, .ledger-row .amt-cr { text-align: right; font-family: var(--mono); font-size: 13px; font-weight: 500; }
+.ledger-row .amt-dr { color: var(--ink); }
+.ledger-row .amt-cr { color: var(--brand); }
+.ledger-row .dash { text-align: right; color: var(--ink-dim); }
+.card-ledger-foot {
+  display: flex; justify-content: space-between; align-items: center;
+  margin-top: 8px; font-size: 12px; color: var(--ink-mute);
+  text-transform: uppercase; letter-spacing: 0.08em;
+}
+.card-ledger-foot b { color: var(--mint); font-size: 13px; }
+
+.card-api {
+  bottom: 30px; right: 0; width: 320px;
+  transform: rotate(4deg); z-index: 4;
+  animation: drift-b 7s ease-in-out infinite;
+}
+.card-api:hover { animation-play-state: paused; }
+.card-api-head {
+  padding: 12px 16px; display: flex; align-items: center; gap: 6px;
+  background: var(--ink); border-radius: 18px 18px 0 0;
+}
+.card-api-head .dot { width: 10px; height: 10px; border-radius: 50%; }
+.card-api-head .dot.r { background: #ff5f57; }
+.card-api-head .dot.y { background: #ffbd2e; }
+.card-api-head .dot.g { background: #28c940; }
+.card-api-title { margin-left: 8px; font-family: var(--mono); font-size: 11.5px; color: rgba(255,255,255,0.7); }
+.card-api-body {
+  font-family: var(--mono); font-size: 11.5px; line-height: 1.65;
+  padding: 16px; background: #0f1019; color: #e6e6e6;
+  white-space: pre; overflow-x: auto;
+  border-radius: 0 0 18px 18px;
+}
+.card-api-body .tk-c { color: #777; }
+.card-api-body .tk-k { color: #a3aeff; }
+.card-api-body .tk-s { color: #ffd145; }
+.card-api-body .tk-n { color: #7bb8ff; }
+.card-api-body .tk-r { color: var(--mint); }
+
+.card-chip {
+  top: 240px; left: 8%;
+  background: var(--brand) !important; color: #fff !important;
+  padding: 16px 22px; border-radius: 16px;
+  display: flex; align-items: center; gap: 14px;
+  transform: rotate(8deg);
+  box-shadow: 0 24px 50px -20px rgba(55,75,236,0.5) !important;
+  animation: drift-c 5s ease-in-out infinite;
+  z-index: 2;
+}
+.card-chip:hover { animation-play-state: paused; }
+.card-chip svg { width: 32px; height: 32px; }
+.card-chip .label { font-size: 11px; color: rgba(255,255,255,0.7); text-transform: uppercase; letter-spacing: 0.1em; display: block; }
+.card-chip .val { font-family: var(--display); font-weight: 700; letter-spacing: -0.025em; font-size: 22px; line-height: 1.1; display: block; }
+
+/* Solution section showpiece */
+.balance-card {
+  background: #fff; border: 1px solid var(--line);
+  border-radius: var(--r-xl); padding: 32px;
+  box-shadow: 0 30px 80px -30px rgba(14, 23, 38, 0.25);
+}
+.balance-meta { font-family: var(--mono); font-size: 11px; color: var(--ink-mute); letter-spacing: 0.04em; margin-bottom: 22px; }
+.balance-table { width: 100%; border-collapse: collapse; }
+.balance-table thead th {
+  text-align: left; padding: 10px 0;
+  font-size: 11px; letter-spacing: 0.08em; text-transform: uppercase;
+  color: var(--ink-mute); border-bottom: 1px solid var(--line); font-weight: 600;
+}
+.balance-table thead th.num { text-align: right; }
+.balance-table tbody td { padding: 14px 0; font-size: 14px; }
+.balance-table tbody td:first-child { font-family: var(--mono); font-size: 13px; color: var(--ink-soft); }
+.balance-table tbody td.num { text-align: right; font-family: var(--mono); font-weight: 500; }
+.balance-table tbody td.dr { color: var(--ink); }
+.balance-table tbody td.cr { color: var(--brand); }
+.balance-table tbody td.dash { color: var(--ink-dim); }
+.balance-foot {
+  display: flex; justify-content: space-between; align-items: center;
+  margin-top: 12px; padding-top: 18px; border-top: 1px solid var(--line);
+  font-size: 13px;
+}
+.balance-foot b { font-size: 12px; letter-spacing: 0.08em; text-transform: uppercase; color: var(--ink-mute); }
+.balance-foot .balanced {
+  display: inline-flex; align-items: center; gap: 6px;
+  background: rgba(46, 204, 139, 0.12); color: var(--mint);
+  font-size: 12px; font-weight: 600; padding: 5px 12px; border-radius: 999px;
+}
+.balance-foot .balanced::before { content: '✓'; }
+</style>
+<!-- GA_BEGIN -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-G1YWDRHW8T"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+  gtag('config', 'G-G1YWDRHW8T');
+</script>
+<!-- GA_END -->
+<!-- AMPLITUDE_BEGIN -->
+<script src="https://cdn.eu.amplitude.com/script/30b70e5e6ec2360a6c262a482628baf0.js"></script>
+<script>
+  window.amplitude.init('30b70e5e6ec2360a6c262a482628baf0', {
+    serverZone: 'EU',
+    serverUrl: 'https://api.eu.amplitude.com/2/httpapi',
+    fetchRemoteConfig: true,
+    autocapture: {
+      attribution: true,
+      fileDownloads: true,
+      formInteractions: true,
+      pageViews: true,
+      sessions: true,
+      elementInteractions: true,
+      networkTracking: true,
+      webVitals: true,
+      frustrationInteractions: true
+    }
+  });
+</script>
+<!-- AMPLITUDE_END -->
+<!-- OG_BEGIN -->
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="SouthPay">
+<meta property="og:title" content="SouthPay Ledger - Double-entry ledger API for fintechs that ship">
+<meta property="og:description" content="A production-grade ledger API for fintechs, payment processors, and platforms moving money. Self-serve. No demo call. From $97/mo.">
+<meta property="og:url" content="https://southpay.io/ledger">
+<meta property="og:image" content="https://southpay.io/assets/img/og-image.png">
+<meta property="og:image:secure_url" content="https://southpay.io/assets/img/og-image.png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:image:alt" content="SouthPay - crypto payments for stores, ledgers, and invoices">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="SouthPay Ledger - Double-entry ledger API for fintechs that ship">
+<meta name="twitter:description" content="A production-grade ledger API for fintechs, payment processors, and platforms moving money. Self-serve. No demo call. From $97/mo.">
+<meta name="twitter:image" content="https://southpay.io/assets/img/og-image.png">
+<meta name="twitter:image:alt" content="SouthPay - crypto payments for stores, ledgers, and invoices">
+<!-- OG_END -->
+
+</head>
+<body>
+
+<div class="hex-bg" id="hexBg">
+  <svg id="hexSvg" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="xMidYMid slice"></svg>
+</div>
+
+<nav class="site-nav">
+  <div class="container">
+    <div class="nav-inner">
+      <a href="/" class="logo">
+        <img src="/assets/img/southpay-logo.avif" alt="SouthPay" class="logo-img">
+        <span class="logo-text"><span class="slash">/</span><span class="product">ledger</span></span>
+      </a>
+      <div class="nav-links">
+        <div class="nav-products">
+          <span class="nav-products-trigger">Products <svg viewBox="0 0 10 10" fill="none" stroke="currentColor" stroke-width="2"><path d="M2 4l3 3 3-3"/></svg></span>
+          <div class="nav-products-menu">
+            <a href="/commerce" class="nav-product-item">
+              <div class="motif motif-ecom"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 7h18l-2 12H5L3 7z"/><path d="M8 7V5a4 4 0 018 0v2"/></svg></div>
+              <div class="nav-product-info">
+                <div class="nav-product-name">Commerce</div>
+                <div class="nav-product-desc">Crypto checkout for your store. 1.99% flat.</div>
+              </div>
+            </a>
+            <a href="/ledger" class="nav-product-item">
+              <div class="motif motif-ledger"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 12h8M4 7h12M4 17h6"/><circle cx="18" cy="17" r="2"/></svg></div>
+              <div class="nav-product-info">
+                <div class="nav-product-name">Ledger</div>
+                <div class="nav-product-desc">Double-entry API for fintechs. From $97/mo.</div>
+              </div>
+            </a>
+            <a href="/invoice" class="nav-product-item">
+              <div class="motif motif-invoice"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="5" y="3" width="14" height="18" rx="1"/><path d="M8 8h8M8 12h8M8 16h5"/></svg></div>
+              <div class="nav-product-info">
+                <div class="nav-product-name">Invoice</div>
+                <div class="nav-product-desc">Get paid in crypto, settle in cash.</div>
+              </div>
+            </a>
+          </div>
+        </div>
+        <div class="nav-industries">
+          <span class="nav-industries-trigger">Industries <svg viewBox="0 0 10 10" fill="none" stroke="currentColor" stroke-width="2"><path d="M2 4l3 3 3-3"/></svg></span>
+          <div class="nav-industries-menu">
+            <a href="/industries/ecommerce-stores" class="nav-industry-item">
+              <div class="nav-industry-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 7h18l-2 12H5L3 7z"/><path d="M8 7V5a4 4 0 018 0v2"/></svg></div>
+              <div>
+                <div class="nav-industry-name">Ecommerce stores</div>
+                <div class="nav-industry-desc">Crypto checkout for global retailers</div>
+              </div>
+            </a>
+            <a href="/industries/gaming" class="nav-industry-item">
+              <div class="nav-industry-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="8" width="18" height="10" rx="3"/><path d="M8 13h4M10 11v4"/><circle cx="16" cy="12.5" r="0.8" fill="currentColor"/><circle cx="17.5" cy="14.5" r="0.8" fill="currentColor"/></svg></div>
+              <div>
+                <div class="nav-industry-name">Gaming</div>
+                <div class="nav-industry-desc">Top-ups and creator payouts</div>
+              </div>
+            </a>
+            <a href="/industries/trading-investments" class="nav-industry-item">
+              <div class="nav-industry-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 17l6-6 4 4 8-8"/><path d="M14 7h7v7"/></svg></div>
+              <div>
+                <div class="nav-industry-name">Trading & investments</div>
+                <div class="nav-industry-desc">Deposits, withdrawals, on-ramp</div>
+              </div>
+            </a>
+            <a href="/industries/stablecoin-top-ups" class="nav-industry-item">
+              <div class="nav-industry-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="6" width="18" height="13" rx="2"/><path d="M15 12h-2a2 2 0 100 4h2"/><path d="M3 10h18"/></svg></div>
+              <div>
+                <div class="nav-industry-name">Stablecoin top-ups</div>
+                <div class="nav-industry-desc">Wallet and fintech top-up flows</div>
+              </div>
+            </a>
+            <a href="/industries/it-solutions" class="nav-industry-item">
+              <div class="nav-industry-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="7" rx="2"/><rect x="3" y="13" width="18" height="7" rx="2"/><path d="M7 7.5h.01M7 16.5h.01"/></svg></div>
+              <div>
+                <div class="nav-industry-name">IT & SaaS</div>
+                <div class="nav-industry-desc">Cloud, hosting, software</div>
+              </div>
+            </a>
+            <a href="/industries/web3" class="nav-industry-item">
+              <div class="nav-industry-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3l8 4.5v9L12 21l-8-4.5v-9z"/><path d="M12 12L4 7.5M12 12l8-4.5M12 12v9"/></svg></div>
+              <div>
+                <div class="nav-industry-name">Web3</div>
+                <div class="nav-industry-desc">Crypto-native rails for protocols</div>
+              </div>
+            </a>
+            <a href="/industries/cross-border-trade" class="nav-industry-item">
+              <div class="nav-industry-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="M3 12h18"/><path d="M12 3c2.5 3 2.5 15 0 18M12 3c-2.5 3-2.5 15 0 18"/></svg></div>
+              <div>
+                <div class="nav-industry-name">Cross-border trade</div>
+                <div class="nav-industry-desc">Import, export, supplier payouts</div>
+              </div>
+            </a>
+            <a href="/industries/digital-goods" class="nav-industry-item">
+              <div class="nav-industry-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3v12"/><path d="M7 10l5 5 5-5"/><rect x="3" y="17" width="18" height="4" rx="1"/></svg></div>
+              <div>
+                <div class="nav-industry-name">Digital goods</div>
+                <div class="nav-industry-desc">Software, games, content, downloads</div>
+              </div>
+            </a>
+            <a href="/industries/payment-service-providers" class="nav-industry-item">
+              <div class="nav-industry-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="7" width="20" height="11" rx="2"/><path d="M2 11h20"/><path d="M6 15h3"/></svg></div>
+              <div>
+                <div class="nav-industry-name">Payment service providers</div>
+                <div class="nav-industry-desc">Crypto as a feature for your stack</div>
+              </div>
+            </a>
+            <a href="/industries/creator-economy" class="nav-industry-item">
+              <div class="nav-industry-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="9" y="3" width="6" height="11" rx="3"/><path d="M7 11a5 5 0 0010 0"/><path d="M12 16v4M9 20h6"/></svg></div>
+              <div>
+                <div class="nav-industry-name">Creator economy</div>
+                <div class="nav-industry-desc">Payouts and tipping for creators</div>
+              </div>
+            </a>
+            <a href="/industries/professional-services" class="nav-industry-item">
+              <div class="nav-industry-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="8" width="18" height="12" rx="2"/><path d="M9 8V5a2 2 0 012-2h2a2 2 0 012 2v3"/><path d="M3 13h18"/></svg></div>
+              <div>
+                <div class="nav-industry-name">Professional services</div>
+                <div class="nav-industry-desc">Agencies, consultancies, freelancers</div>
+              </div>
+            </a>
+            <a href="/industries/travel-hospitality" class="nav-industry-item">
+              <div class="nav-industry-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 12l18-6-5 17-3-9-10-2z"/></svg></div>
+              <div>
+                <div class="nav-industry-name">Travel & hospitality</div>
+                <div class="nav-industry-desc">Hotels, OTAs, tours, experiences</div>
+              </div>
+            </a>
+            <a href="/industries/luxury-rentals" class="nav-industry-item">
+              <div class="nav-industry-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 17l3-10 4 4 2-8 2 8 4-4 3 10z"/><circle cx="12" cy="20" r="1" fill="currentColor"/></svg></div>
+              <div>
+                <div class="nav-industry-name">Luxury rentals</div>
+                <div class="nav-industry-desc">Aviation, yachts, supercars, experiences</div>
+              </div>
+            </a>
+            <a href="/industries" class="nav-industries-cta">All industries <span class="arrow">→</span></a>
+          </div>
+        </div>
+        <a href="/about">About</a>
+        <a href="https://docs.southpay.io/" target="_blank" rel="noopener">Docs</a>
+        <a href="https://app.southpay.io/ledger" class="nav-cta" target="_blank" rel="noopener">Start free →</a><!-- LANG_BEGIN --><!-- LANG_END --></div>
+    </div>
+  </div>
+</nav>
+
+<div class="breadcrumb-strip">
+  <div class="container">
+    <div class="breadcrumb-inner">
+      <a href="/" class="breadcrumb-link">← All products</a>
+    </div>
+  </div>
+</div>
+
+<section class="hero">
+  <div class="container">
+    <div class="hero-grid">
+      <div>
+        <div class="eyebrow reveal d1">
+          <span class="pill">New</span> Ledger-as-a-Service · Live today
+        </div>
+        <h1 class="reveal d2">The ledger API fintechs build on, <em>without the demo call.</em></h1>
+        <p class="hero-sub reveal d3">
+          Double-entry accounting, money movement tracking, and reconciliation infrastructure for fintechs, payment processors, crypto rails, and loyalty platforms. <strong>Self-serve. Production-ready. From $97/mo.</strong>
+        </p>
+        <div class="cta-row reveal d4">
+          <a href="https://app.southpay.io/ledger" class="btn-primary" target="_blank" rel="noopener">
+            Start building free <span class="arrow">→</span>
+          </a>
+          <a href="#how" class="btn-secondary">See it in 60 seconds</a>
+        </div>
+        <div class="hero-meta reveal d5">
+          <span><span class="check">✓</span> No sales call</span>
+          <span><span class="check">✓</span> API keys in 5 min</span>
+          <span><span class="check">✓</span> Cancel anytime</span>
+        </div>
+      </div>
+
+      <div class="hero-visual reveal d3">
+        <div class="float-card card-ledger">
+          <div class="card-ledger-head">
+            <span class="card-ledger-ref">REF · tx_01HXKJZN8</span>
+            <span class="card-ledger-badge">Posted</span>
+          </div>
+          <div class="card-ledger-rows">
+            <div class="ledger-row">
+              <span class="acct">user:alice</span>
+              <span class="amt-dr">49.00</span>
+              <span class="dash">-</span>
+            </div>
+            <div class="ledger-row">
+              <span class="acct">merchant:42</span>
+              <span class="dash">-</span>
+              <span class="amt-cr">47.53</span>
+            </div>
+            <div class="ledger-row">
+              <span class="acct">fees:platform</span>
+              <span class="dash">-</span>
+              <span class="amt-cr">1.47</span>
+            </div>
+          </div>
+          <div class="card-ledger-foot">
+            <span>TOTAL · USD</span>
+            <b>Balanced ✓</b>
+          </div>
+        </div>
+
+        <div class="float-card card-api">
+          <div class="card-api-head">
+            <span class="dot r"></span><span class="dot y"></span><span class="dot g"></span>
+            <span class="card-api-title">POST /v1/transactions</span>
+          </div>
+<div class="card-api-body"><span class="tk-c">// Balanced in one call</span>
+<span class="tk-k">curl</span> <span class="tk-s">"api.southpay.io/v1/tx"</span> \
+  -d <span class="tk-s">'{ "postings": [</span>
+<span class="tk-s">    { "to":"merchant", "amt":</span><span class="tk-n">4753</span> <span class="tk-s">},</span>
+<span class="tk-s">    { "to":"fees", "amt":</span><span class="tk-n">147</span> <span class="tk-s">}</span>
+<span class="tk-s">  ] }'</span>
+
+<span class="tk-r">→ 201 { "balanced": true }</span></div>
+        </div>
+
+        <div class="float-card card-chip">
+          <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <circle cx="12" cy="12" r="10" stroke="white" stroke-width="2"/>
+            <path d="M8 12l3 3 5-6" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+          </svg>
+          <div>
+            <span class="label">Reconciled</span>
+            <span class="val">12,847 tx</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<div class="integrations">
+  <div class="container">
+    <div class="integrations-inner">
+      <span class="integrations-label">Built for teams moving money:</span>
+      <div class="integrations-logos">
+        <span>Fintechs</span>
+        <span>Payment rails</span>
+        <span>Crypto processors</span>
+        <span>Loyalty platforms</span>
+        <span>Neobanks</span>
+      </div>
+    </div>
+  </div>
+</div>
+
+<section id="problem">
+  <div class="container">
+    <span class="section-tag">The problem</span>
+    <h2>Your engineers keep <em>rebuilding the same ledger.</em></h2>
+    <p class="section-intro">Every fintech eventually hits the same wall. The wall has a name: an in-house double-entry ledger that becomes a critical-path microservice nobody wants to own.</p>
+
+    <div class="problem-grid">
+      <div class="problem-card">
+        <div class="problem-icon">✕</div>
+        <div class="problem-headline">Reconciliation eats your weekends.</div>
+        <div class="problem-body">Stripe says one thing. Your DB says another. Your bank says a third. By Sunday night you've written another script that won't survive the next edge case.</div>
+      </div>
+      <div class="problem-card">
+        <div class="problem-icon">✕</div>
+        <div class="problem-headline">Your "ledger" is a Postgres table.</div>
+        <div class="problem-body">Built fast, shipped faster. Now it's not fault-tolerant, double-entry guarantees live in application code, and every migration is a near-miss.</div>
+      </div>
+      <div class="problem-card">
+        <div class="problem-icon">✕</div>
+        <div class="problem-headline">The alternatives are gatekept.</div>
+        <div class="problem-body">The incumbents start at $15K/year and only after a demo call. Others want a procurement cycle. All of them want to talk before you can read the docs.</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="how" class="solution-section">
+  <div class="container">
+    <div style="text-align: left; margin-bottom: 48px;">
+      <span class="section-tag">What you get</span>
+      <h2>A double-entry ledger API with <em>the hard parts handled.</em></h2>
+      <p class="section-intro">You could build this on Postgres. Most teams do, then spend a quarter chasing balance races, double-posts, and reconciliation drift. Start one layer up.</p>
+    </div>
+
+    <div class="solution-hero">
+      <div class="balance-card">
+        <div class="balance-meta">REF · tx_01HXKJZN8 - POSTED 2026-05-14 13:02 UTC</div>
+        <table class="balance-table">
+          <thead>
+            <tr>
+              <th>Account</th>
+              <th class="num">Debit</th>
+              <th class="num">Credit</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr><td>user:alice</td><td class="num dr">49.00</td><td class="num dash">-</td></tr>
+            <tr><td>merchant:42</td><td class="num dash">-</td><td class="num cr">47.53</td></tr>
+            <tr><td>fees:platform</td><td class="num dash">-</td><td class="num cr">1.47</td></tr>
+          </tbody>
+        </table>
+        <div class="balance-foot">
+          <b>TOTAL · USD</b>
+          <span class="balanced">Balanced</span>
+        </div>
+      </div>
+
+      <div class="solution-copy">
+        <h3>One POST. Three postings. <em>Always balanced.</em></h3>
+        <p>
+          Every transaction in SouthPay Ledger is a set of <strong>postings</strong> that must sum to zero. The API rejects anything that doesn't balance. Your ledger stays correct by construction, not by hope.
+        </p>
+        <p>
+          Underneath: a fault-tolerant transactional engine with append-only history, deterministic replays, and atomic multi-account moves. The same primitives the incumbents built. Without the call.
+        </p>
+      </div>
+    </div>
+
+    <div class="feature-grid">
+      <div class="feature featured">
+        <div class="feature-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M4 8h16M4 16h16"/><circle cx="12" cy="12" r="9"/></svg></div>
+        <div class="feature-title">Balances that can't drift</div>
+        <div class="feature-desc">Every transaction balances per currency, checked server-side before it commits. Corrections are reversals, never edits - history stays append-only. Books reconcile after every write, not on a nightly job.</div>
+      </div>
+      <div class="feature">
+        <div class="feature-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="9"/><path d="M3 12h18M12 3a14 14 0 010 18M12 3a14 14 0 000 18"/></svg></div>
+        <div class="feature-title">Multi-currency is a primitive</div>
+        <div class="feature-desc">Fiat, stablecoins, and crypto in one balanced ledger. USD, EUR, USDC, BTC - any symbol, in integer minor units. No floats, no silent single-currency assumptions.</div>
+      </div>
+      <div class="feature">
+        <div class="feature-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M3 12a9 9 0 1015.5-6.2"/><path d="M19 3v4h-4"/></svg></div>
+        <div class="feature-title">Built for retries</div>
+        <div class="feature-desc">Durable idempotency keys, separate pending and posted balances, and webhooks on every posted transaction. Your integration replays cleanly because ours does.</div>
+      </div>
+      <div class="feature featured">
+        <div class="feature-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 3v14m0 0l-4-4m4 4l4-4M4 21h16"/></svg></div>
+        <div class="feature-title">CSV export, anytime</div>
+        <div class="feature-desc">Full ledger export for audits, accountants, and that one investor who insists.</div>
+      </div>
+      <div class="feature">
+        <div class="feature-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M13 6l6 6-6 6"/><circle cx="5" cy="12" r="1.5" fill="currentColor"/></svg></div>
+        <div class="feature-title">Stripe / Wise / Revolut</div>
+        <div class="feature-desc">Pull movements from your processors and banks. Reconcile without the cron jobs.</div>
+      </div>
+      <div class="feature featured">
+        <div class="feature-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="18" height="18" rx="3"/><path d="M9 9h6v6H9z"/></svg></div>
+        <div class="feature-title">Xero, QuickBooks, Sage</div>
+        <div class="feature-desc">Push to your accounting stack so finance stops asking for a CSV every Friday.</div>
+      </div>
+      <div class="feature">
+        <div class="feature-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 8v4l3 2"/><circle cx="12" cy="12" r="9"/></svg></div>
+        <div class="feature-title">Append-only history</div>
+        <div class="feature-desc">Every state is replayable. Every entry immutable. Auditors love it. So do you.</div>
+      </div>
+      <div class="feature">
+        <div class="feature-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M13 2L3 14h7l-1 8 10-12h-7l1-8z" stroke-linejoin="round"/></svg></div>
+        <div class="feature-title">5-minute setup</div>
+        <div class="feature-desc">Sign up, grab a key, post your first transaction. No call. No quote. No NDA.</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="model">
+  <div class="container">
+    <div style="text-align: center; max-width: 720px; margin: 0 auto 56px;">
+      <span class="section-tag">The model</span>
+      <h2>Four primitives. <em>Nothing more to learn.</em></h2>
+      <p class="section-intro" style="margin-top: 16px;">You write the business logic. We keep the books.</p>
+    </div>
+
+    <div class="feature-grid">
+      <div class="feature">
+        <div class="feature-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="5" width="18" height="14" rx="2"/><path d="M3 9h18"/><path d="M7 14h4"/></svg></div>
+        <div class="feature-title">Account</div>
+        <div class="feature-desc">A balance in one currency, in a chart of accounts you define. Asset, liability, revenue, expense, or equity.</div>
+      </div>
+      <div class="feature">
+        <div class="feature-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 7h12l-3-3M20 17H8l3 3"/></svg></div>
+        <div class="feature-title">Transaction</div>
+        <div class="feature-desc">A balanced set of postings, made idempotent by a key you supply. Written once, immutable after.</div>
+      </div>
+      <div class="feature">
+        <div class="feature-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M5 12h6m2 0h6"/><path d="M9 8v8M15 8v8"/></svg></div>
+        <div class="feature-title">Posting</div>
+        <div class="feature-desc">A single debit or credit in integer minor units. Append-only, never updated in place.</div>
+      </div>
+      <div class="feature">
+        <div class="feature-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 20V10M10 20V4M16 20v-8M22 20H2"/></svg></div>
+        <div class="feature-title">Balance</div>
+        <div class="feature-desc">Available, pending, and posted views, derived from postings and always reconciled.</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="also-included">
+  <div class="container">
+    <div style="text-align: center; max-width: 720px; margin: 0 auto 56px;">
+      <span class="section-tag">Also included</span>
+      <h2>Everything around <em>the ledger, too.</em></h2>
+    </div>
+
+    <div class="feature-grid" style="grid-template-columns: repeat(3, minmax(0, 1fr));">
+      <div class="feature">
+        <div class="feature-title">Webhooks</div>
+        <div class="feature-desc">Fire on every posted transaction, delivered replay-safe.</div>
+      </div>
+      <div class="feature">
+        <div class="feature-title">Reconciliation</div>
+        <div class="feature-desc">Match postings against the outside world and flag what's off-book.</div>
+      </div>
+      <div class="feature">
+        <div class="feature-title">Reversals</div>
+        <div class="feature-desc">Correct with a reversing transaction. History is never edited.</div>
+      </div>
+      <div class="feature">
+        <div class="feature-title">Period close</div>
+        <div class="feature-desc">Lock a period so closed books cannot change.</div>
+      </div>
+      <div class="feature">
+        <div class="feature-title">Export</div>
+        <div class="feature-desc">Stream the full journal out, append-only and ordered, for audit or BI.</div>
+      </div>
+      <div class="feature">
+        <div class="feature-title">Account templates</div>
+        <div class="feature-desc">Define your own chart of accounts, enforced per template.</div>
+      </div>
+      <div class="feature">
+        <div class="feature-title">Test + live mode</div>
+        <div class="feature-desc">Separate keys and data. Every response says which mode it is.</div>
+      </div>
+      <div class="feature">
+        <div class="feature-title">Connectors <span style="display: inline-block; background: var(--bg-lavender); color: var(--brand); font-size: 10px; padding: 2px 8px; border-radius: 999px; font-weight: 600; text-transform: uppercase; letter-spacing: 0.06em; vertical-align: middle; margin-left: 6px;">Soon</span></div>
+        <div class="feature-desc">Pull money movement from external systems into the ledger, no glue code.</div>
+      </div>
+      <div class="feature">
+        <div class="feature-title">SDKs <span style="display: inline-block; background: var(--bg-lavender); color: var(--brand); font-size: 10px; padding: 2px 8px; border-radius: 999px; font-weight: 600; text-transform: uppercase; letter-spacing: 0.06em; vertical-align: middle; margin-left: 6px;">Soon</span></div>
+        <div class="feature-desc">TypeScript, Python, Ruby, Go.</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="compare">
+  <div class="container">
+    <span class="section-tag">Versus the gatekept ones</span>
+    <h2>Same engine. <em>None of the friction.</em></h2>
+    <p class="section-intro">We respect our competitors. We just don't think you should have to schedule a call to read pricing.</p>
+
+    <div class="compare-wrap">
+      <table class="compare-table">
+        <thead>
+          <tr>
+            <th></th>
+            <th class="us">SouthPay Ledger</th>
+            <th class="them">Competitors</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>Pricing visible on the website</td>
+            <td class="us-cell"><span class="check-y">✓</span>Yes, three tiers published</td>
+            <td class="them-cell"><span class="check-n">✕</span>"Contact sales"</td>
+          </tr>
+          <tr>
+            <td>Time to first API call</td>
+            <td class="us-cell">~5 minutes</td>
+            <td class="them-cell">2 to 4 weeks (after demo)</td>
+          </tr>
+          <tr>
+            <td>Entry price point</td>
+            <td class="us-cell">$97 / month</td>
+            <td class="them-cell">$15,000+ / year, billed annually</td>
+          </tr>
+          <tr>
+            <td>Self-serve signup</td>
+            <td class="us-cell"><span class="check-y">✓</span>Credit card, done</td>
+            <td class="them-cell"><span class="check-n">✕</span>Sales-qualified only</td>
+          </tr>
+          <tr>
+            <td>Double-entry guarantees</td>
+            <td class="us-cell"><span class="check-y">✓</span></td>
+            <td class="them-cell"><span class="check-y">✓</span></td>
+          </tr>
+          <tr>
+            <td>Native processor connectors</td>
+            <td class="us-cell"><span class="check-y">✓</span>Stripe, Wise, Revolut</td>
+            <td class="them-cell">Roll your own</td>
+          </tr>
+          <tr>
+            <td>Accounting integrations</td>
+            <td class="us-cell"><span class="check-y">✓</span>Xero, QuickBooks, Sage</td>
+            <td class="them-cell">Mostly DIY</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</section>
+
+<section>
+  <div class="container">
+    <span class="section-tag">Why we built it</span>
+    <h2>A note from the team.</h2>
+    <p class="section-intro">SouthPay Ledger is the same engine we built for our own crypto payments product. Here's the short version of why we're shipping it as a standalone API.</p>
+
+    <div class="founder-note">
+      <div class="founder-note-photo">
+        <img src="/assets/img/daniel.avif" alt="Daniel Rocha">
+      </div>
+      <div class="founder-note-body">
+        <p>We built SouthPay Ledger to solve our own problem. We needed a production-grade double-entry ledger to run our crypto payments. The existing options all came with a demo call, a six-figure starting price, and a procurement cycle.</p>
+        <p>So we shipped what we built. The same engine. Self-serve. Pricing on the website. Sign up with a card, ship the same afternoon.</p>
+        <p>If you're a fintech, a payment processor, a loyalty platform, or a gift-card network, you'll eventually need a ledger. We're done watching teams either pay $15K a year for one or quietly maintain a homemade version they're afraid of. This is the exit.</p>
+        <div class="founder-note-sign">
+          <div class="founder-note-name">Daniel Rocha</div>
+          <div class="founder-note-role">Co-founder, SouthPay</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<style>
+.founder-note {
+  background: var(--surface);
+  border: 1px solid var(--line);
+  border-radius: var(--r-2xl);
+  padding: 44px;
+  display: grid;
+  grid-template-columns: 160px 1fr;
+  gap: 40px;
+  align-items: start;
+  max-width: 920px;
+  margin: 40px auto 0;
+  box-shadow: 0 24px 60px -28px rgba(55, 75, 236, 0.18);
+}
+.founder-note-photo {
+  width: 160px; height: 160px;
+  border-radius: 50%;
+  overflow: hidden;
+  background: var(--bg-lavender);
+}
+.founder-note-photo img { width: 100%; height: 100%; object-fit: cover; display: block; }
+.founder-note-body p {
+  font-family: var(--display);
+  font-size: 19px;
+  line-height: 1.6;
+  color: var(--ink);
+  margin-bottom: 18px;
+  font-weight: 400;
+  font-style: italic;
+  letter-spacing: -0.005em;
+}
+.founder-note-body p:last-of-type { margin-bottom: 26px; }
+.founder-note-sign {
+  border-top: 1px solid var(--line-soft);
+  padding-top: 18px;
+}
+.founder-note-name {
+  font-family: var(--display);
+  font-size: 18px;
+  font-weight: 600;
+  color: var(--ink);
+  letter-spacing: -0.02em;
+}
+.founder-note-role {
+  font-family: var(--mono);
+  font-size: 12px;
+  color: var(--ink-mute);
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  margin-top: 4px;
+}
+@media (max-width: 720px) {
+  .founder-note { grid-template-columns: 1fr; padding: 28px; gap: 24px; text-align: left; }
+  .founder-note-photo { width: 110px; height: 110px; }
+}
+</style>
+
+<section id="pricing">
+  <div class="container">
+    <span class="section-tag">Pricing</span>
+    <h2>Pick a tier. <em>Or start free.</em></h2>
+    <p class="section-intro">Usage-based pricing. No annual commitment. No sales call required to see the numbers. Upgrade or cancel from the dashboard.</p>
+
+    <div class="pricing-grid">
+      <div class="tier">
+        <div class="tier-name">Starter</div>
+        <div class="tier-price"><span class="currency">$</span>9.97<span class="unit">/ month</span></div>
+        <div class="tier-desc">For early-stage fintechs validating a money-movement product.</div>
+        <ul class="tier-features">
+          <li>100k postings <span class="mute">/ month</span></li>
+          <li>10 chart-of-accounts roots</li>
+          <li>Self-serve dashboard</li>
+          <li>CSV export</li>
+          <li>1 processor connector</li>
+          <li>Email support</li>
+        </ul>
+        <a href="https://ledger.southpay.io/" class="tier-cta" target="_blank" rel="noopener">Start free trial →</a>
+      </div>
+
+      <div class="tier featured">
+        <div class="tier-name">Growth</div>
+        <div class="tier-price"><span class="currency">$</span>497<span class="unit">/ month</span></div>
+        <div class="tier-desc">For fintechs and processors running real volume in production.</div>
+        <ul class="tier-features">
+          <li>1M postings <span class="mute">/ month</span></li>
+          <li>Unlimited accounts</li>
+          <li>Stripe + Wise + Revolut</li>
+          <li>Xero + QuickBooks + Sage</li>
+          <li>Webhooks &amp; replay</li>
+          <li>Multi-asset (FX &amp; crypto)</li>
+          <li>Priority Slack support</li>
+        </ul>
+        <a href="https://ledger.southpay.io/" class="tier-cta" target="_blank" rel="noopener">Start free trial →</a>
+      </div>
+
+      <div class="tier">
+        <div class="tier-name">Enterprise</div>
+        <div class="tier-price" style="font-size:42px;">Custom</div>
+        <div class="tier-desc">High-volume rails, regulated entities, and embedded finance platforms.</div>
+        <ul class="tier-features">
+          <li>Unlimited postings</li>
+          <li>Dedicated infrastructure</li>
+          <li>SOC 2 &amp; audit support</li>
+          <li>Custom integrations</li>
+          <li>99.99% uptime SLA</li>
+          <li>Solutions engineer</li>
+        </ul>
+        <a href="https://calendly.com/daniel-southpay/intro-call" class="tier-cta" target="_blank" rel="noopener">Talk to us →</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="faq">
+  <div class="container">
+    <div class="faq-grid">
+      <div>
+        <span class="section-tag">FAQ</span>
+        <h2 style="font-size: clamp(36px, 4.5vw, 54px);">We've all the <em>answers.</em></h2>
+        <p style="color: var(--ink-soft); font-size: 16px; line-height: 1.55; margin-top: 18px;">
+          Couldn't find your answer? Read the docs at <a href="https://docs.southpay.io/" style="color: var(--brand); text-decoration: underline; text-decoration-thickness: 1px; text-underline-offset: 4px;" target="_blank" rel="noopener">docs.southpay.io/ledger</a> or email <a href="mailto:hello@southpay.io" style="color: var(--brand); text-decoration: underline; text-decoration-thickness: 1px; text-underline-offset: 4px;">hello@southpay.io</a>.
+        </p>
+      </div>
+      <div class="faq-list">
+        <div class="faq-item open">
+          <div class="faq-q">What is a double-entry ledger API? <span class="faq-toggle">+</span></div>
+          <div class="faq-a">A double-entry ledger API is a service that keeps financial records over HTTP. Every transaction is a set of postings where debits equal credits per currency, so account balances always reconcile. You integrate accounts, transactions, and balances through REST endpoints instead of building ledger tables, invariants, and reconciliation jobs yourself.</div>
+        </div>
+        <div class="faq-item">
+          <div class="faq-q">Why use a ledger API instead of building on Postgres? <span class="faq-toggle">+</span></div>
+          <div class="faq-a">You can, and most teams do - then spend a quarter chasing balance races, double-posts, and reconciliation drift. SouthPay Ledger starts you one layer up: a transactional engine with append-only history, atomic multi-account moves, idempotency, and replayable webhooks already solved. You write the business logic; we keep the books.</div>
+        </div>
+        <div class="faq-item">
+          <div class="faq-q">How does multi-currency work? <span class="faq-toggle">+</span></div>
+          <div class="faq-a">Fiat, stablecoins, and crypto live in one balanced ledger. USD, EUR, USDC, BTC, or any token symbol you define - each in integer minor units, never floats. Every transaction balances per currency, checked server-side before it commits. No silent single-currency assumptions.</div>
+        </div>
+        <div class="faq-item">
+          <div class="faq-q">Is the ledger append-only? <span class="faq-toggle">+</span></div>
+          <div class="faq-a">Yes. Every posting is immutable once written, and corrections happen by posting a reversing transaction. State is always replayable from the journal - which is exactly what auditors and finance teams expect.</div>
+        </div>
+        <div class="faq-item">
+          <div class="faq-q">How are retries and idempotency handled? <span class="faq-toggle">+</span></div>
+          <div class="faq-a">Every transaction is keyed by a durable idempotency key you supply, so retries are safe by default. Pending and posted balances are tracked separately, and webhooks fire replay-safe on every posted transaction. Your integration replays cleanly because ours does.</div>
+        </div>
+        <div class="faq-item">
+          <div class="faq-q">How do I get access? <span class="faq-toggle">+</span></div>
+          <div class="faq-a">Sign up at <a href="https://ledger.southpay.io/" style="color: var(--brand); text-decoration: underline; text-decoration-thickness: 1px; text-underline-offset: 3px;" target="_blank" rel="noopener">ledger.southpay.io</a>, paste a card, and grab a live key in under five minutes. Test and live mode share the same API surface but use separate keys and data. No demo call required.</div>
+        </div>
+        <div class="faq-item">
+          <div class="faq-q">Is this really self-serve? <span class="faq-toggle">+</span></div>
+          <div class="faq-a">Yes. Sign up with email or Google, paste a card, get a live API key. The only time you'd talk to us is if you want the Enterprise tier or have a specific compliance question.</div>
+        </div>
+        <div class="faq-item">
+          <div class="faq-q">How is this different from the incumbents? <span class="faq-toggle">+</span></div>
+          <div class="faq-a">Technically, the primitives are similar. Double-entry postings, accounts, balances, multi-asset support. Commercially, we publish pricing, we don't gate signup behind a demo, and we start at $97/mo instead of $15K/yr. We respect what they've built. We just disagree about how to sell it.</div>
+        </div>
+        <div class="faq-item">
+          <div class="faq-q">What counts as a "posting"? <span class="faq-toggle">+</span></div>
+          <div class="faq-a">A posting is one debit or credit on one account. A typical payment transaction has 2 to 4 postings (user debit, merchant credit, platform fee credit, etc). We meter postings, not API calls, so a single balanced transaction with three legs counts as three postings.</div>
+        </div>
+        <div class="faq-item">
+          <div class="faq-q">Do you offer a free tier? <span class="faq-toggle">+</span></div>
+          <div class="faq-a">Every plan starts with a 14-day free trial. No card required to read the docs or try the sandbox. The Starter tier itself is $97/mo once you're ready to run production traffic.</div>
+        </div>
+        <div class="faq-item">
+          <div class="faq-q">What about SOC 2, PCI, audit trails? <span class="faq-toggle">+</span></div>
+          <div class="faq-a">All plans get immutable append-only history and full audit logs. SOC 2 reports, custom DPAs, and regulated-entity support live on the Enterprise tier.</div>
+        </div>
+        <div class="faq-item">
+          <div class="faq-q">Can I import an existing ledger? <span class="faq-toggle">+</span></div>
+          <div class="faq-a">Yes. We have a bulk-import endpoint for historical postings, plus a migration helper that ingests CSV exports from other ledger systems or your homegrown one.</div>
+        </div>
+        <div class="faq-item">
+          <div class="faq-q">Is the engine the same as SouthPay's main product? <span class="faq-toggle">+</span></div>
+          <div class="faq-a">Yes. SouthPay Ledger runs on the same OLTP engine that powers our crypto-to-USD payments product. We've been hardening it in production for our own use. Now you can use it directly.</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section style="padding-bottom: 60px;">
+  <div class="container">
+    <div class="final-cta-wrap">
+      <span class="section-tag">Join the future</span>
+      <h2>Stop maintaining <em>your in-house ledger.</em></h2>
+      <p>API keys in five minutes. First 14 days free. Cancel from the dashboard whenever. No call required, ever.</p>
+      <div class="cta-row">
+        <a href="https://app.southpay.io/ledger" class="btn-primary" target="_blank" rel="noopener">Start building free <span class="arrow">→</span></a>
+        <a href="https://docs.southpay.io/" class="btn-secondary" target="_blank" rel="noopener">Read the docs</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <div class="container">
+    <div class="footer-inner">
+      <div class="footer-brand">
+        <a href="/" class="logo">
+          <img src="/assets/img/southpay-logo.avif" alt="SouthPay" class="logo-img">
+        </a>
+        <p>Crypto payments for stores, ledgers, and invoices. Zero chargebacks. Settle in any currency.</p>
+        <div class="footer-social">
+          <a href="https://www.linkedin.com/company/southpay/" target="_blank" rel="noopener" aria-label="LinkedIn">
+            <svg viewBox="0 0 24 24" width="18" height="18" fill="currentColor" aria-hidden="true"><path d="M4.98 3.5a2.5 2.5 0 1 1 0 5 2.5 2.5 0 0 1 0-5zM3 9h4v12H3V9zm7 0h3.8v1.7h.06c.53-.95 1.83-1.95 3.77-1.95 4.03 0 4.77 2.5 4.77 5.74V21H18.6v-5.65c0-1.35-.03-3.08-1.96-3.08-1.96 0-2.26 1.45-2.26 2.98V21H10V9z"/></svg>
+          </a>
+          <a href="https://www.instagram.com/southpay.io/" target="_blank" rel="noopener" aria-label="Instagram">
+            <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="3" width="18" height="18" rx="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.5" cy="6.5" r="1" fill="currentColor" stroke="none"/></svg>
+          </a>
+        </div>
+      </div>
+      <div class="footer-cols">
+        <div class="footer-col">
+          <h4>Products</h4>
+          <a href="/commerce">Commerce</a>
+          <a href="/ledger">Ledger</a>
+          <a href="/invoice">Invoice</a>
+        </div>
+        <div class="footer-col industries-col">
+          <h4>Industries</h4>
+          <div class="footer-col-grid">
+            <a href="/industries">All industries</a>
+            <a href="/industries/ecommerce-stores">Ecommerce stores</a>
+            <a href="/industries/gaming">Gaming</a>
+            <a href="/industries/trading-investments">Trading & investments</a>
+            <a href="/industries/stablecoin-top-ups">Stablecoin top-ups</a>
+            <a href="/industries/it-solutions">IT & SaaS</a>
+            <a href="/industries/web3">Web3</a>
+            <a href="/industries/cross-border-trade">Cross-border trade</a>
+            <a href="/industries/digital-goods">Digital goods</a>
+            <a href="/industries/payment-service-providers">Payment service providers</a>
+            <a href="/industries/creator-economy">Creator economy</a>
+            <a href="/industries/professional-services">Professional services</a>
+            <a href="/industries/travel-hospitality">Travel & hospitality</a>
+            <a href="/industries/luxury-rentals">Luxury rentals</a>
+          </div>
+        </div>
+        <div class="footer-col">
+          <h4>Company</h4>
+          <a href="/about">About</a>
+          <a href="https://docs.southpay.io/" target="_blank" rel="noopener">Docs</a>
+          <a href="/pricing">Pricing</a>
+          <a href="mailto:support@southpay.io">Support</a>
+        </div>
+        <div class="footer-col">
+          <h4>Legal</h4>
+          <a href="/aml-policy">AML policy</a>
+          <a href="/merchant-services-agreement">Merchant agreement</a>
+          <a href="/privacy-policy">Privacy policy</a>
+          <a href="/terms-and-conditions">Terms and conditions</a>
+        </div>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <span>© 2026 SouthPay. All rights reserved.</span>
+      <span>SouthPay is an <a href="https://alc.media/" target="_blank" rel="noopener" class="alc-link">ALC Media</a> brand.</span>
+    </div>
+  </div>
+</footer>
+
+<script src="/assets/southpay.js"></script>
+
+<!-- LANG_JS_BEGIN -->
+<script>
+(function(){
+  // Delegate clicks at the document level — works on desktop and mobile,
+  // doesn't depend on when .nav-lang elements were inserted.
+  document.addEventListener('click', function(e){
+    var trigger = e.target.closest('.nav-lang-trigger');
+    if(trigger){
+      e.preventDefault();
+      e.stopPropagation();
+      var lang = trigger.closest('.nav-lang');
+      var wasOpen = lang.classList.contains('open');
+      document.querySelectorAll('.nav-lang.open').forEach(function(o){ o.classList.remove('open'); });
+      if(!wasOpen) lang.classList.add('open');
+      return;
+    }
+    if(!e.target.closest('.nav-lang-menu')){
+      document.querySelectorAll('.nav-lang.open').forEach(function(o){ o.classList.remove('open'); });
+    }
+  }, false);
+  // Close on Escape for keyboard users
+  document.addEventListener('keydown', function(e){
+    if(e.key === 'Escape'){
+      document.querySelectorAll('.nav-lang.open').forEach(function(o){ o.classList.remove('open'); });
+    }
+  });
+})();
+</script>
+<!-- LANG_JS_END -->
+</body>
+</html>

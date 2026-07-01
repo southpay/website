@@ -1,0 +1,16 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 200" role="img" aria-label="Bitcoin">
+  <defs>
+    <linearGradient id="btc-bg" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0%" stop-color="#374bec"/>
+      <stop offset="100%" stop-color="#2934d0"/>
+    </linearGradient>
+  </defs>
+  <circle cx="100" cy="100" r="100" fill="url(#btc-bg)"/>
+  <g fill="#fff">
+    <rect x="78" y="34" width="11" height="20" rx="2"/>
+    <rect x="105" y="34" width="11" height="20" rx="2"/>
+    <rect x="78" y="146" width="11" height="20" rx="2"/>
+    <rect x="105" y="146" width="11" height="20" rx="2"/>
+    <path d="M64 50 H110 C129 50 142 60 142 78 C142 90 135 99 124 102 C137 105 146 116 146 130 C146 148 132 150 110 150 H64 V50 Z M82 67 V90 H106 C115 90 121 86 121 78 C121 70 115 67 106 67 Z M82 107 V133 H110 C121 133 126 128 126 120 C126 111 121 107 110 107 Z"/>
+  </g>
+</svg>

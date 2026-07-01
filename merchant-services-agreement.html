@@ -1,0 +1,574 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<link rel="icon" type="image/svg+xml" href="/favicon.svg">
+<title>Merchant Payment Services Agreement - SouthPay</title>
+<meta name="description" content="The terms under which merchants access the SouthPay platform - service tracks, fees, settlement, compliance, liability, and electronic acceptance.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:ital,wght@0,400;0,500;0,600;0,700;1,500;1,600;1,700&family=Geist:wght@400;500;600;700&family=Geist+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="/southpay.css">
+<style>
+.legal-page { padding: 90px 0 80px; }
+.legal-hero {
+  max-width: 820px;
+  margin: 0 auto 64px;
+  text-align: center;
+}
+.legal-hero h1 {
+  font-family: var(--display);
+  font-size: clamp(38px, 5vw, 60px);
+  font-weight: 600;
+  letter-spacing: -0.035em;
+  line-height: 1.06;
+  margin: 18px 0 14px;
+}
+.legal-hero h1 em { font-style: italic; color: var(--brand); font-weight: 600; }
+.legal-meta {
+  font-family: var(--mono);
+  font-size: 12.5px;
+  color: var(--ink-mute);
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  margin-top: 6px;
+}
+.legal-intro {
+  max-width: 720px;
+  margin: 22px auto 0;
+  font-size: 17px;
+  line-height: 1.6;
+  color: var(--ink-soft);
+}
+.legal-content {
+  max-width: 760px;
+  margin: 0 auto;
+  font-size: 16px;
+  line-height: 1.72;
+  color: var(--ink-soft);
+}
+.legal-content h2 {
+  font-family: var(--display);
+  font-size: 26px;
+  font-weight: 600;
+  letter-spacing: -0.02em;
+  color: var(--ink);
+  margin: 52px 0 18px;
+  padding-top: 32px;
+  border-top: 1px solid var(--line-soft);
+}
+.legal-content > h2:first-child { padding-top: 0; border-top: none; margin-top: 8px; }
+.legal-content h3 {
+  font-family: var(--display);
+  font-size: 18px;
+  font-weight: 600;
+  color: var(--ink);
+  margin: 30px 0 10px;
+  letter-spacing: -0.015em;
+}
+.legal-content p { margin: 0 0 16px; }
+.legal-content ul, .legal-content ol { margin: 0 0 20px 22px; padding: 0; }
+.legal-content li { margin-bottom: 9px; }
+.legal-content strong { color: var(--ink); font-weight: 600; }
+.legal-content em { font-style: italic; color: var(--ink); }
+.legal-content a {
+  color: var(--brand); text-decoration: underline;
+  text-decoration-thickness: 1px; text-underline-offset: 3px;
+}
+.legal-content a:hover { color: var(--brand-deep); }
+.parties-block {
+  background: var(--surface);
+  border: 1px solid var(--line);
+  border-radius: var(--r-xl);
+  padding: 24px 28px;
+  margin: 18px 0 22px;
+  font-size: 15px;
+  line-height: 1.65;
+  color: var(--ink);
+}
+.parties-block .party-name { font-family: var(--display); font-weight: 600; font-size: 17px; letter-spacing: -0.02em; }
+.parties-block .party-addr { color: var(--ink-soft); font-size: 14.5px; margin-top: 4px; white-space: pre-line; }
+.parties-block .party-roles { font-family: var(--mono); font-size: 12.5px; color: var(--ink-mute); margin-top: 8px; text-transform: uppercase; letter-spacing: 0.05em; }
+.parties-block .conjunction { text-align: center; font-family: var(--mono); font-size: 11.5px; color: var(--ink-mute); margin: 14px 0; letter-spacing: 0.18em; }
+.def-list dt {
+  font-family: var(--mono);
+  font-weight: 600;
+  color: var(--brand);
+  font-size: 13px;
+  letter-spacing: 0.04em;
+  margin-top: 14px;
+}
+.def-list dd { margin: 4px 0 0; padding: 0; }
+</style>
+<!-- GA_BEGIN -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-G1YWDRHW8T"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+  gtag('config', 'G-G1YWDRHW8T');
+</script>
+<!-- GA_END -->
+<!-- AMPLITUDE_BEGIN -->
+<script src="https://cdn.eu.amplitude.com/script/30b70e5e6ec2360a6c262a482628baf0.js"></script>
+<script>
+  window.amplitude.init('30b70e5e6ec2360a6c262a482628baf0', {
+    serverZone: 'EU',
+    serverUrl: 'https://api.eu.amplitude.com/2/httpapi',
+    fetchRemoteConfig: true,
+    autocapture: {
+      attribution: true,
+      fileDownloads: true,
+      formInteractions: true,
+      pageViews: true,
+      sessions: true,
+      elementInteractions: true,
+      networkTracking: true,
+      webVitals: true,
+      frustrationInteractions: true
+    }
+  });
+</script>
+<!-- AMPLITUDE_END -->
+<!-- OG_BEGIN -->
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="SouthPay">
+<meta property="og:title" content="Merchant Payment Services Agreement - SouthPay">
+<meta property="og:description" content="The terms under which merchants access the SouthPay platform - service tracks, fees, settlement, compliance, liability, and electronic acceptance.">
+<meta property="og:url" content="https://southpay.io/merchant-services-agreement">
+<meta property="og:image" content="https://southpay.io/assets/img/og-image.png">
+<meta property="og:image:secure_url" content="https://southpay.io/assets/img/og-image.png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:image:alt" content="SouthPay - crypto payments for stores, ledgers, and invoices">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Merchant Payment Services Agreement - SouthPay">
+<meta name="twitter:description" content="The terms under which merchants access the SouthPay platform - service tracks, fees, settlement, compliance, liability, and electronic acceptance.">
+<meta name="twitter:image" content="https://southpay.io/assets/img/og-image.png">
+<meta name="twitter:image:alt" content="SouthPay - crypto payments for stores, ledgers, and invoices">
+<!-- OG_END -->
+
+</head>
+<body>
+
+<div class="hex-bg" id="hexBg">
+  <svg id="hexSvg" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="xMidYMid slice"></svg>
+</div>
+
+<nav class="site-nav">
+  <div class="container">
+    <div class="nav-inner">
+      <a href="/" class="logo">
+        <img src="/assets/img/southpay-logo.avif" alt="SouthPay" class="logo-img">
+      </a>
+      <div class="nav-links">
+        <div class="nav-products">
+          <span class="nav-products-trigger">Products <svg viewBox="0 0 10 10" fill="none" stroke="currentColor" stroke-width="2"><path d="M2 4l3 3 3-3"/></svg></span>
+          <div class="nav-products-menu">
+            <a href="/commerce" class="nav-product-item">
+              <div class="motif motif-ecom"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 7h18l-2 12H5L3 7z"/><path d="M8 7V5a4 4 0 018 0v2"/></svg></div>
+              <div class="nav-product-info">
+                <div class="nav-product-name">Commerce</div>
+                <div class="nav-product-desc">Crypto checkout for your store. 1.99% flat.</div>
+              </div>
+            </a>
+            <a href="/ledger" class="nav-product-item">
+              <div class="motif motif-ledger"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 12h8M4 7h12M4 17h6"/><circle cx="18" cy="17" r="2"/></svg></div>
+              <div class="nav-product-info">
+                <div class="nav-product-name">Ledger</div>
+                <div class="nav-product-desc">Double-entry API for fintechs. From $97/mo.</div>
+              </div>
+            </a>
+            <a href="/invoice" class="nav-product-item">
+              <div class="motif motif-invoice"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="5" y="3" width="14" height="18" rx="1"/><path d="M8 8h8M8 12h8M8 16h5"/></svg></div>
+              <div class="nav-product-info">
+                <div class="nav-product-name">Invoice</div>
+                <div class="nav-product-desc">Get paid in crypto, settle in cash.</div>
+              </div>
+            </a>
+          </div>
+        </div>
+        <div class="nav-industries">
+          <span class="nav-industries-trigger">Industries <svg viewBox="0 0 10 10" fill="none" stroke="currentColor" stroke-width="2"><path d="M2 4l3 3 3-3"/></svg></span>
+          <div class="nav-industries-menu">
+            <a href="/industries/ecommerce-stores" class="nav-industry-item">
+              <div class="nav-industry-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 7h18l-2 12H5L3 7z"/><path d="M8 7V5a4 4 0 018 0v2"/></svg></div>
+              <div>
+                <div class="nav-industry-name">Ecommerce stores</div>
+                <div class="nav-industry-desc">Crypto checkout for global retailers</div>
+              </div>
+            </a>
+            <a href="/industries/gaming" class="nav-industry-item">
+              <div class="nav-industry-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="8" width="18" height="10" rx="3"/><path d="M8 13h4M10 11v4"/><circle cx="16" cy="12.5" r="0.8" fill="currentColor"/><circle cx="17.5" cy="14.5" r="0.8" fill="currentColor"/></svg></div>
+              <div>
+                <div class="nav-industry-name">Gaming</div>
+                <div class="nav-industry-desc">Top-ups and creator payouts</div>
+              </div>
+            </a>
+            <a href="/industries/trading-investments" class="nav-industry-item">
+              <div class="nav-industry-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 17l6-6 4 4 8-8"/><path d="M14 7h7v7"/></svg></div>
+              <div>
+                <div class="nav-industry-name">Trading & investments</div>
+                <div class="nav-industry-desc">Deposits, withdrawals, on-ramp</div>
+              </div>
+            </a>
+            <a href="/industries/stablecoin-top-ups" class="nav-industry-item">
+              <div class="nav-industry-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="6" width="18" height="13" rx="2"/><path d="M15 12h-2a2 2 0 100 4h2"/><path d="M3 10h18"/></svg></div>
+              <div>
+                <div class="nav-industry-name">Stablecoin top-ups</div>
+                <div class="nav-industry-desc">Wallet and fintech top-up flows</div>
+              </div>
+            </a>
+            <a href="/industries/it-solutions" class="nav-industry-item">
+              <div class="nav-industry-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="7" rx="2"/><rect x="3" y="13" width="18" height="7" rx="2"/><path d="M7 7.5h.01M7 16.5h.01"/></svg></div>
+              <div>
+                <div class="nav-industry-name">IT & SaaS</div>
+                <div class="nav-industry-desc">Cloud, hosting, software</div>
+              </div>
+            </a>
+            <a href="/industries/web3" class="nav-industry-item">
+              <div class="nav-industry-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3l8 4.5v9L12 21l-8-4.5v-9z"/><path d="M12 12L4 7.5M12 12l8-4.5M12 12v9"/></svg></div>
+              <div>
+                <div class="nav-industry-name">Web3</div>
+                <div class="nav-industry-desc">Crypto-native rails for protocols</div>
+              </div>
+            </a>
+            <a href="/industries/cross-border-trade" class="nav-industry-item">
+              <div class="nav-industry-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="M3 12h18"/><path d="M12 3c2.5 3 2.5 15 0 18M12 3c-2.5 3-2.5 15 0 18"/></svg></div>
+              <div>
+                <div class="nav-industry-name">Cross-border trade</div>
+                <div class="nav-industry-desc">Import, export, supplier payouts</div>
+              </div>
+            </a>
+            <a href="/industries/digital-goods" class="nav-industry-item">
+              <div class="nav-industry-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3v12"/><path d="M7 10l5 5 5-5"/><rect x="3" y="17" width="18" height="4" rx="1"/></svg></div>
+              <div>
+                <div class="nav-industry-name">Digital goods</div>
+                <div class="nav-industry-desc">Software, games, content, downloads</div>
+              </div>
+            </a>
+            <a href="/industries/payment-service-providers" class="nav-industry-item">
+              <div class="nav-industry-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="7" width="20" height="11" rx="2"/><path d="M2 11h20"/><path d="M6 15h3"/></svg></div>
+              <div>
+                <div class="nav-industry-name">Payment service providers</div>
+                <div class="nav-industry-desc">Crypto as a feature for your stack</div>
+              </div>
+            </a>
+            <a href="/industries/creator-economy" class="nav-industry-item">
+              <div class="nav-industry-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="9" y="3" width="6" height="11" rx="3"/><path d="M7 11a5 5 0 0010 0"/><path d="M12 16v4M9 20h6"/></svg></div>
+              <div>
+                <div class="nav-industry-name">Creator economy</div>
+                <div class="nav-industry-desc">Payouts and tipping for creators</div>
+              </div>
+            </a>
+            <a href="/industries/professional-services" class="nav-industry-item">
+              <div class="nav-industry-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="8" width="18" height="12" rx="2"/><path d="M9 8V5a2 2 0 012-2h2a2 2 0 012 2v3"/><path d="M3 13h18"/></svg></div>
+              <div>
+                <div class="nav-industry-name">Professional services</div>
+                <div class="nav-industry-desc">Agencies, consultancies, freelancers</div>
+              </div>
+            </a>
+            <a href="/industries/travel-hospitality" class="nav-industry-item">
+              <div class="nav-industry-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 12l18-6-5 17-3-9-10-2z"/></svg></div>
+              <div>
+                <div class="nav-industry-name">Travel & hospitality</div>
+                <div class="nav-industry-desc">Hotels, OTAs, tours, experiences</div>
+              </div>
+            </a>
+            <a href="/industries/luxury-rentals" class="nav-industry-item">
+              <div class="nav-industry-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 17l3-10 4 4 2-8 2 8 4-4 3 10z"/><circle cx="12" cy="20" r="1" fill="currentColor"/></svg></div>
+              <div>
+                <div class="nav-industry-name">Luxury rentals</div>
+                <div class="nav-industry-desc">Aviation, yachts, supercars, experiences</div>
+              </div>
+            </a>
+            <a href="/industries" class="nav-industries-cta">All industries <span class="arrow">→</span></a>
+          </div>
+        </div>
+        <a href="/about">About</a>
+        <a href="https://docs.southpay.io/" target="_blank" rel="noopener">Docs</a>
+        <a href="https://app.southpay.io/" class="nav-cta" target="_blank" rel="noopener">Get started →</a><!-- LANG_BEGIN --><!-- LANG_END --></div>
+    </div>
+  </div>
+</nav>
+
+<section class="legal-page">
+  <div class="container">
+    <div class="legal-hero">
+      <span class="section-tag reveal">Legal</span>
+      <h1 class="reveal d1">Merchant payment <em>services agreement.</em></h1>
+      <p class="legal-meta reveal d2">Last updated · May 11, 2026 · v1.0.0</p>
+      <p class="legal-intro reveal d2">The terms under which merchants access the SouthPay platform - service tracks, fees, settlement, compliance, liability, and electronic acceptance.</p>
+    </div>
+
+    <div class="legal-content">
+
+      <h2>1. Parties and effective date</h2>
+      <p>This Merchant Payment Services Agreement (this "Agreement") is entered into as of the date the Merchant accepts or otherwise agrees to these terms (the "Effective Date"), by and between:</p>
+
+      <div class="parties-block">
+        <div class="party-name"><a href="https://alc.media/" target="_blank" rel="noopener" class="alc-link">ALC Media LLC</a></div>
+        <p style="margin: 6px 0 0; font-size: 14.5px; color: var(--ink-soft);">A limited liability company duly organized and existing under the laws of the State of Wyoming, United States of America, operating under the brand name <strong>SouthPay</strong>, with its principal place of business at:</p>
+        <div class="party-addr">1309 Coffeen Avenue STE 1200
+Sheridan, Wyoming 82801
+United States</div>
+        <div class="party-roles">"ALC Media", "SouthPay", "we", "us", or "our"</div>
+      </div>
+
+      <div class="parties-block">
+        <div class="conjunction">- AND -</div>
+        <div class="party-name">[Merchant Legal Name]</div>
+        <p style="margin: 6px 0 0; font-size: 14.5px; color: var(--ink-soft);">A company or individual organized or residing under the laws of <em>[Jurisdiction]</em>, hereby represented by <em>[Merchant.FirstName] [Merchant.LastName]</em>.</p>
+        <div class="party-roles">"Merchant", "you", or "your"</div>
+      </div>
+
+      <p>ALC Media and Merchant may each be referred to as a "Party" and collectively as the "Parties".</p>
+
+      <h2>2. Definitions and interpretation</h2>
+      <p>For purposes of this Agreement, the following definitions apply:</p>
+
+      <dl class="def-list">
+        <dt>Platform</dt>
+        <dd>means the proprietary software platform, plugins, APIs, integrations, dashboards, administrative tools, configuration layers, and related technical infrastructure operated by ALC Media under the SouthPay brand.</dd>
+
+        <dt>Third-Party Payment Service Providers / PSPs</dt>
+        <dd>means independent third-party entities that provide blockchain transaction execution, payment processing, settlement, fiat conversion, custody (if any), compliance services, or related financial infrastructure.</dd>
+
+        <dt>Crypto-to-Crypto Track</dt>
+        <dd>means transactions in which end users pay in cryptocurrency and the Merchant is settled in cryptocurrency, without fiat conversion.</dd>
+
+        <dt>Crypto-to-Fiat Track</dt>
+        <dd>means transactions in which end users pay in cryptocurrency and the Merchant is settled in fiat currency through a PSP.</dd>
+
+        <dt>KYB</dt>
+        <dd>means know-your-business, business verification, corporate identity verification, ultimate beneficial owner identification, anti-money laundering (AML), counter-terrorist financing (CTF), sanctions screening, and related compliance procedures required by applicable law or by a PSP in connection with Merchant onboarding or continued service.</dd>
+
+        <dt>Fees</dt>
+        <dd>means the fees charged by ALC Media for access to and use of the Platform, excluding any fees charged by PSPs.</dd>
+      </dl>
+
+      <p style="margin-top: 22px;">Headings are for convenience only and do not affect interpretation.</p>
+
+      <h2>3. Scope of services</h2>
+
+      <h3>3.1 Platform access</h3>
+      <p>ALC Media provides Merchant with access to the Platform for the purpose of enabling cryptocurrency payment acceptance on Merchant's commerce systems, subject to the terms of this Agreement.</p>
+
+      <h3>3.2 Nature of services and role limitation</h3>
+      <p>Merchant expressly acknowledges and agrees that:</p>
+      <ul>
+        <li>ALC Media is a software provider and integration layer only.</li>
+        <li>ALC Media is not a bank, financial institution, money services business, payment processor, virtual asset service provider, or custodian.</li>
+        <li>ALC Media does not execute transactions, custody funds, control wallets, perform settlement, conduct fiat conversion, or guarantee payment outcomes.</li>
+        <li>All payment execution, settlement, conversion, custody (if any), compliance checks, and related financial services are performed exclusively by Third-Party Payment Service Providers.</li>
+      </ul>
+      <p>ALC Media does not perform identity verification or KYC of Merchant's end users. Any end-user compliance procedures are conducted solely by applicable PSPs, if required.</p>
+      <p>Merchant further acknowledges that ALC Media has no control over, and no responsibility for, the internal policies, technical systems, compliance determinations, or operational decisions of any PSP.</p>
+
+      <h2>4. Service tracks and compliance models</h2>
+
+      <h3>4.1 Crypto-to-Crypto Track</h3>
+      <p>Where Merchant participates in the Crypto-to-Crypto Track:</p>
+      <ul>
+        <li>Settlement is made exclusively in cryptocurrency.</li>
+        <li>KYB may not be required by ALC Media for participation in this track, subject to PSP requirements and applicable law.</li>
+        <li>Any compliance obligations are determined solely by the applicable PSP and/or applicable law.</li>
+      </ul>
+      <p>Merchant bears all risks related to:</p>
+      <ul>
+        <li>cryptocurrency price volatility</li>
+        <li>blockchain congestion or delays</li>
+        <li>incorrect wallet addresses</li>
+        <li>loss of private keys</li>
+        <li>regulatory classification of digital assets</li>
+      </ul>
+      <p>ALC Media shall have no liability for losses arising from any of the foregoing.</p>
+
+      <h3>4.2 Crypto-to-Fiat Track</h3>
+      <p>Where Merchant participates in the Crypto-to-Fiat Track:</p>
+      <ul>
+        <li>Merchant acknowledges that KYB is mandatory for participation and continued access to settlement services.</li>
+        <li>Merchant agrees to provide accurate, complete, and up-to-date corporate documentation, ownership information, director information, and any other documentation reasonably required for KYB verification.</li>
+        <li>Merchant acknowledges that failure to satisfy KYB requirements may result in delayed settlement, rejected transactions, frozen funds, withheld balances, or permanent suspension by PSPs or authorities.</li>
+      </ul>
+      <p>ALC Media has no responsibility for, and no ability to override, PSP or regulatory decisions.</p>
+
+      <h3>4.3 Discretion and changes</h3>
+      <p>ALC Media may, at its sole discretion and without notice, determine which service track applies to any Merchant, transaction, or period of time, and may modify, suspend, or discontinue any service track.</p>
+
+      <h2>5. Merchant obligations</h2>
+      <p>Merchant represents, warrants, and agrees that it shall:</p>
+      <ul>
+        <li>conduct its business lawfully and in good faith;</li>
+        <li>not engage in prohibited, deceptive, fraudulent, or sanctioned activities;</li>
+        <li>provide accurate information at all times;</li>
+        <li>comply with all applicable laws, including tax, consumer protection, financial regulations, and digital asset laws;</li>
+        <li>immediately notify ALC Media of any investigation, enforcement action, or regulatory inquiry related to Merchant's business.</li>
+      </ul>
+      <p>Merchant is solely responsible for its relationship with its customers and for all products, services, refunds, disputes, and representations made to end users.</p>
+
+      <h2>6. Fees and payments</h2>
+
+      <h3>6.1 Platform fees</h3>
+      <p>Merchant agrees to pay the Fees communicated by ALC Media from time to time. Fees may be modified upon notice, and continued use of the Platform constitutes acceptance.</p>
+
+      <h3>6.2 PSP fees</h3>
+      <p>Fees charged by PSPs are separate from ALC Media's Fees and are determined solely by the PSPs. ALC Media does not control, guarantee, or absorb PSP fees.</p>
+
+      <h2>7. Settlements</h2>
+      <p>Merchant acknowledges that:</p>
+      <ul>
+        <li>settlement timing, currency, method, and availability are determined solely by PSPs;</li>
+        <li>settlements may be delayed, withheld, reversed, or denied due to compliance reviews, regulatory requirements, technical issues, or PSP decisions.</li>
+      </ul>
+      <p>ALC Media shall not be liable for any settlement-related delay, loss, or interruption.</p>
+
+      <h2>8. Intellectual property</h2>
+      <p>All right, title, and interest in the Platform, SouthPay brand, software, documentation, and related intellectual property remain the exclusive property of ALC Media. No ownership or license is granted except as expressly stated.</p>
+
+      <h2>9. Confidentiality</h2>
+      <p>Each Party shall maintain the confidentiality of non-public information received in connection with this Agreement. Confidentiality obligations shall survive termination of this Agreement to the maximum extent permitted by law.</p>
+
+      <h2>10. Disclaimer of warranties</h2>
+      <p><em>The Platform is provided on an "as is" and "as available" basis.</em> ALC Media makes no warranties of any kind, whether express, implied, or statutory, including warranties of merchantability, fitness for a particular purpose, or non-infringement.</p>
+
+      <h2>11. Limitation of liability</h2>
+      <p>To the maximum extent permitted by law:</p>
+      <ul>
+        <li>ALC Media's total aggregate liability arising out of or related to this Agreement shall not exceed <em>the Fees paid by Merchant to ALC Media in the one (1) month preceding the event giving rise to the claim.</em></li>
+        <li>ALC Media shall not be liable for indirect, incidental, consequential, special, or punitive damages, including lost profits, lost revenue, loss of data, business interruption, regulatory penalties, frozen funds, or actions taken by PSPs or authorities.</li>
+      </ul>
+
+      <h2>12. Indemnification</h2>
+      <p>Merchant agrees to indemnify, defend, and hold harmless ALC Media from any claims, losses, damages, fines, penalties, or expenses arising from:</p>
+      <ul>
+        <li>Merchant's business or conduct;</li>
+        <li>Merchant's customers or end users;</li>
+        <li>regulatory or tax violations;</li>
+        <li>misuse of the Platform;</li>
+        <li>inaccurate or misleading information provided by Merchant.</li>
+      </ul>
+
+      <h2>13. Suspension and termination</h2>
+      <p>ALC Media may suspend or terminate this Agreement immediately, without notice, if ALC Media determines that Merchant presents a compliance, legal, reputational, or operational risk.</p>
+      <p>Upon termination, Merchant shall immediately cease all use of the Platform.</p>
+
+      <h2>14. Assignment</h2>
+      <p>ALC Media may assign this Agreement to any affiliate or successor entity, including any entity formed to own or operate the SouthPay platform, without Merchant consent.</p>
+
+      <h2>15. Governing law and venue</h2>
+      <p>This Agreement shall be governed by and construed in accordance with the laws of the State of Wyoming. Exclusive jurisdiction and venue shall lie in the courts located in the State of Wyoming.</p>
+
+      <h2>16. Electronic acceptance and consent</h2>
+      <p>Merchant acknowledges and agrees that this Agreement may be accepted electronically through the SouthPay account registration process. By completing the SouthPay signup form, checking the consent box, and clicking "Sign Up," Merchant:</p>
+      <ul>
+        <li><strong>(a)</strong> confirms that Merchant has read, understood, and agrees to be bound by all terms and conditions of this Agreement, including Appendix A;</li>
+        <li><strong>(b)</strong> authorizes ALC Media to execute this Agreement on Merchant's behalf using the information provided during registration (including Merchant's name, business name, email address, and country) as Merchant's electronic signature, with the date of registration serving as the Effective Date;</li>
+        <li><strong>(c)</strong> consents to receive marketing and promotional communications from SouthPay and ALC Media, including but not limited to emails regarding product updates, new features, promotional offers, and partner services. Merchant may withdraw this marketing consent at any time by contacting <a href="mailto:support@southpay.io">support@southpay.io</a> or using the unsubscribe mechanism provided in such communications, without affecting the validity of this Agreement.</li>
+      </ul>
+      <p>This electronic acceptance shall have the same legal force and effect as a handwritten signature.</p>
+
+    </div>
+  </div>
+</section>
+
+<footer>
+  <div class="container">
+    <div class="footer-inner">
+      <div class="footer-brand">
+        <a href="/" class="logo">
+          <img src="/assets/img/southpay-logo.avif" alt="SouthPay" class="logo-img">
+        </a>
+        <p>Crypto payments for stores, ledgers, and invoices. Zero chargebacks. Settle in any currency.</p>
+        <div class="footer-social">
+          <a href="https://www.linkedin.com/company/southpay/" target="_blank" rel="noopener" aria-label="LinkedIn">
+            <svg viewBox="0 0 24 24" width="18" height="18" fill="currentColor" aria-hidden="true"><path d="M4.98 3.5a2.5 2.5 0 1 1 0 5 2.5 2.5 0 0 1 0-5zM3 9h4v12H3V9zm7 0h3.8v1.7h.06c.53-.95 1.83-1.95 3.77-1.95 4.03 0 4.77 2.5 4.77 5.74V21H18.6v-5.65c0-1.35-.03-3.08-1.96-3.08-1.96 0-2.26 1.45-2.26 2.98V21H10V9z"/></svg>
+          </a>
+          <a href="https://www.instagram.com/southpay.io/" target="_blank" rel="noopener" aria-label="Instagram">
+            <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="3" width="18" height="18" rx="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.5" cy="6.5" r="1" fill="currentColor" stroke="none"/></svg>
+          </a>
+        </div>
+      </div>
+      <div class="footer-cols">
+        <div class="footer-col">
+          <h4>Products</h4>
+          <a href="/commerce">Commerce</a>
+          <a href="/ledger">Ledger</a>
+          <a href="/invoice">Invoice</a>
+        </div>
+        <div class="footer-col industries-col">
+          <h4>Industries</h4>
+          <div class="footer-col-grid">
+            <a href="/industries">All industries</a>
+            <a href="/industries/ecommerce-stores">Ecommerce stores</a>
+            <a href="/industries/gaming">Gaming</a>
+            <a href="/industries/trading-investments">Trading & investments</a>
+            <a href="/industries/stablecoin-top-ups">Stablecoin top-ups</a>
+            <a href="/industries/it-solutions">IT & SaaS</a>
+            <a href="/industries/web3">Web3</a>
+            <a href="/industries/cross-border-trade">Cross-border trade</a>
+            <a href="/industries/digital-goods">Digital goods</a>
+            <a href="/industries/payment-service-providers">Payment service providers</a>
+            <a href="/industries/creator-economy">Creator economy</a>
+            <a href="/industries/professional-services">Professional services</a>
+            <a href="/industries/travel-hospitality">Travel & hospitality</a>
+            <a href="/industries/luxury-rentals">Luxury rentals</a>
+          </div>
+        </div>
+        <div class="footer-col">
+          <h4>Company</h4>
+          <a href="/about">About</a>
+          <a href="https://docs.southpay.io/" target="_blank" rel="noopener">Docs</a>
+          <a href="/pricing">Pricing</a>
+          <a href="mailto:support@southpay.io">Support</a>
+        </div>
+        <div class="footer-col">
+          <h4>Legal</h4>
+          <a href="/aml-policy">AML policy</a>
+          <a href="/merchant-services-agreement">Merchant agreement</a>
+          <a href="/privacy-policy">Privacy policy</a>
+          <a href="/terms-and-conditions">Terms and conditions</a>
+        </div>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <span>© 2026 SouthPay. All rights reserved.</span>
+      <span>SouthPay is an <a href="https://alc.media/" target="_blank" rel="noopener" class="alc-link">ALC Media</a> brand.</span>
+    </div>
+  </div>
+</footer>
+
+<script src="/assets/southpay.js"></script>
+
+<!-- LANG_JS_BEGIN -->
+<script>
+(function(){
+  // Delegate clicks at the document level — works on desktop and mobile,
+  // doesn't depend on when .nav-lang elements were inserted.
+  document.addEventListener('click', function(e){
+    var trigger = e.target.closest('.nav-lang-trigger');
+    if(trigger){
+      e.preventDefault();
+      e.stopPropagation();
+      var lang = trigger.closest('.nav-lang');
+      var wasOpen = lang.classList.contains('open');
+      document.querySelectorAll('.nav-lang.open').forEach(function(o){ o.classList.remove('open'); });
+      if(!wasOpen) lang.classList.add('open');
+      return;
+    }
+    if(!e.target.closest('.nav-lang-menu')){
+      document.querySelectorAll('.nav-lang.open').forEach(function(o){ o.classList.remove('open'); });
+    }
+  }, false);
+  // Close on Escape for keyboard users
+  document.addEventListener('keydown', function(e){
+    if(e.key === 'Escape'){
+      document.querySelectorAll('.nav-lang.open').forEach(function(o){ o.classList.remove('open'); });
+    }
+  });
+})();
+</script>
+<!-- LANG_JS_END -->
+</body>
+</html>

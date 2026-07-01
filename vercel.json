@@ -1,0 +1,46 @@
+{
+  "$schema": "https://openapi.vercel.sh/vercel.json",
+  "cleanUrls": true,
+  "trailingSlash": false,
+  "redirects": [
+    {
+      "source": "/ecommerce",
+      "destination": "/commerce",
+      "permanent": true
+    },
+    {
+      "source": "/es",
+      "destination": "/",
+      "permanent": false
+    },
+    {
+      "source": "/es/:path*",
+      "destination": "/:path*",
+      "permanent": false
+    },
+    {
+      "source": "/pt",
+      "destination": "/",
+      "permanent": false
+    },
+    {
+      "source": "/pt/:path*",
+      "destination": "/:path*",
+      "permanent": false
+    }
+  ],
+  "headers": [
+    {
+      "source": "/southpay.css",
+      "headers": [
+        { "key": "Cache-Control", "value": "public, max-age=3600, must-revalidate" }
+      ]
+    },
+    {
+      "source": "/assets/(.*)",
+      "headers": [
+        { "key": "Cache-Control", "value": "public, max-age=3600, must-revalidate" }
+      ]
+    }
+  ]
+}
