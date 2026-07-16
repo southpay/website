@@ -144,7 +144,7 @@ nav.site-nav {
   transform: translateX(-50%) translateY(8px);
   background: #fff; border: 1px solid var(--line);
   border-radius: var(--r-xl); padding: 14px;
-  width: 720px; display: grid; grid-template-columns: repeat(3, 1fr); gap: 10px;
+  width: 500px; display: grid; grid-template-columns: repeat(2, 1fr); gap: 10px;
   box-shadow: 0 30px 80px -30px rgba(14, 23, 38, 0.25);
   opacity: 0; visibility: hidden;
   transition: opacity .2s, visibility .2s, transform .2s;
