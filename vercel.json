@@ -27,19 +27,45 @@
       "source": "/pt/:path*",
       "destination": "/:path*",
       "permanent": false
+    },
+    {
+      "source": "/ledger",
+      "destination": "https://kordio.io/",
+      "permanent": false
+    },
+    {
+      "source": "/ledger/:path*",
+      "destination": "https://kordio.io/:path*",
+      "permanent": false
+    },
+    {
+      "source": "/es/ledger",
+      "destination": "https://kordio.io/",
+      "permanent": false
+    },
+    {
+      "source": "/pt/ledger",
+      "destination": "https://kordio.io/",
+      "permanent": false
     }
   ],
   "headers": [
     {
       "source": "/southpay.css",
       "headers": [
-        { "key": "Cache-Control", "value": "public, max-age=3600, must-revalidate" }
+        {
+          "key": "Cache-Control",
+          "value": "public, max-age=3600, must-revalidate"
+        }
       ]
     },
     {
       "source": "/assets/(.*)",
       "headers": [
-        { "key": "Cache-Control", "value": "public, max-age=3600, must-revalidate" }
+        {
+          "key": "Cache-Control",
+          "value": "public, max-age=3600, must-revalidate"
+        }
       ]
     }
   ]
