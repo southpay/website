@@ -640,8 +640,8 @@ h2 em { font-style: italic; color: var(--brand); font-weight: 600; }
 
 /* ========== PRODUCT TILES ========== */
 .products-strip { padding: 60px 0; position: relative; z-index: 2; }
-.products-strip-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 18px; }
-@media (max-width: 880px) { .products-strip-grid { grid-template-columns: 1fr; } }
+.products-strip-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 18px; }
+@media (max-width: 980px) { .products-strip-grid { grid-template-columns: 1fr; } }
 .product-tile {
   background: #fff; border: 1px solid var(--line);
   border-radius: var(--r-xl); padding: 28px 28px 24px;
