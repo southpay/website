@@ -144,7 +144,7 @@ nav.site-nav {
   transform: translateX(-50%) translateY(8px);
   background: #fff; border: 1px solid var(--line);
   border-radius: var(--r-xl); padding: 14px;
-  width: 500px; display: grid; grid-template-columns: repeat(2, 1fr); gap: 10px;
+  width: 760px; display: grid; grid-template-columns: repeat(3, 1fr); gap: 10px;
   box-shadow: 0 30px 80px -30px rgba(14, 23, 38, 0.25);
   opacity: 0; visibility: hidden;
   transition: opacity .2s, visibility .2s, transform .2s;
@@ -633,6 +633,7 @@ h2 em { font-style: italic; color: var(--brand); font-weight: 600; }
   border-radius: 12px;
 }
 .motif.motif-invoice { border-radius: 6px; transform: rotate(-4deg); }
+.motif.motif-c2c { border-radius: 10px; transform: rotate(3deg); }
 
 /* ========== PRODUCT TILES ========== */
 .products-strip { padding: 60px 0; position: relative; z-index: 2; }
