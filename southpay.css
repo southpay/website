@@ -639,7 +639,7 @@ h2 em { font-style: italic; color: var(--brand); font-weight: 600; }
 .motif.motif-c2c { border-radius: 10px; transform: rotate(3deg); }
 
 /* ========== PRODUCT TILES ========== */
-.products-strip { padding: 60px 0; position: relative; z-index: 2; }
+.products-strip { padding: 110px 0; position: relative; z-index: 2; }
 .products-strip-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 18px; }
 @media (max-width: 980px) { .products-strip-grid { grid-template-columns: 1fr; } }
 .product-tile {
