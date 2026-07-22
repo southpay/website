@@ -169,6 +169,14 @@
 <meta name="twitter:image:alt" content="SouthPay - crypto payments for stores and invoices">
 <!-- OG_END -->
 
+
+<style>
+/* Card2Crypto nav tile — dark motif + enterprise tag pill */
+.nav-product-tag { display: inline-block; margin-left: 6px; font-family: var(--mono); font-size: 9.5px; letter-spacing: 0.14em; text-transform: uppercase; background: var(--ink); color: #fff; padding: 2px 6px 1px; border-radius: 4px; vertical-align: middle; }
+.nav-product-item--c2c .motif { background: var(--ink); color: #fff; }
+.nav-product-item--c2c:hover .motif { background: var(--brand); color: #fff; }
+.motif-c2c { border-radius: 10px; }
+</style>
 </head>
 <body>
 
@@ -198,6 +206,13 @@
               <div class="nav-product-info">
                 <div class="nav-product-name">Invoice</div>
                 <div class="nav-product-desc">Get paid in crypto, settle in cash.</div>
+              </div>
+            </a>
+            <a href="/card2crypto" class="nav-product-item nav-product-item--c2c">
+              <div class="motif motif-c2c"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="6" width="20" height="12" rx="2"/><path d="M2 10h20"/><path d="M14 14h4"/></svg></div>
+              <div class="nav-product-info">
+                <div class="nav-product-name">Card2Crypto <span class="nav-product-tag">Enterprise</span></div>
+                <div class="nav-product-desc">Card processing for restricted verticals.</div>
               </div>
             </a>
           </div>
@@ -558,6 +573,62 @@
   </div>
 </section>
 
+<!-- Card2Crypto callout — for restricted-vertical operators only. Deliberately understated. -->
+<section class="c2c-callout" aria-label="Card2Crypto enterprise callout">
+  <div class="container">
+    <a href="/card2crypto" class="c2c-callout-inner">
+      <div class="c2c-callout-tag">Card2Crypto · Enterprise</div>
+      <div class="c2c-callout-body">
+        <strong>Looking to accept card payments for peptides, nutraceuticals, CBD, hemp, kratom, firearms, or tactical?</strong>
+        <span>SouthPay runs a separate rail for high-risk verticals traditional processors won't serve. Custom pricing. Direct line.</span>
+      </div>
+      <span class="c2c-callout-arrow" aria-hidden="true">→</span>
+    </a>
+  </div>
+</section>
+
+<style>
+.c2c-callout { padding: 40px 0 90px; }
+.c2c-callout-inner {
+  display: grid; grid-template-columns: auto 1fr auto;
+  gap: 28px; align-items: center;
+  padding: 22px 28px;
+  background: var(--ink); color: #fff;
+  border-radius: var(--r-xl); text-decoration: none;
+  border: 1px solid rgba(255,255,255,0.08);
+  transition: transform .3s cubic-bezier(0.2,0.8,0.2,1),
+              background .3s cubic-bezier(0.2,0.8,0.2,1),
+              box-shadow .3s cubic-bezier(0.2,0.8,0.2,1);
+}
+.c2c-callout-inner:hover {
+  transform: translateY(-2px);
+  background: #0d0f18;
+  box-shadow: 0 20px 50px -20px rgba(55, 75, 236, 0.35);
+}
+.c2c-callout-tag {
+  font-family: var(--mono); font-size: 10.5px; letter-spacing: 0.18em;
+  text-transform: uppercase; color: var(--brand-soft);
+  padding: 6px 10px; border: 1px solid rgba(255,255,255,0.18); border-radius: 999px;
+  white-space: nowrap;
+}
+.c2c-callout-body strong {
+  display: block; font-family: var(--display); font-weight: 600;
+  font-size: 16.5px; letter-spacing: -0.01em; color: #fff; margin-bottom: 4px;
+}
+.c2c-callout-body span {
+  display: block; font-size: 13.5px; line-height: 1.5; color: rgba(255,255,255,0.65);
+}
+.c2c-callout-arrow {
+  font-family: var(--display); font-size: 22px; color: rgba(255,255,255,0.7);
+  transition: transform .3s cubic-bezier(0.2,0.8,0.2,1), color .3s ease;
+}
+.c2c-callout-inner:hover .c2c-callout-arrow { transform: translateX(4px); color: #fff; }
+@media (max-width: 720px) {
+  .c2c-callout-inner { grid-template-columns: 1fr; text-align: left; gap: 14px; padding: 22px; }
+  .c2c-callout-arrow { justify-self: end; }
+}
+</style>
+
 <footer>
   <div class="container">
     <div class="footer-inner">
@@ -580,6 +651,7 @@
           <h4>Products</h4>
           <a href="/commerce">Commerce</a>
           <a href="/invoice">Invoice</a>
+          <a href="/card2crypto">Card2Crypto</a>
         </div>
         <div class="footer-col industries-col">
           <h4>Industries</h4>

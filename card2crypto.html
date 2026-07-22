@@ -1,0 +1,616 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<link rel="icon" type="image/svg+xml" href="/favicon.svg">
+<link rel="canonical" href="https://southpay.io/card2crypto">
+<title>Card2Crypto by SouthPay — Card payment processing for peptides, nutraceuticals, CBD & firearms</title>
+<meta name="description" content="Card2Crypto accepts card payments for high-risk verticals traditional processors won't serve: peptides, research chemicals, nutraceuticals, SARMs, CBD, hemp, kratom, firearms, ammo, and tactical. Cards in, USD out. No chargebacks, no rolling reserves, no MCC blocks.">
+<meta name="keywords" content="peptide payment processor, research chemical payment gateway, SARM payment processor, nutraceutical merchant account, supplement payment gateway, CBD merchant account, hemp payment processor, kratom payment gateway, firearms merchant account, FFL payment processor, ammo payment gateway, high-risk merchant account, restricted category payment processing, card to crypto processor, crypto payment processor for high-risk merchants, no chargeback payment processor">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:ital,wght@0,400;0,500;0,600;0,700;1,500;1,600;1,700&family=Geist:wght@400;500;600;700&family=Geist+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="/southpay.css">
+
+<!-- OG_BEGIN -->
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="SouthPay">
+<meta property="og:title" content="Card2Crypto by SouthPay — Card payments for high-risk verticals">
+<meta property="og:description" content="Card payment processing for peptides, nutraceuticals, CBD, hemp, kratom, firearms and other categories traditional processors won't serve. Cards in, USD out. No chargebacks. Custom pricing.">
+<meta property="og:url" content="https://southpay.io/card2crypto">
+<meta property="og:image" content="https://southpay.io/assets/img/og-image.png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Card2Crypto by SouthPay — Card payments for high-risk verticals">
+<meta name="twitter:description" content="Card payment processing for peptides, nutraceuticals, CBD, hemp, kratom, firearms and other categories traditional processors won't serve. Cards in, USD out. No chargebacks. Custom pricing.">
+<meta name="twitter:image" content="https://southpay.io/assets/img/og-image.png">
+<!-- OG_END -->
+
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "Service",
+  "name": "Card2Crypto by SouthPay",
+  "provider": {
+    "@type": "Organization",
+    "name": "SouthPay",
+    "url": "https://southpay.io/"
+  },
+  "serviceType": "High-risk merchant card payment processing with USD settlement",
+  "description": "Card payment processing for high-risk and restricted verticals traditional PSPs won't serve. Cards in from customers, USD out to the merchant. No chargebacks, no MCC restrictions, no rolling reserves.",
+  "areaServed": "Worldwide",
+  "audience": {
+    "@type": "BusinessAudience",
+    "audienceType": [
+      "Peptide retailers",
+      "Research chemical merchants",
+      "Nutraceutical and supplement brands",
+      "CBD, hemp and kratom stores",
+      "Firearms, ammunition and tactical dealers"
+    ]
+  },
+  "offers": {
+    "@type": "Offer",
+    "priceSpecification": {
+      "@type": "PriceSpecification",
+      "priceCurrency": "USD",
+      "price": "Custom"
+    }
+  }
+}
+</script>
+
+<style>
+/* ==========================================================================
+   Card2Crypto — page-scoped premium styling. Distinct from Commerce/Invoice
+   without breaking the brand system. Dark hero, precise typography, restrained
+   accents. Everything else inherits SouthPay tokens.
+   ========================================================================== */
+
+.c2c-hero {
+  background: radial-gradient(circle 900px at 20% 10%, rgba(55, 75, 236, 0.18), transparent 55%),
+              linear-gradient(180deg, #08090f 0%, #0d0f18 100%);
+  color: #fff;
+  padding: 140px 0 110px;
+  position: relative;
+  overflow: hidden;
+}
+.c2c-hero::after {
+  content: ''; position: absolute; inset: 0;
+  background: radial-gradient(circle 500px at 90% 90%, rgba(55, 75, 236, 0.12), transparent 60%);
+  pointer-events: none;
+}
+.c2c-hero .container { position: relative; z-index: 2; max-width: 920px; }
+.c2c-hero .eyebrow {
+  display: inline-flex; align-items: center; gap: 10px;
+  font-family: var(--mono);
+  font-size: 11.5px; letter-spacing: 0.18em; text-transform: uppercase;
+  color: rgba(255,255,255,0.6); margin-bottom: 28px;
+}
+.c2c-hero .eyebrow::before {
+  content: ''; width: 6px; height: 6px; border-radius: 50%; background: var(--brand);
+  box-shadow: 0 0 12px rgba(55, 75, 236, 0.6);
+}
+.c2c-hero h1 {
+  font-family: var(--display);
+  font-size: clamp(44px, 5.6vw, 76px);
+  line-height: 1.02; letter-spacing: -0.03em;
+  font-weight: 600; color: #fff; margin-bottom: 28px;
+  max-width: 780px;
+}
+.c2c-hero h1 em { color: var(--brand-soft); font-style: italic; font-weight: 600; }
+.c2c-hero .lede {
+  font-size: 19px; line-height: 1.55; color: rgba(255,255,255,0.78);
+  max-width: 640px; margin-bottom: 36px;
+}
+.c2c-hero .lede strong { color: #fff; font-weight: 600; }
+.c2c-hero .cta-row .btn-primary {
+  background: #fff; color: #0a0a10;
+  box-shadow: 0 10px 30px -8px rgba(255,255,255,0.25);
+}
+.c2c-hero .cta-row .btn-primary:hover { background: var(--brand); color: #fff; }
+.c2c-hero .cta-row .btn-secondary {
+  background: transparent; color: rgba(255,255,255,0.85);
+  border: 1px solid rgba(255,255,255,0.22);
+}
+.c2c-hero .cta-row .btn-secondary:hover { border-color: #fff; color: #fff; background: rgba(255,255,255,0.06); }
+.c2c-hero-tags {
+  display: flex; gap: 22px; flex-wrap: wrap;
+  margin-top: 28px; padding-top: 24px;
+  border-top: 1px solid rgba(255,255,255,0.1);
+  font-family: var(--mono); font-size: 11.5px; letter-spacing: 0.14em; text-transform: uppercase;
+  color: rgba(255,255,255,0.5);
+}
+.c2c-hero-tags span { position: relative; }
+
+/* --- Verticals grid --- */
+.c2c-verticals { padding: 100px 0 40px; background: var(--surface); }
+.c2c-verticals .container > header {
+  max-width: 720px; margin-bottom: 56px;
+}
+.c2c-verticals .section-tag { color: var(--brand); }
+.c2c-verticals-grid {
+  display: grid; grid-template-columns: repeat(2, 1fr); gap: 20px;
+}
+@media (max-width: 880px) { .c2c-verticals-grid { grid-template-columns: 1fr; } }
+.c2c-vertical {
+  background: var(--surface); border: 1px solid var(--line);
+  border-radius: var(--r-2xl); padding: 34px 32px;
+  transition: transform .3s, border-color .3s, box-shadow .3s;
+  position: relative; overflow: hidden;
+}
+.c2c-vertical::before {
+  content: ''; position: absolute; top: 0; left: 0; right: 0; height: 3px;
+  background: linear-gradient(90deg, var(--brand), transparent);
+  opacity: 0; transition: opacity .3s;
+}
+.c2c-vertical:hover { border-color: var(--brand-soft); transform: translateY(-4px); box-shadow: 0 24px 48px -20px rgba(55,75,236,0.14); }
+.c2c-vertical:hover::before { opacity: 1; }
+.c2c-vertical-icon {
+  width: 44px; height: 44px; border-radius: 12px;
+  display: inline-flex; align-items: center; justify-content: center;
+  background: rgba(55, 75, 236, 0.10); color: var(--brand); margin-bottom: 22px;
+}
+.c2c-vertical-icon svg { width: 22px; height: 22px; }
+.c2c-vertical h3 {
+  font-family: var(--display); font-size: 22px; font-weight: 600;
+  letter-spacing: -0.02em; line-height: 1.2; margin-bottom: 10px; color: var(--ink);
+}
+.c2c-vertical p { font-size: 14.5px; line-height: 1.55; color: var(--ink-soft); margin-bottom: 16px; }
+.c2c-vertical-keywords {
+  font-family: var(--mono); font-size: 11.5px; color: var(--ink-mute);
+  letter-spacing: 0.02em; padding-top: 14px; border-top: 1px solid var(--line-soft);
+}
+
+/* --- Problem / how it works --- */
+.c2c-problem { padding: 100px 0 60px; background: var(--surface); }
+.c2c-problem-grid {
+  display: grid; grid-template-columns: repeat(2, 1fr); gap: 16px; margin-top: 48px;
+}
+@media (max-width: 880px) { .c2c-problem-grid { grid-template-columns: 1fr; } }
+.c2c-problem-card {
+  padding: 28px 30px; border: 1px solid var(--line); border-radius: var(--r-xl);
+  background: var(--surface);
+}
+.c2c-problem-card b {
+  display: block; font-family: var(--display); font-size: 18px; font-weight: 600;
+  letter-spacing: -0.015em; color: var(--ink); margin-bottom: 8px;
+}
+.c2c-problem-card p { font-size: 14.5px; line-height: 1.6; color: var(--ink-soft); }
+
+.c2c-how { padding: 100px 0; background: #0d0f18; color: #fff; position: relative; }
+.c2c-how::before {
+  content: ''; position: absolute; inset: 0;
+  background: radial-gradient(circle 700px at 80% 20%, rgba(55, 75, 236, 0.12), transparent 55%);
+  pointer-events: none;
+}
+.c2c-how .container { position: relative; z-index: 2; }
+.c2c-how .section-tag { color: var(--brand-soft); }
+.c2c-how h2 { color: #fff; }
+.c2c-how h2 em { color: var(--brand-soft); }
+.c2c-how .section-intro { color: rgba(255,255,255,0.7); }
+.c2c-flow {
+  display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px;
+  margin-top: 56px; position: relative;
+}
+@media (max-width: 880px) { .c2c-flow { grid-template-columns: 1fr; } }
+.c2c-flow-step {
+  padding: 34px 30px; border: 1px solid rgba(255,255,255,0.14);
+  border-radius: var(--r-xl); background: rgba(255,255,255,0.02);
+}
+.c2c-flow-num {
+  font-family: var(--mono); font-size: 11.5px; letter-spacing: 0.14em;
+  text-transform: uppercase; color: var(--brand-soft); margin-bottom: 22px;
+}
+.c2c-flow-step h4 {
+  font-family: var(--display); font-size: 20px; font-weight: 600;
+  letter-spacing: -0.02em; margin-bottom: 10px; color: #fff;
+}
+.c2c-flow-step p { color: rgba(255,255,255,0.7); font-size: 14.5px; line-height: 1.55; }
+
+/* --- Pillars (enterprise reassurance) --- */
+.c2c-pillars { padding: 100px 0; background: var(--surface); }
+.c2c-pillars-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 18px; margin-top: 48px; }
+@media (max-width: 980px) { .c2c-pillars-grid { grid-template-columns: repeat(2, 1fr); } }
+@media (max-width: 560px) { .c2c-pillars-grid { grid-template-columns: 1fr; } }
+.c2c-pillar {
+  padding: 30px 26px; border: 1px solid var(--line); border-radius: var(--r-xl);
+  background: var(--surface);
+}
+.c2c-pillar-num {
+  font-family: var(--mono); font-size: 11px; letter-spacing: 0.14em;
+  text-transform: uppercase; color: var(--brand); margin-bottom: 14px;
+}
+.c2c-pillar h4 {
+  font-family: var(--display); font-size: 17px; font-weight: 600;
+  letter-spacing: -0.015em; margin-bottom: 8px; color: var(--ink);
+}
+.c2c-pillar p { font-size: 13.5px; line-height: 1.55; color: var(--ink-soft); }
+
+/* --- Pricing --- */
+.c2c-pricing { padding: 100px 0; background: #0d0f18; color: #fff; }
+.c2c-pricing .container { text-align: center; max-width: 720px; }
+.c2c-pricing .section-tag { color: var(--brand-soft); }
+.c2c-pricing h2 { color: #fff; margin: 0 auto 24px; }
+.c2c-pricing h2 em { color: var(--brand-soft); }
+.c2c-pricing p { color: rgba(255,255,255,0.75); font-size: 17px; line-height: 1.55; max-width: 560px; margin: 0 auto 40px; }
+.c2c-price-card {
+  background: rgba(255,255,255,0.03); border: 1px solid rgba(255,255,255,0.14);
+  border-radius: var(--r-2xl); padding: 44px; margin-top: 12px;
+  display: grid; grid-template-columns: 1fr auto; gap: 32px; align-items: center; text-align: left;
+}
+@media (max-width: 720px) { .c2c-price-card { grid-template-columns: 1fr; text-align: center; } }
+.c2c-price-headline {
+  font-family: var(--display); font-size: 34px; font-weight: 600;
+  letter-spacing: -0.025em; color: #fff; line-height: 1.15;
+}
+.c2c-price-meta {
+  margin-top: 14px; display: flex; gap: 20px; flex-wrap: wrap;
+  font-family: var(--mono); font-size: 11.5px; letter-spacing: 0.14em; text-transform: uppercase;
+  color: rgba(255,255,255,0.55);
+}
+@media (max-width: 720px) { .c2c-price-meta { justify-content: center; } }
+.c2c-price-card .btn-primary {
+  background: #fff; color: #0a0a10;
+  box-shadow: 0 10px 30px -8px rgba(255,255,255,0.25);
+}
+.c2c-price-card .btn-primary:hover { background: var(--brand); color: #fff; }
+
+/* --- Final CTA (uses site's .final-cta-wrap dark on white) --- */
+.c2c-final { padding: 80px 0 100px; background: var(--surface); }
+
+/* --- SEO body text (subtle, keyword-rich, small type) --- */
+.c2c-seo-body {
+  padding: 60px 0 90px; background: var(--surface);
+  border-top: 1px solid var(--line-soft);
+}
+.c2c-seo-body .container { max-width: 780px; }
+.c2c-seo-body h2 {
+  font-size: clamp(24px, 3vw, 30px); font-weight: 600;
+  letter-spacing: -0.02em; margin-bottom: 20px; color: var(--ink);
+}
+.c2c-seo-body p { color: var(--ink-soft); font-size: 15px; line-height: 1.7; margin-bottom: 16px; }
+.c2c-seo-body ul { color: var(--ink-soft); font-size: 15px; line-height: 1.75; padding-left: 20px; margin-bottom: 16px; }
+.c2c-seo-body strong { color: var(--ink); font-weight: 600; }
+</style>
+</head>
+<body>
+
+<nav class="site-nav">
+  <div class="container">
+    <div class="nav-inner">
+      <a href="/" class="logo">
+        <img src="/assets/img/southpay-logo.avif" alt="SouthPay" class="logo-img">
+      </a>
+      <div class="nav-links">
+        <div class="nav-products">
+          <span class="nav-products-trigger">Products <svg viewBox="0 0 10 10" fill="none" stroke="currentColor" stroke-width="2"><path d="M2 4l3 3 3-3"/></svg></span>
+          <div class="nav-products-menu">
+            <a href="/commerce" class="nav-product-item">
+              <div class="motif motif-ecom"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 7h18l-2 12H5L3 7z"/><path d="M8 7V5a4 4 0 018 0v2"/></svg></div>
+              <div class="nav-product-info">
+                <div class="nav-product-name">Commerce</div>
+                <div class="nav-product-desc">Crypto checkout for your store. 1.99% flat.</div>
+              </div>
+            </a>
+            <a href="/invoice" class="nav-product-item">
+              <div class="motif motif-invoice"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="5" y="3" width="14" height="18" rx="1"/><path d="M8 8h8M8 12h8M8 16h5"/></svg></div>
+              <div class="nav-product-info">
+                <div class="nav-product-name">Invoice</div>
+                <div class="nav-product-desc">Get paid in crypto, settle in cash.</div>
+              </div>
+            </a>
+            <a href="/card2crypto" class="nav-product-item nav-product-item--c2c">
+              <div class="motif motif-c2c"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="6" width="20" height="12" rx="2"/><path d="M2 10h20"/><path d="M14 14h4"/></svg></div>
+              <div class="nav-product-info">
+                <div class="nav-product-name">Card2Crypto <span class="nav-product-tag">Enterprise</span></div>
+                <div class="nav-product-desc">Card processing for restricted verticals.</div>
+              </div>
+            </a>
+          </div>
+        </div>
+        <a href="/about">About</a>
+        <a href="https://docs.southpay.io/" target="_blank" rel="noopener">Docs</a>
+        <a href="mailto:sales@southpay.io?subject=Card2Crypto%20inquiry" class="nav-cta">Talk to us →</a>
+      </div>
+    </div>
+  </div>
+</nav>
+
+<!-- ============= HERO ============= -->
+<section class="c2c-hero">
+  <div class="container">
+    <div class="eyebrow">Card2Crypto · Enterprise</div>
+    <h1>Card payments for the businesses <em>everyone else refuses to serve.</em></h1>
+    <p class="lede">
+      Card2Crypto is SouthPay's card-acceptance rail built for verticals traditional PSPs won't touch: <strong>peptides, research chemicals, nutraceuticals, SARMs, CBD, hemp, kratom, firearms, ammunition, and tactical.</strong> Cards in from customers. USD out to your bank. No MCC restrictions, no rolling reserves, no chargebacks.
+    </p>
+    <div class="cta-row">
+      <a href="mailto:sales@southpay.io?subject=Card2Crypto%20inquiry" class="btn-primary">Talk to us <span class="arrow">→</span></a>
+      <a href="#how-it-works" class="btn-secondary">How it works</a>
+    </div>
+    <div class="c2c-hero-tags">
+      <span>Peptides</span>
+      <span>Nutraceuticals</span>
+      <span>CBD · Hemp · Kratom</span>
+      <span>Firearms · Ammo</span>
+      <span>Custom vertical? Ask us.</span>
+    </div>
+  </div>
+</section>
+
+<!-- ============= WHO THIS IS FOR (verticals) ============= -->
+<section class="c2c-verticals">
+  <div class="container">
+    <header>
+      <span class="section-tag">Who this is for</span>
+      <h2>Built for the verticals traditional processors <em>quietly avoid.</em></h2>
+      <p class="section-intro" style="margin-top: 16px;">Stripe, Adyen, and the banks under them keep MCC blacklists you'll never see. If your product falls into one of these categories, you already know. This is the rail we built for you.</p>
+    </header>
+    <div class="c2c-verticals-grid">
+
+      <div class="c2c-vertical">
+        <div class="c2c-vertical-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M8 3v18"/><path d="M16 3v18"/><path d="M8 8h8"/><path d="M8 16h8"/><path d="M4 12h16"/></svg></div>
+        <h3>Peptides & research chemicals</h3>
+        <p>Merchant accounts terminated the moment a bank sees "BPC-157" or "GHK-Cu" on a descriptor. Card2Crypto is the <strong>peptide payment processor</strong> that stays live through the categories every PSP quietly blocks.</p>
+        <div class="c2c-vertical-keywords">peptide payment processor · research chemical payment gateway · high-risk merchant account for peptides · BPC-157 · TB-500 · nootropic</div>
+      </div>
+
+      <div class="c2c-vertical">
+        <div class="c2c-vertical-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10 3v6a4 4 0 004 4h0a4 4 0 004-4V3"/><path d="M10 3h8"/><path d="M14 13v8"/><path d="M10 21h8"/></svg></div>
+        <h3>Nutraceuticals, SARMs & supplements</h3>
+        <p>Testosterone boosters, SARMs, nootropics, sleep stacks. Traditional processors bucket you as "high-risk" and reserve 10% of your revenue for six months. Card2Crypto is the <strong>nutraceutical payment processor</strong> and <strong>SARM merchant account</strong> alternative built without those handbrakes.</p>
+        <div class="c2c-vertical-keywords">nutraceutical merchant account · SARM payment processor · supplement payment gateway · nootropic checkout · testosterone booster payment processing</div>
+      </div>
+
+      <div class="c2c-vertical">
+        <div class="c2c-vertical-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3c3 3 6 7 6 11a6 6 0 01-12 0c0-4 3-8 6-11z"/><path d="M12 9v9"/><path d="M9 13c2 1 4 1 6 0"/></svg></div>
+        <h3>CBD, hemp & kratom</h3>
+        <p>Federally legal, PSP-restricted. Cannabinoids, kratom, hemp flower, and delta products get frozen without notice. Card2Crypto is the <strong>CBD merchant account</strong> and <strong>kratom payment gateway</strong> that keeps card acceptance live for regulated botanicals.</p>
+        <div class="c2c-vertical-keywords">CBD merchant account · hemp payment processor · kratom payment gateway · delta-8 payment processing · cannabinoid merchant services</div>
+      </div>
+
+      <div class="c2c-vertical">
+        <div class="c2c-vertical-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 12h11l-3-3"/><path d="M15 12l-3 3"/><path d="M18 5h2v14h-2"/><circle cx="6" cy="12" r="1.2" fill="currentColor" stroke="none"/></svg></div>
+        <h3>Firearms, ammunition & tactical</h3>
+        <p>2A retailers cut off by Stripe, Square and PayPal at random. FFL-holders paying 5% and still getting deplatformed. Card2Crypto is the <strong>firearms merchant account</strong> and <strong>ammo payment gateway</strong> that treats you like a compliant business, not a liability.</p>
+        <div class="c2c-vertical-keywords">firearms merchant account · FFL payment processor · ammo payment gateway · 2A retailer payment processing · tactical gear checkout</div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- ============= THE PROBLEM ============= -->
+<section class="c2c-problem">
+  <div class="container">
+    <header style="max-width: 720px;">
+      <span class="section-tag">The problem</span>
+      <h2>You already know <em>the story.</em></h2>
+      <p class="section-intro" style="margin-top: 16px;">You didn't come to this page because your payments are working. You came because the account you spent months onboarding just froze, or your reserve is choking cash flow, or your third processor this year hit the MATCH list.</p>
+    </header>
+    <div class="c2c-problem-grid">
+      <div class="c2c-problem-card">
+        <b>Account terminations without notice.</b>
+        <p>You wake up to a 30-day off-boarding email and 90 days of held funds. No hearing, no appeal. The MCC changed at your acquiring bank and you were the collateral.</p>
+      </div>
+      <div class="c2c-problem-card">
+        <b>Rolling reserves that eat your runway.</b>
+        <p>10 to 20% of monthly volume held for six months. On a business doing $500K/mo, that's $100K locked up at any time. That's your Q1 marketing budget sitting on someone else's balance sheet.</p>
+      </div>
+      <div class="c2c-problem-card">
+        <b>Chargebacks stacked against you.</b>
+        <p>Regulated verticals get treated as fraud-prone by default. Every dispute goes to the customer, plus $25 in fees. Card2Crypto settlements are final on the crypto side — no reversals downstream.</p>
+      </div>
+      <div class="c2c-problem-card">
+        <b>MCC blacklists you'll never see.</b>
+        <p>Stripe and its peers publish a "prohibited businesses" list that reads like a wishlist. What you don't see: the internal MCC codes acquirers use to shut off categories mid-quarter. You get to be the incident.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============= HOW IT WORKS ============= -->
+<section class="c2c-how" id="how-it-works">
+  <div class="container">
+    <header style="max-width: 720px;">
+      <span class="section-tag">How it works</span>
+      <h2>Cards in. USD out. <em>Nothing in between that can freeze you.</em></h2>
+      <p class="section-intro" style="margin-top: 16px;">Customers pay by card at your checkout like they always have. Card2Crypto handles the acceptance leg on a rail that isn't beholden to your MCC. You get settled in USD to your bank. The card networks never see what you sell.</p>
+    </header>
+    <div class="c2c-flow">
+      <div class="c2c-flow-step">
+        <div class="c2c-flow-num">01 — customer</div>
+        <h4>Cards at checkout.</h4>
+        <p>Your customer pays Visa, Mastercard, or Amex at your existing checkout. Nothing changes for them. No "pay with crypto" prompt, no wallet install, no explanation.</p>
+      </div>
+      <div class="c2c-flow-step">
+        <div class="c2c-flow-num">02 — Card2Crypto</div>
+        <h4>Our rail, our risk.</h4>
+        <p>The transaction is processed on Card2Crypto's licensed acceptance infrastructure — not through your bank's MCC gate. Compliance, KYC, AML, and settlement risk sit on us, not you.</p>
+      </div>
+      <div class="c2c-flow-step">
+        <div class="c2c-flow-num">03 — you</div>
+        <h4>USD to your bank.</h4>
+        <p>Funds settle to your US bank account in USD. Same-day or next-day depending on volume. Or hold in stablecoin. You choose.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============= ENTERPRISE PILLARS ============= -->
+<section class="c2c-pillars">
+  <div class="container">
+    <header style="max-width: 720px;">
+      <span class="section-tag">Why Card2Crypto</span>
+      <h2>An enterprise rail. <em>For an enterprise problem.</em></h2>
+      <p class="section-intro" style="margin-top: 16px;">Card2Crypto isn't a self-serve signup. Every account starts with a conversation, an underwriting review, and a dedicated point of contact. Because the stakes for you are higher, and we treat them that way.</p>
+    </header>
+    <div class="c2c-pillars-grid">
+      <div class="c2c-pillar">
+        <div class="c2c-pillar-num">01</div>
+        <h4>Dedicated onboarding</h4>
+        <p>A human walks you through underwriting, integration, and settlement. First payment usually inside two weeks.</p>
+      </div>
+      <div class="c2c-pillar">
+        <div class="c2c-pillar-num">02</div>
+        <h4>US-domiciled settlement</h4>
+        <p>USD payouts to a US bank account, or hold in stablecoin. No offshore intermediaries, no wire delays.</p>
+      </div>
+      <div class="c2c-pillar">
+        <div class="c2c-pillar-num">03</div>
+        <h4>Compliance-first</h4>
+        <p>Full KYC/AML, sanctions screening, transaction monitoring. Your vertical is niche; your compliance posture shouldn't be.</p>
+      </div>
+      <div class="c2c-pillar">
+        <div class="c2c-pillar-num">04</div>
+        <h4>Enterprise SLA</h4>
+        <p>Named account manager, direct Slack/Signal line, incident response on real timelines. Not a support inbox.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============= PRICING ============= -->
+<section class="c2c-pricing">
+  <div class="container">
+    <span class="section-tag">Pricing</span>
+    <h2>Custom. <em>Because you're not a category.</em></h2>
+    <p>No monthly subscription. No setup fees. Per-transaction pricing sized to your vertical, your volume, and your risk profile — quoted in the intro call, not scraped off a pricing page.</p>
+
+    <div class="c2c-price-card">
+      <div>
+        <div class="c2c-price-headline">Talk to us. We'll build the quote to fit.</div>
+        <div class="c2c-price-meta">
+          <span>No monthly fees</span>
+          <span>No setup cost</span>
+          <span>Volume-based</span>
+        </div>
+      </div>
+      <a href="mailto:sales@southpay.io?subject=Card2Crypto%20inquiry" class="btn-primary">Get in touch <span class="arrow">→</span></a>
+    </div>
+  </div>
+</section>
+
+<!-- ============= FINAL CTA ============= -->
+<section class="c2c-final">
+  <div class="container">
+    <div class="final-cta-wrap">
+      <span class="section-tag">Ready to talk?</span>
+      <h2>Stop losing accounts. <em>Start taking cards.</em></h2>
+      <p>Tell us your vertical, your monthly volume, and your current PSP situation. We'll come back with underwriting terms and a settlement plan inside two business days.</p>
+      <div class="cta-row">
+        <a href="mailto:sales@southpay.io?subject=Card2Crypto%20inquiry" class="btn-primary">Email sales <span class="arrow">→</span></a>
+        <a href="https://calendly.com/daniel-southpay/intro-call" class="btn-secondary" target="_blank" rel="noopener">Book a call</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============= SEO BODY ============= -->
+<section class="c2c-seo-body">
+  <div class="container">
+    <h2>Reliable card payment processing for high-risk merchants</h2>
+    <p>
+      Card2Crypto is <strong>SouthPay's high-risk merchant account alternative</strong>, purpose-built for verticals that traditional payment processors — Stripe, Square, PayPal, Adyen, Braintree — either refuse outright or terminate mid-contract. We combine card acceptance with crypto-rail settlement so that regulated but PSP-restricted categories can operate a compliant, reliable checkout without the freezes, reserves, and MATCH-list risk that come with mainstream processors.
+    </p>
+    <p>Categories we specialize in:</p>
+    <ul>
+      <li><strong>Peptide payment processing</strong> — BPC-157, TB-500, GHK-Cu, HGH fragments, research peptides shipped for research use only.</li>
+      <li><strong>Nutraceutical and SARM merchant accounts</strong> — RAD-140, MK-677, LGD-4033, YK-11, plus general supplements, nootropics, and hormone-support stacks.</li>
+      <li><strong>CBD, hemp, kratom, and delta merchant services</strong> — full-spectrum CBD, delta-8 THC, delta-9 hemp-derived, kratom powder and extracts, and adjacent botanicals compliant with the 2018 Farm Bill.</li>
+      <li><strong>Firearms and FFL payment processing</strong> — 2A retailers, ammunition sellers, tactical gear, optics, suppressors (where legal), and firearms training services.</li>
+    </ul>
+    <p>
+      If you're searching for a <strong>reliable card processor for peptides</strong>, a <strong>CBD merchant account that won't freeze</strong>, a <strong>SARM payment gateway</strong>, or a <strong>firearms-friendly payment processor</strong> — that's what Card2Crypto is. We're not a general PSP that "makes exceptions". This is our whole reason for existing.
+    </p>
+    <p style="margin-top: 28px;">
+      <a href="mailto:sales@southpay.io?subject=Card2Crypto%20inquiry" style="color: var(--brand); text-decoration: underline; text-decoration-thickness: 1px; text-underline-offset: 4px;">Email sales</a>
+      &nbsp;·&nbsp;
+      <a href="https://calendly.com/daniel-southpay/intro-call" style="color: var(--brand); text-decoration: underline; text-decoration-thickness: 1px; text-underline-offset: 4px;" target="_blank" rel="noopener">Book a 20-minute intro</a>
+    </p>
+  </div>
+</section>
+
+<footer>
+  <div class="container">
+    <div class="footer-inner">
+      <div class="footer-brand">
+        <a href="/" class="logo">
+          <img src="/assets/img/southpay-logo.avif" alt="SouthPay" class="logo-img">
+        </a>
+        <p>Global crypto payment solution for stores and freelancers. Accept USDT, USDC, and 60+ cryptocurrencies. Settle in USD, stablecoins, or crypto.</p>
+        <div class="footer-social">
+          <a href="https://www.linkedin.com/company/southpay/" target="_blank" rel="noopener" aria-label="LinkedIn">
+            <svg viewBox="0 0 24 24" width="18" height="18" fill="currentColor" aria-hidden="true"><path d="M4.98 3.5a2.5 2.5 0 1 1 0 5 2.5 2.5 0 0 1 0-5zM3 9h4v12H3V9zm7 0h3.8v1.7h.06c.53-.95 1.83-1.95 3.77-1.95 4.03 0 4.77 2.5 4.77 5.74V21H18.6v-5.65c0-1.35-.03-3.08-1.96-3.08-1.96 0-2.26 1.45-2.26 2.98V21H10V9z"/></svg>
+          </a>
+        </div>
+      </div>
+      <div class="footer-cols">
+        <div class="footer-col">
+          <h4>Products</h4>
+          <a href="/commerce">Commerce</a>
+          <a href="/invoice">Invoice</a>
+          <a href="/card2crypto">Card2Crypto</a>
+        </div>
+        <div class="footer-col industries-col">
+          <h4>Industries</h4>
+          <div class="footer-col-grid">
+            <a href="/industries">All industries</a>
+            <a href="/industries/ecommerce-stores">Ecommerce stores</a>
+            <a href="/industries/gaming">Gaming</a>
+            <a href="/industries/trading-investments">Trading & investments</a>
+            <a href="/industries/stablecoin-top-ups">Stablecoin top-ups</a>
+            <a href="/industries/it-solutions">IT & SaaS</a>
+            <a href="/industries/web3">Web3</a>
+            <a href="/industries/cross-border-trade">Cross-border trade</a>
+            <a href="/industries/digital-goods">Digital goods</a>
+            <a href="/industries/payment-service-providers">Payment service providers</a>
+            <a href="/industries/creator-economy">Creator economy</a>
+            <a href="/industries/professional-services">Professional services</a>
+            <a href="/industries/travel-hospitality">Travel & hospitality</a>
+            <a href="/industries/luxury-rentals">Luxury rentals</a>
+          </div>
+        </div>
+        <div class="footer-col">
+          <h4>Company</h4>
+          <a href="/about">About</a>
+          <a href="https://docs.southpay.io/" target="_blank" rel="noopener">Docs</a>
+          <a href="/pricing">Pricing</a>
+          <a href="mailto:support@southpay.io">Support</a>
+        </div>
+        <div class="footer-col">
+          <h4>Legal</h4>
+          <a href="/aml-policy">AML policy</a>
+          <a href="/merchant-services-agreement">Merchant agreement</a>
+          <a href="/privacy-policy">Privacy policy</a>
+          <a href="/terms-and-conditions">Terms and conditions</a>
+        </div>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <span>© 2026 SouthPay. All rights reserved.</span>
+      <span>SouthPay is an <a href="https://alc.media/" target="_blank" rel="noopener" class="alc-link">ALC Media</a> brand.</span>
+    </div>
+  </div>
+</footer>
+
+<script src="/assets/southpay.js"></script>
+
+<style>
+/* Nav product tag pill + subtle Card2Crypto tile treatment */
+.nav-product-tag {
+  display: inline-block; margin-left: 6px;
+  font-family: var(--mono); font-size: 9.5px; letter-spacing: 0.14em; text-transform: uppercase;
+  background: var(--ink); color: #fff;
+  padding: 2px 6px 1px; border-radius: 4px; vertical-align: middle;
+}
+.nav-product-item--c2c .motif { background: var(--ink); color: #fff; }
+.nav-product-item--c2c:hover .motif { background: var(--brand); color: #fff; }
+.motif-c2c { border-radius: 10px; }
+</style>
+
+</body>
+</html>
