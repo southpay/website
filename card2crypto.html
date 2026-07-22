@@ -13,7 +13,7 @@
 <link href="https://fonts.googleapis.com/css2?family=Inter:ital,wght@0,400;0,500;0,600;0,700;1,500;1,600;1,700&family=Geist:wght@400;500;600;700&family=Geist+Mono:wght@400;500&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="/southpay.css">
 <style>
-/* Card2Crypto-specific hero cards — mirror Commerce's float-card pattern */
+/* Card2Crypto-specific hero cards, mirroring Commerce's float-card pattern */
 .hero-card-charge {
   top: 0; right: 0; width: 320px;
   transform: rotate(-3deg);
@@ -93,17 +93,22 @@
   .hero-card-settle { left: 0; bottom: 0; }
 }
 
-/* Card2Crypto-specific motif (matches Commerce/Invoice motif system, no dark override) */
+/* Card2Crypto motif (sibling of Commerce/Invoice motifs, purple by default) */
 .motif.motif-c2c { border-radius: 10px; transform: rotate(3deg); }
 
-/* Vertical cards on this page — reuse .feature grid but slot vertical-specific keywords underneath */
+/* Per-vertical SEO keyword strip inside feature cards */
 .c2c-vert-keys {
   margin-top: 14px; padding-top: 12px; border-top: 1px solid var(--line-soft);
   font-family: var(--mono); font-size: 11px; color: var(--ink-mute);
   letter-spacing: 0.02em; line-height: 1.5;
 }
+/* On dark featured cards, invert so text remains readable */
+.feature.featured .c2c-vert-keys {
+  color: rgba(255, 255, 255, 0.72);
+  border-top-color: rgba(255, 255, 255, 0.18);
+}
 
-/* Solution showpiece — a mini "cards → crypto → USD" flow diagram */
+/* Solution showpiece: mini "cards, rail, USD" flow diagram */
 .c2c-flow-showpiece {
   background: #fff; border: 1px solid var(--line);
   border-radius: var(--r-xl); padding: 32px;
@@ -139,15 +144,14 @@
 .c2c-flow-foot .foot-label { font-family: var(--mono); font-size: 11px; color: var(--ink-mute); text-transform: uppercase; letter-spacing: 0.08em; }
 .c2c-flow-foot .foot-amt { font-family: var(--display); font-weight: 700; font-size: 22px; letter-spacing: -0.02em; }
 
-/* Pricing "Custom" card — single tier, same look as .tier */
-.c2c-price-tier {
-  max-width: 520px; margin: 40px auto 0;
-}
+/* Pricing card: wider so it doesn't read thin */
+.c2c-price-tier { max-width: 60%; margin: 40px auto 0; }
+@media (max-width: 720px) { .c2c-price-tier { max-width: 100%; } }
+.c2c-price-tier .tier { padding: 44px 40px; }
 
-/* SEO body block */
+/* SEO body: light grey bg so the section reads as its own zone, symmetric padding */
 .c2c-seo-body {
-  padding: 60px 0 90px; background: var(--surface);
-  border-top: 1px solid var(--line-soft);
+  padding: 90px 0; background: var(--bg-lavender-soft);
 }
 .c2c-seo-body .container { max-width: 780px; }
 .c2c-seo-body h2 {
@@ -235,6 +239,10 @@
 
 </head>
 <body>
+
+<div class="hex-bg" id="hexBg">
+  <svg id="hexSvg" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="xMidYMid slice"></svg>
+</div>
 
 <nav class="site-nav">
   <div class="container">
@@ -346,20 +354,49 @@
   </div>
 </section>
 
-<div class="integrations">
+<!-- Who this is for. Placed high on the page, immediately after hero, so operators recognize themselves fast. -->
+<section>
   <div class="container">
-    <div class="integrations-inner">
-      <span class="integrations-label">Verticals we serve — and traditional PSPs don't:</span>
-      <div class="integrations-logos">
-        <span>Peptides</span>
-        <span>Nutraceuticals · SARMs</span>
-        <span>CBD · Hemp · Kratom</span>
-        <span>Firearms · Ammo</span>
-        <span>Talk to us for others</span>
+    <span class="section-tag">Who this is for</span>
+    <h2>Built for the verticals traditional processors <em>quietly avoid.</em></h2>
+    <p class="section-intro">If your product falls into one of these categories, you already know. This is the rail we built for you.</p>
+
+    <div class="feature-grid">
+      <div class="feature featured">
+        <div class="feature-icon">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M8 3v18"/><path d="M16 3v18"/><path d="M8 8h8"/><path d="M8 16h8"/><path d="M4 12h16"/></svg>
+        </div>
+        <div class="feature-title">Peptides &amp; research chemicals</div>
+        <div class="feature-desc">BPC-157, TB-500, GHK-Cu, HGH fragments, research peptides shipped for research use only. The <strong>peptide payment processor</strong> that stays live through the categories every PSP quietly blocks.</div>
+        <div class="c2c-vert-keys">peptide payment processor · research chemical payment gateway · high-risk merchant account for peptides</div>
+      </div>
+      <div class="feature">
+        <div class="feature-icon">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10 3v6a4 4 0 004 4h0a4 4 0 004-4V3"/><path d="M10 3h8"/><path d="M14 13v8"/><path d="M10 21h8"/></svg>
+        </div>
+        <div class="feature-title">Nutraceuticals, SARMs &amp; supplements</div>
+        <div class="feature-desc">RAD-140, MK-677, LGD-4033, testosterone boosters, nootropics, sleep stacks. The <strong>nutraceutical payment processor</strong> and <strong>SARM merchant account</strong> alternative without the reserves or the terminations.</div>
+        <div class="c2c-vert-keys">nutraceutical merchant account · SARM payment processor · supplement payment gateway · nootropic checkout</div>
+      </div>
+      <div class="feature">
+        <div class="feature-icon">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3c3 3 6 7 6 11a6 6 0 01-12 0c0-4 3-8 6-11z"/><path d="M12 9v9"/><path d="M9 13c2 1 4 1 6 0"/></svg>
+        </div>
+        <div class="feature-title">CBD, hemp &amp; kratom</div>
+        <div class="feature-desc">Federally legal, PSP-restricted. Cannabinoids, kratom, hemp flower, delta products. The <strong>CBD merchant account</strong> and <strong>kratom payment gateway</strong> that keeps card acceptance live for regulated botanicals.</div>
+        <div class="c2c-vert-keys">CBD merchant account · hemp payment processor · kratom payment gateway · delta-8 payment processing</div>
+      </div>
+      <div class="feature featured">
+        <div class="feature-icon">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 12h11l-3-3"/><path d="M15 12l-3 3"/><path d="M18 5h2v14h-2"/><circle cx="6" cy="12" r="1.2" fill="currentColor" stroke="none"/></svg>
+        </div>
+        <div class="feature-title">Firearms, ammunition &amp; tactical</div>
+        <div class="feature-desc">2A retailers cut off by Stripe, Square and PayPal at random. FFL-holders paying 5% and still getting deplatformed. The <strong>firearms merchant account</strong> and <strong>ammo payment gateway</strong> that treats you like a compliant business.</div>
+        <div class="c2c-vert-keys">firearms merchant account · FFL payment processor · ammo payment gateway · 2A retailer payment processing</div>
       </div>
     </div>
   </div>
-</div>
+</section>
 
 <section>
   <div class="container">
@@ -393,7 +430,7 @@
       <div class="solution-copy">
         <span class="section-tag">How it works</span>
         <h3>Cards in. USD out. <em>Nothing between them that can freeze you.</em></h3>
-        <p>Customers pay by card at checkout like they always have. Card2Crypto handles the acceptance on a rail that isn't gated by your MCC — the card networks never see what you sell.</p>
+        <p>Customers pay by card at checkout like they always have. Card2Crypto handles the acceptance on a rail that isn't gated by your MCC. The card networks never see what you sell.</p>
         <p>You get paid in <strong>USD to your US bank</strong>, or hold in stablecoin. Compliance, KYC, AML, and settlement risk sit on our side. No rolling reserves, no chargebacks, no MATCH-list exposure.</p>
       </div>
       <div>
@@ -455,54 +492,11 @@
   </div>
 </section>
 
-<section>
-  <div class="container">
-    <span class="section-tag">Who this is for</span>
-    <h2>Built for the verticals traditional processors <em>quietly avoid.</em></h2>
-    <p class="section-intro">If your product falls into one of these categories, you already know. This is the rail we built for you.</p>
-
-    <div class="feature-grid">
-      <div class="feature featured">
-        <div class="feature-icon">
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M8 3v18"/><path d="M16 3v18"/><path d="M8 8h8"/><path d="M8 16h8"/><path d="M4 12h16"/></svg>
-        </div>
-        <div class="feature-title">Peptides & research chemicals</div>
-        <div class="feature-desc">BPC-157, TB-500, GHK-Cu, HGH fragments, research peptides shipped for research use only. The <strong>peptide payment processor</strong> that stays live through the categories every PSP quietly blocks.</div>
-        <div class="c2c-vert-keys">peptide payment processor · research chemical payment gateway · high-risk merchant account for peptides</div>
-      </div>
-      <div class="feature">
-        <div class="feature-icon">
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10 3v6a4 4 0 004 4h0a4 4 0 004-4V3"/><path d="M10 3h8"/><path d="M14 13v8"/><path d="M10 21h8"/></svg>
-        </div>
-        <div class="feature-title">Nutraceuticals, SARMs & supplements</div>
-        <div class="feature-desc">RAD-140, MK-677, LGD-4033, testosterone boosters, nootropics, sleep stacks. The <strong>nutraceutical payment processor</strong> and <strong>SARM merchant account</strong> alternative without the reserves or the terminations.</div>
-        <div class="c2c-vert-keys">nutraceutical merchant account · SARM payment processor · supplement payment gateway · nootropic checkout</div>
-      </div>
-      <div class="feature">
-        <div class="feature-icon">
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3c3 3 6 7 6 11a6 6 0 01-12 0c0-4 3-8 6-11z"/><path d="M12 9v9"/><path d="M9 13c2 1 4 1 6 0"/></svg>
-        </div>
-        <div class="feature-title">CBD, hemp & kratom</div>
-        <div class="feature-desc">Federally legal, PSP-restricted. Cannabinoids, kratom, hemp flower, delta products. The <strong>CBD merchant account</strong> and <strong>kratom payment gateway</strong> that keeps card acceptance live for regulated botanicals.</div>
-        <div class="c2c-vert-keys">CBD merchant account · hemp payment processor · kratom payment gateway · delta-8 payment processing</div>
-      </div>
-      <div class="feature featured">
-        <div class="feature-icon">
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 12h11l-3-3"/><path d="M15 12l-3 3"/><path d="M18 5h2v14h-2"/><circle cx="6" cy="12" r="1.2" fill="currentColor" stroke="none"/></svg>
-        </div>
-        <div class="feature-title">Firearms, ammunition & tactical</div>
-        <div class="feature-desc">2A retailers cut off by Stripe, Square and PayPal at random. FFL-holders paying 5% and still getting deplatformed. The <strong>firearms merchant account</strong> and <strong>ammo payment gateway</strong> that treats you like a compliant business.</div>
-        <div class="c2c-vert-keys">firearms merchant account · FFL payment processor · ammo payment gateway · 2A retailer payment processing</div>
-      </div>
-    </div>
-  </div>
-</section>
-
 <section id="pricing">
   <div class="container">
     <span class="section-tag">Pricing</span>
     <h2>Custom. <em>Because you're not a category.</em></h2>
-    <p class="section-intro">No monthly subscription. No setup fees. Per-transaction pricing sized to your vertical, your volume, and your risk profile — quoted in the intro call, not scraped off a pricing page.</p>
+    <p class="section-intro">No monthly subscription. No setup fees. Per-transaction pricing sized to your vertical, your volume, and your risk profile. Quoted in the intro call, not scraped off a pricing page.</p>
 
     <div class="pricing-grid c2c-price-tier">
       <div class="tier featured">
@@ -510,7 +504,7 @@
         <div class="tier-price"><span class="currency"></span>Custom<span class="unit"></span></div>
         <div class="tier-desc">Card acceptance built for peptides, nutraceuticals, CBD, firearms, and other verticals traditional processors won't serve.</div>
         <ul class="tier-features">
-          <li>Cards in · USD out</li>
+          <li>Cards in, USD out</li>
           <li>No monthly fees</li>
           <li>No setup cost</li>
           <li>No rolling reserves</li>
@@ -532,17 +526,17 @@
         <span class="section-tag">Questions</span>
         <h2 style="font-size: clamp(36px, 4.5vw, 54px);">We've all <em>the answers.</em></h2>
         <p style="color: var(--ink-soft); font-size: 16px; line-height: 1.55; margin-top: 18px;">
-          Rather have the conversation directly? Email <a href="mailto:daniel@southpay.io?subject=Card2Crypto%20inquiry" style="color: var(--brand); text-decoration: underline; text-decoration-thickness: 1px; text-underline-offset: 4px;">daniel@southpay.io</a> — a human replies.
+          Rather have the conversation directly? Email <a href="mailto:daniel@southpay.io?subject=Card2Crypto%20inquiry" style="color: var(--brand); text-decoration: underline; text-decoration-thickness: 1px; text-underline-offset: 4px;">daniel@southpay.io</a>. A human replies.
         </p>
       </div>
       <div class="faq-list">
         <div class="faq-item open">
           <div class="faq-q">What verticals do you actually serve? <span class="faq-toggle">+</span></div>
-          <div class="faq-a">Peptides and research chemicals, nutraceuticals and SARMs, CBD/hemp/kratom, firearms/ammo/tactical. If you're borderline or in another restricted category, email us — we take the conversation before we say no.</div>
+          <div class="faq-a">Peptides and research chemicals, nutraceuticals and SARMs, CBD/hemp/kratom, firearms/ammo/tactical. If you're borderline or in another restricted category, email us. We take the conversation before we say no.</div>
         </div>
         <div class="faq-item">
           <div class="faq-q">How is this different from Commerce? <span class="faq-toggle">+</span></div>
-          <div class="faq-a">Commerce is our self-serve crypto checkout at 1.99% flat — customers pay in crypto, you settle in USD. Card2Crypto keeps the customer experience as a card payment: they swipe a Visa, we handle the acceptance and settlement on a rail built for your vertical. Different product, different rail, different risk model.</div>
+          <div class="faq-a">Commerce is our self-serve crypto checkout at 1.99% flat. Customers pay in crypto, you settle in USD. Card2Crypto keeps the customer experience as a card payment: they swipe a Visa, we handle the acceptance and settlement on a rail built for your vertical. Different product, different rail, different risk model.</div>
         </div>
         <div class="faq-item">
           <div class="faq-q">Why doesn't this page show a price? <span class="faq-toggle">+</span></div>
@@ -554,7 +548,7 @@
         </div>
         <div class="faq-item">
           <div class="faq-q">Do you hold rolling reserves? <span class="faq-toggle">+</span></div>
-          <div class="faq-a">No standing reserve as a default. For very high refund/chargeback verticals we may agree a short-term reserve during onboarding — but the "hold 15% for six months just because" model does not apply here.</div>
+          <div class="faq-a">No standing reserve as a default. For very high refund or chargeback verticals we may agree a short-term reserve during onboarding, but the "hold 15% for six months just because" model does not apply here.</div>
         </div>
         <div class="faq-item">
           <div class="faq-q">Where do funds settle? <span class="faq-toggle">+</span></div>
@@ -562,7 +556,7 @@
         </div>
         <div class="faq-item">
           <div class="faq-q">Are chargebacks really impossible? <span class="faq-toggle">+</span></div>
-          <div class="faq-a">On the crypto leg of settlement to you, yes — it's final and irreversible. On the acceptance leg from the customer's card, standard card-network dispute rules apply upstream on our rail; we absorb that risk as part of the service, not you.</div>
+          <div class="faq-a">On the crypto leg of settlement to you, yes. It's final and irreversible. On the acceptance leg from the customer's card, standard card-network dispute rules apply upstream on our rail. We absorb that risk as part of the service, not you.</div>
         </div>
         <div class="faq-item">
           <div class="faq-q">How long does onboarding take? <span class="faq-toggle">+</span></div>
@@ -587,22 +581,22 @@
   </div>
 </section>
 
-<!-- SEO body — keyword-rich long-form copy for organic reach -->
+<!-- SEO body: keyword-rich long-form copy for organic reach. Light-grey section so it reads as its own zone. -->
 <section class="c2c-seo-body">
   <div class="container">
     <h2>Reliable card payment processing for high-risk merchants</h2>
     <p>
-      Card2Crypto is <strong>SouthPay's high-risk merchant account alternative</strong>, purpose-built for verticals that traditional payment processors — Stripe, Square, PayPal, Adyen, Braintree — either refuse outright or terminate mid-contract. We combine card acceptance with crypto-rail settlement so that regulated but PSP-restricted categories can operate a compliant, reliable checkout without the freezes, reserves, and MATCH-list risk that come with mainstream processors.
+      Card2Crypto is <strong>SouthPay's high-risk merchant account alternative</strong>, purpose-built for verticals that traditional payment processors (Stripe, Square, PayPal, Adyen, Braintree) either refuse outright or terminate mid-contract. We combine card acceptance with crypto-rail settlement so that regulated but PSP-restricted categories can operate a compliant, reliable checkout without the freezes, reserves, and MATCH-list risk that come with mainstream processors.
     </p>
     <p>Categories we specialize in:</p>
     <ul>
-      <li><strong>Peptide payment processing</strong> — BPC-157, TB-500, GHK-Cu, HGH fragments, research peptides shipped for research use only.</li>
-      <li><strong>Nutraceutical and SARM merchant accounts</strong> — RAD-140, MK-677, LGD-4033, YK-11, plus general supplements, nootropics, and hormone-support stacks.</li>
-      <li><strong>CBD, hemp, kratom, and delta merchant services</strong> — full-spectrum CBD, delta-8 THC, delta-9 hemp-derived, kratom powder and extracts, and adjacent botanicals compliant with the 2018 Farm Bill.</li>
-      <li><strong>Firearms and FFL payment processing</strong> — 2A retailers, ammunition sellers, tactical gear, optics, and firearms training services.</li>
+      <li><strong>Peptide payment processing</strong>: BPC-157, TB-500, GHK-Cu, HGH fragments, research peptides shipped for research use only.</li>
+      <li><strong>Nutraceutical and SARM merchant accounts</strong>: RAD-140, MK-677, LGD-4033, YK-11, plus general supplements, nootropics, and hormone-support stacks.</li>
+      <li><strong>CBD, hemp, kratom, and delta merchant services</strong>: full-spectrum CBD, delta-8 THC, delta-9 hemp-derived, kratom powder and extracts, and adjacent botanicals compliant with the 2018 Farm Bill.</li>
+      <li><strong>Firearms and FFL payment processing</strong>: 2A retailers, ammunition sellers, tactical gear, optics, and firearms training services.</li>
     </ul>
     <p>
-      If you're searching for a <strong>reliable card processor for peptides</strong>, a <strong>CBD merchant account that won't freeze</strong>, a <strong>SARM payment gateway</strong>, or a <strong>firearms-friendly payment processor</strong> — that's what Card2Crypto is. We're not a general PSP that "makes exceptions". This is our reason for existing.
+      If you're searching for a <strong>reliable card processor for peptides</strong>, a <strong>CBD merchant account that won't freeze</strong>, a <strong>SARM payment gateway</strong>, or a <strong>firearms-friendly payment processor</strong>, that's what Card2Crypto is. We're not a general PSP that "makes exceptions". This is our reason for existing.
     </p>
     <p style="margin-top: 28px;">
       <a href="mailto:daniel@southpay.io?subject=Card2Crypto%20inquiry" style="color: var(--brand); text-decoration: underline; text-decoration-thickness: 1px; text-underline-offset: 4px;">Email daniel@southpay.io</a>
